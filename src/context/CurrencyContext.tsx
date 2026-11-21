@@ -8,6 +8,8 @@ interface CurrencyContextType {
   formatPrice: (amountINR: number, amountAED?: number) => string;
   getPrice: (amountINR: number, amountAED?: number) => number;
   symbol: string;
+  isRegionModalOpen: boolean;
+  setIsRegionModalOpen: (open: boolean) => void;
 }
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
@@ -24,6 +26,8 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   });
 
+  const [isRegionModalOpen, setIsRegionModalOpen] = useState(false);
+
   const currency: CurrencyType = country === 'UAE' ? 'AED' : 'INR';
   const symbol = currency === 'AED' ? 'AED ' : '₹';
 
@@ -33,6 +37,8 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const setRegion = (newCountry: CountryType) => {
     setCountry(newCountry);
+    localStorage.setItem('velmira_country', newCountry);
+    localStorage.setItem('velmira_region_chosen', 'true');
   };
 
   const getPrice = (amountINR: number, amountAED?: number): number => {
@@ -55,7 +61,9 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setRegion,
         formatPrice,
         getPrice,
-        symbol
+        symbol,
+        isRegionModalOpen,
+        setIsRegionModalOpen
       }}
     >
       {children}

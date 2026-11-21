@@ -30,7 +30,7 @@ export const Navbar: React.FC = () => {
   const { wishlistIds } = useWishlist();
   const { user, logout } = useAuth();
   const { products, setFilters } = useShop();
-  const { country, currency, setRegion } = useCurrency();
+  const { country, currency, setRegion, setIsRegionModalOpen } = useCurrency();
   const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -138,6 +138,14 @@ export const Navbar: React.FC = () => {
                     <span>🇦🇪 UAE (AED د.إ)</span>
                     {country === 'UAE' && <span className="text-[10px] bg-emerald-100 text-emerald-900 px-1.5 rounded">Active</span>}
                   </button>
+                  <div className="border-t border-stone-100 mt-1 pt-1">
+                    <button
+                      onClick={() => { setIsRegionMenuOpen(false); setIsRegionModalOpen(true); }}
+                      className="w-full text-left px-3 py-1.5 text-[11px] text-[#D4AF37] hover:bg-stone-50 font-medium"
+                    >
+                      🗺️ Change Destination...
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
