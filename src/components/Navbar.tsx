@@ -101,13 +101,14 @@ export const Navbar: React.FC = () => {
     <>
       <header className="sticky top-0 z-40 bg-[#0F0F0F] text-white">
         {/* Top Announcement Ribbon with WhatsApp Ordering Info & Currency Switcher */}
-        <div className="bg-[#171717] border-b border-stone-800 text-[11px] py-1.5 px-4 sm:px-8 flex items-center justify-between text-stone-300">
+        <div className="bg-[#141414] border-b border-stone-800 text-[11px] py-1 px-4 sm:px-8 flex items-center justify-between text-stone-300">
           <div className="flex items-center space-x-2 truncate">
-            <span className="bg-[#D4AF37] text-black text-[9px] font-bold px-1.5 py-0.2 rounded uppercase tracking-wider font-cinzel">
-              India & UAE Direct
+            <span className="text-[#D4AF37] text-[10px] font-bold tracking-widest uppercase font-cinzel">
+              India & UAE Atelier
             </span>
-            <span className="truncate">
-              ⚡ Order Directly on WhatsApp: <a href={`https://wa.me/${WHATSAPP_RAW_NUMBER}`} target="_blank" rel="noreferrer" className="text-emerald-400 font-bold hover:underline">{OFFICIAL_WHATSAPP_NUMBER}</a> | White-Glove Delivery
+            <span className="text-stone-600">|</span>
+            <span className="truncate text-stone-400">
+              White-Glove Delivery • WhatsApp Concierge: <a href={`https://wa.me/${WHATSAPP_RAW_NUMBER}`} target="_blank" rel="noreferrer" className="text-[#D4AF37] font-semibold hover:underline">{OFFICIAL_WHATSAPP_NUMBER}</a>
             </span>
           </div>
 

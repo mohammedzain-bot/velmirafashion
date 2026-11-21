@@ -118,35 +118,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
         <div>
           {/* Brand & Rating Bar */}
           <div className="flex items-center justify-between mb-1">
-            <span className="text-[11px] font-bold tracking-wider text-[#C5A059] uppercase font-cinzel">
+            <span className="text-[10px] sm:text-[11px] font-bold tracking-wider text-[#C5A059] uppercase font-cinzel">
               {product.brand}
             </span>
-            <div className="flex items-center space-x-1 bg-emerald-700 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
-              <span>{product.rating}</span>
-              <Star className="w-2.5 h-2.5 fill-white text-white" />
-              <span className="text-emerald-200 font-normal">({product.ratingCount})</span>
+            <div className="flex items-center space-x-1 text-stone-400 text-[10px] font-medium">
+              <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+              <span className="text-stone-700 font-semibold">{product.rating}</span>
             </div>
           </div>
 
           {/* Product Name */}
           <Link to={`/products/${product.id}`} className="block">
-            <h3 className="text-xs sm:text-sm font-medium text-stone-800 line-clamp-2 hover:text-[#C5A059] transition-colors leading-snug">
+            <h3 className="text-xs sm:text-sm font-medium text-stone-900 line-clamp-1 hover:text-[#C5A059] transition-colors leading-snug">
               {product.name}
             </h3>
           </Link>
-
-          {/* Available Sizes / Specs */}
-          <div className="flex flex-wrap items-center gap-1 mt-2">
-            <span className="text-[10px] text-stone-400 font-medium">Specs:</span>
-            {product.sizes.map((sz, idx) => (
-              <span
-                key={idx}
-                className="text-[10px] px-1.5 py-0.2 rounded border border-stone-200 text-stone-600 font-medium"
-              >
-                {sz}
-              </span>
-            ))}
-          </div>
         </div>
 
         {/* Pricing & Actions (Add to Bag + WhatsApp Quick Order) */}
