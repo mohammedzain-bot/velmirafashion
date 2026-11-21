@@ -1,0 +1,233 @@
+[
+  {
+    "customerId": "usr-1",
+    "customerName": "Aarav Sharma",
+    "customerEmail": "aarav.sharma@velmira.in",
+    "customerPhone": "+91 98765 43210",
+    "items": [
+      {
+        "productId": "prod-102",
+        "name": "Italian Tailored Double-Breasted Wool Blazer",
+        "brand": "VELMIRA SIGNATURE",
+        "image": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=900&q=80",
+        "size": "40R",
+        "color": "Navy Blue",
+        "price": 12499,
+        "originalPrice": 24999,
+        "quantity": 2
+      },
+      {
+        "productId": "prod-101",
+        "name": "Royal Heritage Banarasi Katan Silk Saree with Zari Weave",
+        "brand": "VELMIRA COUTURE",
+        "image": "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=80",
+        "size": "Free Size",
+        "color": "Royal Crimson Red",
+        "price": 8999,
+        "originalPrice": 18999,
+        "quantity": 1
+      }
+    ],
+    "shippingAddress": {
+      "id": "addr-1",
+      "fullName": "Aarav Sharma",
+      "phone": "+91 98765 43210",
+      "addressLine1": "Penthouse 14B, Oberoi Sky Heights",
+      "addressLine2": "Lokhandwala Complex, Andheri West",
+      "landmark": "Near Infiniti Mall",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "pincode": "400053",
+      "addressType": "Home",
+      "isDefault": true
+    },
+    "paymentMethod": "upi",
+    "paymentStatus": "completed",
+    "orderStatus": "Placed",
+    "subtotal": 33997,
+    "discount": 35000,
+    "couponCode": "VELMIRA500",
+    "couponDiscount": 500,
+    "deliveryFee": 0,
+    "totalAmount": 33497,
+    "id": "VEL-507486",
+    "trackingNumber": "BLUEDART-868236246",
+    "courierPartner": "BlueDart Luxury Express",
+    "orderDate": "2026-11-21T15:08:46.396Z",
+    "estimatedDelivery": "25 Nov 2026",
+    "trackingEvents": [
+      {
+        "status": "Placed",
+        "title": "Order Confirmed & Payment Verified",
+        "location": "Velmira Fulfillment Center, Mumbai",
+        "timestamp": "21 Nov 2026, 8:38 pm",
+        "done": true
+      },
+      {
+        "status": "Processing",
+        "title": "Quality Inspected & Luxury Packaging",
+        "location": "Velmira Hub, Mumbai",
+        "timestamp": "Expected within 12 Hours",
+        "done": false
+      },
+      {
+        "status": "Shipped",
+        "title": "Dispatched with BlueDart Luxury Express",
+        "location": "Transit Air Hub",
+        "timestamp": "Expected within 24 Hours",
+        "done": false
+      },
+      {
+        "status": "Delivered",
+        "title": "Doorstep Handover",
+        "location": "Mumbai, Maharashtra",
+        "timestamp": "Expected within 3-4 Days",
+        "done": false
+      }
+    ]
+  },
+  {
+    "id": "VEL-894211",
+    "customerId": "usr-1",
+    "customerName": "Aarav Sharma",
+    "customerEmail": "aarav.sharma@velmira.in",
+    "customerPhone": "+91 98765 43210",
+    "items": [
+      {
+        "productId": "prod-102",
+        "name": "Italian Tailored Double-Breasted Wool Blazer",
+        "brand": "VELMIRA SIGNATURE",
+        "image": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=900&q=80",
+        "size": "40R",
+        "color": "Midnight Charcoal",
+        "price": 12499,
+        "originalPrice": 24999,
+        "quantity": 1
+      }
+    ],
+    "shippingAddress": {
+      "id": "addr-1",
+      "fullName": "Aarav Sharma",
+      "phone": "+91 98765 43210",
+      "addressLine1": "Penthouse 14B, Oberoi Sky Heights",
+      "addressLine2": "Lokhandwala Complex, Andheri West",
+      "landmark": "Near Infiniti Mall",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "pincode": "400053",
+      "addressType": "Home",
+      "isDefault": true
+    },
+    "paymentMethod": "upi",
+    "paymentStatus": "completed",
+    "orderStatus": "Shipped",
+    "orderDate": "2026-02-18T14:32:00Z",
+    "estimatedDelivery": "23 Feb 2026",
+    "trackingNumber": "BLUEDART-84918234",
+    "courierPartner": "BlueDart Luxury Express",
+    "trackingEvents": [
+      {
+        "status": "Placed",
+        "title": "Order Confirmed & Payment Verified",
+        "location": "Velmira Fulfillment Center, Mumbai",
+        "timestamp": "18 Feb 2026, 02:32 PM",
+        "done": true
+      },
+      {
+        "status": "Processing",
+        "title": "Quality Inspected & Luxury Velvet Box Packing",
+        "location": "Velmira Hub, Mumbai",
+        "timestamp": "19 Feb 2026, 09:15 AM",
+        "done": true
+      },
+      {
+        "status": "Shipped",
+        "title": "In Transit via Express Air Flight BA-401",
+        "location": "Mumbai Airport Air Cargo Center",
+        "timestamp": "20 Feb 2026, 04:45 PM",
+        "done": true
+      },
+      {
+        "status": "Out for Delivery",
+        "title": "Arrived at Local BlueDart Delivery Hub",
+        "location": "Andheri West Delivery Facility, Mumbai",
+        "timestamp": "Expected 22 Feb 2026",
+        "done": false
+      },
+      {
+        "status": "Delivered",
+        "title": "Delivered to Customer Doorstep",
+        "location": "Mumbai, Maharashtra",
+        "timestamp": "Expected 23 Feb 2026",
+        "done": false
+      }
+    ],
+    "subtotal": 12499,
+    "discount": 12500,
+    "couponCode": "VELMIRA500",
+    "couponDiscount": 500,
+    "deliveryFee": 0,
+    "totalAmount": 11999
+  },
+  {
+    "id": "VEL-773120",
+    "customerId": "usr-1",
+    "customerName": "Aarav Sharma",
+    "customerEmail": "aarav.sharma@velmira.in",
+    "customerPhone": "+91 98765 43210",
+    "items": [
+      {
+        "productId": "prod-106",
+        "name": "Handcrafted Goodyear-Welted Leather Oxford Shoes",
+        "brand": "MONTE CARLO ATELIER",
+        "image": "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=900&q=80",
+        "size": "UK 9",
+        "color": "Burnished Chestnut Tan",
+        "price": 8499,
+        "originalPrice": 16999,
+        "quantity": 1
+      }
+    ],
+    "shippingAddress": {
+      "id": "addr-1",
+      "fullName": "Aarav Sharma",
+      "phone": "+91 98765 43210",
+      "addressLine1": "Penthouse 14B, Oberoi Sky Heights",
+      "addressLine2": "Lokhandwala Complex, Andheri West",
+      "landmark": "Near Infiniti Mall",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "pincode": "400053",
+      "addressType": "Home",
+      "isDefault": true
+    },
+    "paymentMethod": "card",
+    "paymentStatus": "completed",
+    "orderStatus": "Delivered",
+    "orderDate": "2026-02-01T11:15:00Z",
+    "estimatedDelivery": "05 Feb 2026",
+    "trackingNumber": "BLUEDART-59283711",
+    "courierPartner": "BlueDart Luxury Express",
+    "trackingEvents": [
+      {
+        "status": "Placed",
+        "title": "Order Confirmed",
+        "location": "Velmira Center",
+        "timestamp": "01 Feb 2026",
+        "done": true
+      },
+      {
+        "status": "Delivered",
+        "title": "Delivered and Signed by Aarav",
+        "location": "Mumbai",
+        "timestamp": "05 Feb 2026, 01:20 PM",
+        "done": true
+      }
+    ],
+    "subtotal": 8499,
+    "discount": 8500,
+    "couponDiscount": 0,
+    "deliveryFee": 0,
+    "totalAmount": 8499
+  }
+]

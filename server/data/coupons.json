@@ -1,0 +1,36 @@
+[
+  {
+    "code": "VELMIRA500",
+    "discountType": "flat",
+    "value": 500,
+    "minOrderValue": 2999,
+    "description": "Flat ₹500 OFF on orders above ₹2,999 for luxury shopping",
+    "expiryDate": "2026-12-31"
+  },
+  {
+    "code": "FIRSTBUY",
+    "discountType": "percentage",
+    "value": 15,
+    "minOrderValue": 1999,
+    "maxDiscount": 1500,
+    "description": "15% instant discount on your first purchase (up to ₹1,500)",
+    "expiryDate": "2026-12-31"
+  },
+  {
+    "code": "GOLD1000",
+    "discountType": "flat",
+    "value": 1000,
+    "minOrderValue": 6999,
+    "description": "Flat ₹1,000 OFF on premium orders above ₹6,999",
+    "expiryDate": "2026-12-31"
+  },
+  {
+    "code": "ROYAL20",
+    "discountType": "percentage",
+    "value": 20,
+    "minOrderValue": 9999,
+    "maxDiscount": 3000,
+    "description": "20% OFF on high luxury orders above ₹9,999 (up to ₹3,000)",
+    "expiryDate": "2026-12-31"
+  }
+]
