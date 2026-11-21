@@ -1,456 +1,312 @@
 [
   {
-    "id": "prod-101",
-    "name": "Royal Heritage Banarasi Katan Silk Saree with Zari Weave",
-    "brand": "VELMIRA COUTURE",
-    "category": "Ethnic Wear",
-    "subcategory": "Sarees",
-    "originalPrice": 18999,
-    "discountedPrice": 8999,
-    "discountPercentage": 53,
-    "rating": 4.8,
-    "ratingCount": 1420,
-    "reviewCount": 388,
-    "images": [
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=900&q=80"
-    ],
-    "sizes": [
-      "Free Size"
-    ],
-    "colors": [
-      {
-        "name": "Royal Crimson Red",
-        "hex": "#8B0000"
-      },
-      {
-        "name": "Champagne Gold",
-        "hex": "#D4AF37"
-      },
-      {
-        "name": "Emerald Forest Green",
-        "hex": "#0B5345"
-      }
-    ],
-    "stock": 13,
-    "isTrending": true,
-    "isBestSeller": true,
-    "isTopDeal": true,
-    "description": "Immerse in timeless elegance with this handcrafted Banarasi Katan Silk Saree. Featuring intricate gold floral kadwa jaal motifs and an opulent pallu woven by master artisans from Varanasi.",
-    "fabric": "100% Pure Katan Silk with Real Zari Border",
-    "fit": "Classic Indian Drape",
-    "pattern": "Intricate Floral Kadwa Jaal",
-    "occasion": "Weddings, Receptions & Grand Festive",
-    "care": "Dry Clean Only. Store wrapped in soft muslin cloth.",
-    "specifications": {
-      "Saree Length": "5.5 meters",
-      "Blouse Piece": "0.8 meters (Unstitched included)",
-      "Weave Type": "Banarasi Kadwa Handloom",
-      "Border Detail": "Broad Zari Woven Border",
-      "Country of Origin": "India"
-    },
-    "createdAt": "2026-01-10T10:00:00Z"
-  },
-  {
-    "id": "prod-102",
-    "name": "Italian Tailored Double-Breasted Wool Blazer",
+    "id": "prod-w1",
+    "name": "Velmira Chrono Royal Automatic 41mm Emerald Sunburst Dial",
     "brand": "VELMIRA SIGNATURE",
-    "category": "Men",
-    "subcategory": "Blazers & Suits",
-    "originalPrice": 24999,
-    "discountedPrice": 12499,
-    "discountPercentage": 50,
-    "rating": 4.9,
-    "ratingCount": 890,
-    "reviewCount": 215,
-    "images": [
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=900&q=80"
-    ],
-    "sizes": [
-      "38R",
-      "40R",
-      "42R",
-      "44R"
-    ],
-    "colors": [
-      {
-        "name": "Midnight Charcoal",
-        "hex": "#1E1E1E"
-      },
-      {
-        "name": "Navy Blue",
-        "hex": "#0B1B3D"
-      },
-      {
-        "name": "Camel Tan",
-        "hex": "#C19A6B"
-      }
-    ],
-    "stock": 7,
-    "isTrending": true,
-    "isBestSeller": true,
-    "description": "Masterfully crafted from premium Italian super-120s virgin wool, this structured double-breasted blazer delivers sharp architectural silhouette with peak lapels, horn buttons, and cupro silk lining.",
-    "fabric": "100% Italian Super-120s Wool, Cupro Silk Lining",
-    "fit": "Modern Slim Fit",
-    "pattern": "Solid Structured Weave",
-    "occasion": "Black Tie, Formal Galas & Executive Meetings",
-    "care": "Specialist Dry Clean Only.",
-    "specifications": {
-      "Closure": "Double-Breasted 6x2 Horn Buttons",
-      "Lapel": "Satin Trimmed Peak Lapel",
-      "Vents": "Dual Side Vents",
-      "Country of Origin": "Italy"
-    },
-    "createdAt": "2026-01-12T10:00:00Z"
-  },
-  {
-    "id": "prod-103",
-    "name": "Silk Georgette Embroidered Designer Anarkali Gown",
-    "brand": "VELMIRA COUTURE",
-    "category": "Women",
-    "subcategory": "Ethnic Wear",
-    "originalPrice": 21999,
-    "discountedPrice": 9999,
-    "discountPercentage": 55,
-    "rating": 4.7,
-    "ratingCount": 1105,
-    "reviewCount": 298,
-    "images": [
-      "https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=900&q=80"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "colors": [
-      {
-        "name": "Champagne Rose",
-        "hex": "#0F0F0F"
-      },
-      {
-        "name": "Ivory Gold",
-        "hex": "#D4AF37"
-      },
-      {
-        "name": "Midnight Noir",
-        "hex": "#0F0F0F"
-      }
-    ],
-    "stock": 10,
-    "isTrending": true,
-    "isNewArrival": true,
-    "description": "An ethereal floor-length Anarkali silhouette in pure silk georgette adorned with delicate zardozi needlework, pearl accents, and a scalloped organza dupatta with golden tassels.",
-    "fabric": "Pure Silk Georgette & Sheer Organza",
-    "fit": "Flared Regal Silhouette",
-    "pattern": "Zardozi Hand Embroidery & Mukaish Detailing",
-    "occasion": "Bespoke Luxury & Galas",
-    "care": "Specialist Dry Clean Only",
-    "specifications": {
-      "Craftsmanship": "Handcrafted Luxury Atelier",
-      "Lining": "Pure Cupro Silk",
-      "Country of Origin": "India & Italy"
-    },
-    "createdAt": "2026-02-01T10:00:00Z"
-  },
-  {
-    "id": "prod-104",
-    "name": "Pure Mulberry Silk Evening Slip Maxi Dress",
-    "brand": "VALENTINO MILANO",
-    "category": "Western Wear",
-    "subcategory": "Dresses & Gowns",
-    "originalPrice": 15499,
-    "discountedPrice": 7499,
-    "discountPercentage": 52,
-    "rating": 4.9,
-    "ratingCount": 640,
-    "reviewCount": 182,
-    "images": [
-      "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?auto=format&fit=crop&w=900&q=80"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L"
-    ],
-    "colors": [
-      {
-        "name": "Liquid Champagne",
-        "hex": "#F7E7CE"
-      },
-      {
-        "name": "Emerald Velvet",
-        "hex": "#004B49"
-      },
-      {
-        "name": "Onyx Black",
-        "hex": "#000000"
-      }
-    ],
-    "stock": 8,
-    "isTrending": true,
-    "isBestSeller": true,
-    "description": "Crafted from 22-momme pure mulberry silk that skims your curves with effortless grace. Features an alluring cowl neckline, delicate adjustable spaghetti straps, and a sultry high side-slit.",
-    "fabric": "100% Grade 6A Mulberry Silk",
-    "fit": "Bias-Cut Fluid Drape",
-    "pattern": "Lustrous Solid Silk Sheen",
-    "occasion": "Red Carpet, Black Tie, Romance & Fine Dining",
-    "care": "Hand wash with silk detergent or dry clean.",
-    "specifications": {
-      "Length": "Floor Length (56 inches)",
-      "Neckline": "Draped Cowl",
-      "Country of Origin": "France"
-    },
-    "createdAt": "2026-01-20T10:00:00Z"
-  },
-  {
-    "id": "prod-106",
-    "name": "Handcrafted Goodyear-Welted Leather Oxford Shoes",
-    "brand": "MONTE CARLO ATELIER",
-    "category": "Footwear",
-    "subcategory": "Formal Shoes",
-    "originalPrice": 16999,
-    "discountedPrice": 8499,
-    "discountPercentage": 50,
-    "rating": 4.8,
-    "ratingCount": 780,
-    "reviewCount": 195,
-    "images": [
-      "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=900&q=80"
-    ],
-    "sizes": [
-      "UK 7",
-      "UK 8",
-      "UK 9",
-      "UK 10",
-      "UK 11"
-    ],
-    "colors": [
-      {
-        "name": "Burnished Chestnut Tan",
-        "hex": "#8B4513"
-      },
-      {
-        "name": "Deep Piano Black",
-        "hex": "#0A0A0A"
-      }
-    ],
-    "stock": 15,
-    "isTrending": true,
-    "isTopDeal": true,
-    "description": "Constructed using centuries-old Goodyear welt techniques in Florence, Italy. Cut from full-grain French calfskin with a hand-burnished patina finish and durable oak-bark tanned leather soles.",
-    "fabric": "Full-Grain French Calfskin Leather",
-    "fit": "Classic British E-Width",
-    "pattern": "Perforated Toe Cap Brogue Detail",
-    "occasion": "Corporate Leadership, Black Tie & Weddings",
-    "care": "Condition with natural beeswax polish.",
-    "specifications": {
-      "Construction": "Goodyear Welted (Resoleable)",
-      "Sole": "Oak Bark Hand-Channelled Leather Sole",
-      "Country of Origin": "Italy"
-    },
-    "createdAt": "2026-01-18T10:00:00Z"
-  },
-  {
-    "id": "prod-107",
-    "name": "Velmira Chrono Luxe Gold-Plated Automatic Watch",
-    "brand": "VELMIRA SIGNATURE",
-    "category": "Accessories",
-    "subcategory": "Watches",
+    "category": "Men's Watches",
+    "subcategory": "Chronograph Watches",
     "originalPrice": 28999,
     "discountedPrice": 13999,
+    "originalPriceAED": 1290,
+    "priceAED": 620,
     "discountPercentage": 52,
     "rating": 4.9,
-    "ratingCount": 920,
-    "reviewCount": 310,
+    "ratingCount": 1420,
+    "reviewCount": 388,
     "images": [
       "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=80"
     ],
-    "sizes": [
-      "41mm Dial"
-    ],
+    "sizes": ["41mm Dial"],
     "colors": [
-      {
-        "name": "Champagne Gold & Sunburst Green",
-        "hex": "#2E8B57"
-      },
-      {
-        "name": "Rose Gold & Obsidian Black",
-        "hex": "#111111"
-      }
+      { "name": "Champagne Gold & Sunburst Emerald", "hex": "#2E8B57" },
+      { "name": "Rose Gold & Obsidian Black", "hex": "#111111" }
     ],
-    "stock": 3,
+    "stock": 8,
     "isTrending": true,
     "isBestSeller": true,
-    "description": "A tribute to Swiss horological craftsmanship. Features an automatic 24-jewel movement with 42-hour power reserve, scratch-resistant sapphire crystal glass, 18K gold PVD plating, and genuine alligator-embossed leather strap.",
-    "fabric": "316L Surgical Stainless Steel, 18K Gold PVD, Sapphire Crystal",
-    "fit": "Universal Wrist Adjustable Strap",
-    "pattern": "Sunburst Guilloché Dial",
-    "occasion": "Everyday Luxury & Formal Wear",
-    "care": "5 ATM Water Resistant (50 meters). Wipe with microfiber cloth.",
+    "isTopDeal": true,
+    "description": "A masterpiece of Swiss precision and haute horology. Powered by an automatic 24-jewel self-winding movement with 42-hour power reserve. Features scratch-proof domed sapphire crystal, 18K champagne gold PVD coating, and genuine alligator-embossed Italian leather strap.",
+    "fabric": "316L Surgical Grade Stainless Steel, 18K Gold PVD, Sapphire Crystal",
+    "fit": "41mm Case Diameter • 11.2mm Thickness",
+    "pattern": "Sunburst Guilloché Dial with Luminescent Gold Hands",
+    "occasion": "Executive Boardrooms, Black Tie Galas & Everyday Luxury",
+    "care": "5 ATM Water Resistant (50 meters). Wipe with microfiber polishing cloth.",
     "specifications": {
-      "Movement": "Japanese Automatic Self-Winding (24 Jewels)",
-      "Glass": "Domed Anti-Reflective Sapphire Crystal",
-      "Warranty": "2-Year International Guarantee",
-      "Country of Origin": "Switzerland"
+      "Movement": "Japanese Miyota 9015 Automatic (28,800 vph)",
+      "Glass": "Domed Anti-Reflective Scratchproof Sapphire Crystal",
+      "Power Reserve": "42 Hours Power Reserve",
+      "Water Resistance": "5 ATM / 50 Meters",
+      "Country of Origin": "Switzerland & Italy"
     },
-    "createdAt": "2026-01-22T10:00:00Z"
+    "createdAt": "2026-01-10T10:00:00Z"
   },
   {
-    "id": "prod-108",
-    "name": "Italian Saffiano Leather Structured Tote Handbag",
+    "id": "prod-b1",
+    "name": "Italian Saffiano Leather Structured Executive Tote Bag",
     "brand": "AURELIA LUXE",
-    "category": "Accessories",
-    "subcategory": "Bags",
+    "category": "Tote Bags",
+    "subcategory": "Tote Bags",
     "originalPrice": 19999,
     "discountedPrice": 9499,
+    "originalPriceAED": 890,
+    "priceAED": 420,
     "discountPercentage": 53,
     "rating": 4.8,
-    "ratingCount": 670,
-    "reviewCount": 160,
+    "ratingCount": 890,
+    "reviewCount": 245,
     "images": [
       "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=900&q=80"
     ],
-    "sizes": [
-      "One Size (14\" x 11\" x 5\")"
-    ],
+    "sizes": ["Medium (14\" × 11\" × 5\")", "Large (16\" × 12\" × 6\")"],
     "colors": [
-      {
-        "name": "Midnight Charcoal",
-        "hex": "#202020"
-      },
-      {
-        "name": "Warm Cognac Brown",
-        "hex": "#9E5B32"
-      }
+      { "name": "Midnight Onyx Black", "hex": "#111111" },
+      { "name": "Warm Cognac Tan", "hex": "#9E5B32" }
     ],
-    "stock": 10,
+    "stock": 12,
     "isTrending": true,
-    "isNewArrival": true,
-    "description": "Handcrafted in Milan from scratch-resistant Saffiano calf leather. Accented with brushed champagne gold hardware, dedicated 14-inch padded laptop sleeve, and dual top-carry handles plus detachable shoulder strap.",
-    "fabric": "100% Saffiano Calfskin Leather with Micro-Suede Lining",
-    "fit": "Structured Compartmentalized Tote",
-    "pattern": "Crosshatch Textured Finish",
-    "occasion": "Work, Executive Travel & Fine Dining",
-    "care": "Wipe clean with soft damp cloth. Store in dustbag.",
+    "isBestSeller": true,
+    "description": "Handcrafted in Milan from scratch-resistant Saffiano calf leather. Accented with brushed champagne gold hardware, dedicated 14-inch padded laptop compartment, and dual top-carry handles plus detachable leather shoulder strap.",
+    "fabric": "100% Saffiano Calfskin Leather with Micro-Suede Velvet Lining",
+    "fit": "14\" Length × 11\" Height × 5\" Depth",
+    "pattern": "Crosshatch Saffiano Textured Leather",
+    "occasion": "Executive Business, Luxury Travel & Fine Dining",
+    "care": "Wipe with soft damp cloth. Store wrapped in protective cotton dust cover.",
     "specifications": {
-      "Hardware": "Brushed Champagne 18K Gold Plated",
-      "Compartments": "3 Main Compartments + Padded Laptop Sleeve",
-      "Country of Origin": "Italy"
+      "Hardware": "18K Champagne Gold Electroplated Solid Brass",
+      "Compartments": "3 Zip Sections + Padded 14\" Laptop Pocket",
+      "Closure": "Heavy-Duty Gold YKK Zip & Magnetic Snap",
+      "Country of Origin": "Milan, Italy"
     },
-    "createdAt": "2026-02-02T10:00:00Z"
+    "createdAt": "2026-01-12T10:00:00Z"
   },
   {
-    "id": "prod-111",
-    "name": "Champagne Crystal Embellished Evening Stiletto Pumps",
+    "id": "prod-w2",
+    "name": "Velmira Tourbillon Grand Complication Rose Gold & Obsidian",
+    "brand": "VELMIRA SIGNATURE",
+    "category": "Men's Watches",
+    "subcategory": "Tourbillon Watches",
+    "originalPrice": 42999,
+    "discountedPrice": 21999,
+    "originalPriceAED": 1890,
+    "priceAED": 980,
+    "discountPercentage": 49,
+    "rating": 4.9,
+    "ratingCount": 610,
+    "reviewCount": 178,
+    "images": [
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80"
+    ],
+    "sizes": ["42mm Dial"],
+    "colors": [
+      { "name": "18K Rose Gold & Obsidian", "hex": "#B76E79" }
+    ],
+    "stock": 5,
+    "isTrending": true,
+    "isNewArrival": true,
+    "description": "An extraordinary triumph of mechanical horology. Features an open-heart flying tourbillon cage rotating at 6 o’clock, counteracting earth gravity to achieve pinpoint chronometric precision.",
+    "fabric": "Rose Gold PVD 316L Steel, Flying Tourbillon Cage, Sapphire Crystals",
+    "fit": "42mm Case Diameter • 12.5mm Height",
+    "pattern": "Skeleton Open-Heart Tourbillon Guilloché",
+    "occasion": "High Society Events, VIP Galas & Milestone Celebrations",
+    "care": "Wind 25 times upon initial setup. Service every 3-5 years.",
+    "specifications": {
+      "Movement": "Manual-Wind Calibre V-800 Flying Tourbillon (28,800 vph)",
+      "Power Reserve": "72 Hours Dual Barrel",
+      "Country of Origin": "Geneva, Switzerland"
+    },
+    "createdAt": "2026-01-20T10:00:00Z"
+  },
+  {
+    "id": "prod-b2",
+    "name": "Velmira Royal Kelly-Style Top Handle Handbag in Full-Grain Calfskin",
     "brand": "VALENTINO MILANO",
-    "category": "Footwear",
-    "subcategory": "Heels & Pumps",
-    "originalPrice": 18999,
-    "discountedPrice": 9199,
+    "category": "Leather Bags",
+    "subcategory": "Top Handle Bags",
+    "originalPrice": 26999,
+    "discountedPrice": 12999,
+    "originalPriceAED": 1190,
+    "priceAED": 580,
     "discountPercentage": 52,
     "rating": 4.9,
-    "ratingCount": 520,
-    "reviewCount": 175,
+    "ratingCount": 780,
+    "reviewCount": 215,
     "images": [
-      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80"
     ],
-    "sizes": [
-      "EU 36",
-      "EU 37",
-      "EU 38",
-      "EU 39",
-      "EU 40"
-    ],
+    "sizes": ["28cm Kelly Size"],
     "colors": [
-      {
-        "name": "Champagne Gold Starlight",
-        "hex": "#E5C158"
-      },
-      {
-        "name": "Diamond Silver Sheen",
-        "hex": "#C0C0C0"
-      }
+      { "name": "Heritage Tan Gold", "hex": "#C19A6B" },
+      { "name": "Pure Noir Black", "hex": "#000000" }
     ],
-    "stock": 2,
+    "stock": 6,
     "isTrending": true,
-    "isNewArrival": true,
-    "description": "Turn heads at every step. Crafted from shimmering Italian satin crowned with Austrian crystal sunburst brooches. Designed with signature triple-layer memory foam cushioning for evening-long comfort.",
-    "fabric": "Silk Satin Upper, Austrian Crystals, Calfskin Sole",
-    "fit": "True to European Sizing",
-    "pattern": "Sunburst Crystal Jewel Brooch",
-    "occasion": "Weddings, Red Carpet & Black Tie Galas",
-    "care": "Keep in satin dust pouch.",
+    "isBestSeller": true,
+    "isTopDeal": true,
+    "description": "The pinnacle of French luxury handbag design. Constructed using saddle-stitch craftsmanship from French Box Calfskin leather. Crowned with iconic turn-lock swivel clasp and functioning padlock.",
+    "fabric": "Full-Grain French Box Calfskin, Chevre Kidskin Inner Lining",
+    "fit": "28cm Base Length × 22cm Height × 11cm Width",
+    "pattern": "Smooth Satin-Touch Natural Grain Calfskin",
+    "occasion": "Weddings, VIP Luncheons, High Fashion Soirées",
+    "care": "Condition with natural leather cream.",
     "specifications": {
-      "Heel Height": "3.5 inches (85mm) Stiletto",
-      "Insole": "Ergonomic Memory Cushion Footbed",
-      "Country of Origin": "Italy"
+      "Closure": "Turn-Lock Swivel with Clochette, Key & Working Lock",
+      "Country of Origin": "Paris, France"
     },
-    "createdAt": "2026-02-05T10:00:00Z"
+    "createdAt": "2026-01-15T10:00:00Z"
   },
   {
-    "id": "prod-116",
-    "name": "Velmira Royal Zari Silk Embroidered Lehenga Set",
-    "brand": "VELMIRA COUTURE",
-    "category": "Sale",
-    "subcategory": "Lehengas",
-    "originalPrice": 38999,
-    "discountedPrice": 16999,
-    "discountPercentage": 56,
-    "rating": 4.9,
-    "ratingCount": 890,
-    "reviewCount": 260,
+    "id": "prod-w3",
+    "name": "Velmira Diamond Bezel Lady Date 34mm Mother-of-Pearl & Rose Gold",
+    "brand": "VELMIRA SIGNATURE",
+    "category": "Women's Watches",
+    "subcategory": "Diamond Watches",
+    "originalPrice": 24999,
+    "discountedPrice": 11999,
+    "originalPriceAED": 1100,
+    "priceAED": 530,
+    "discountPercentage": 52,
+    "rating": 4.8,
+    "ratingCount": 920,
+    "reviewCount": 310,
     "images": [
-      "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80"
     ],
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
+    "sizes": ["34mm Petite Dial"],
     "colors": [
-      {
-        "name": "Deep Royal Crimson",
-        "hex": "#800000"
-      },
-      {
-        "name": "Champagne Ochre Gold",
-        "hex": "#D4AF37"
-      }
+      { "name": "Rose Gold & Natural Mother-of-Pearl", "hex": "#FFDAB9" }
+    ],
+    "stock": 9,
+    "isTrending": true,
+    "isBestSeller": true,
+    "description": "An enchanting jewel on your wrist. Set with 48 pavé Austrian crystal diamonds on the fluted bezel surrounding an iridescent natural oyster mother-of-pearl dial with date window cyclops magnifier.",
+    "fabric": "316L Stainless Steel, 18K Rose Gold PVD, Pavé Austrian Crystals",
+    "fit": "34mm Case Diameter • 10mm Thickness • Adjustable Jubilee Link",
+    "pattern": "Natural Shimmering Mother-of-Pearl Dial",
+    "occasion": "Weddings, Cocktail Galas & Everyday Glamour",
+    "care": "5 ATM Water Resistant. Wipe clean with velvet cloth.",
+    "specifications": {
+      "Bezel": "Fluted Bezel Set with 48 Hand-Selected Pavé Crystals",
+      "Country of Origin": "Switzerland"
+    },
+    "createdAt": "2026-01-25T10:00:00Z"
+  },
+  {
+    "id": "prod-b3",
+    "name": "Velmira Quilted Velvet & Leather Evening Chain Flap Clutch",
+    "brand": "VALENTINO MILANO",
+    "category": "Clutches & Wallets",
+    "subcategory": "Evening Clutches",
+    "originalPrice": 14999,
+    "discountedPrice": 6999,
+    "originalPriceAED": 660,
+    "priceAED": 310,
+    "discountPercentage": 53,
+    "rating": 4.9,
+    "ratingCount": 540,
+    "reviewCount": 165,
+    "images": [
+      "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=900&q=80"
+    ],
+    "sizes": ["Compact (9\" × 5.5\" × 2.5\")"],
+    "colors": [
+      { "name": "Royal Velvet Noir", "hex": "#0A0A0A" },
+      { "name": "Champagne Rose Gold", "hex": "#B76E79" }
+    ],
+    "stock": 14,
+    "isTrending": true,
+    "isNewArrival": true,
+    "description": "Sumptuous chevron-quilted Italian velvet paired with supple lambskin leather trim. Features an elegant sliding champagne gold chain that transitions from shoulder bag to evening clutch.",
+    "fabric": "Heavy Silk Velvet, Lambskin Leather Trim, Silk Satin Lining",
+    "fit": "9\" Width × 5.5\" Height × 2.5\" Depth",
+    "pattern": "Chevron Diagonal Quilted Velvet",
+    "occasion": "Red Carpet, Operas, Cocktail Soirées & Receptions",
+    "care": "Keep in satin pouch. Brush gently with soft velvet brush.",
+    "specifications": {
+      "Strap": "Sliding Champagne Gold Curb Chain",
+      "Country of Origin": "Florence, Italy"
+    },
+    "createdAt": "2026-02-01T10:00:00Z"
+  },
+  {
+    "id": "prod-w4",
+    "name": "Velmira Submariner Diver 300M Ceramic Bezel Ocean Deep Blue",
+    "brand": "VELMIRA SIGNATURE",
+    "category": "Men's Watches",
+    "subcategory": "Diver Watches",
+    "originalPrice": 31999,
+    "discountedPrice": 15499,
+    "originalPriceAED": 1420,
+    "priceAED": 690,
+    "discountPercentage": 51,
+    "rating": 4.9,
+    "ratingCount": 710,
+    "reviewCount": 220,
+    "images": [
+      "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=80"
+    ],
+    "sizes": ["41mm Case"],
+    "colors": [
+      { "name": "Deep Ocean Blue & Silver Steel", "hex": "#0B3C5D" }
+    ],
+    "stock": 7,
+    "isTrending": true,
+    "isTopDeal": true,
+    "description": "Built for oceanic depths and executive elegance. Engineered with unidirectional 120-click scratchproof ceramic bezel, helium escape valve, SuperLumiNova BGW9 blue luminescence.",
+    "fabric": "316L Solid Surgical Steel, High-Tech Zirconia Ceramic Bezel",
+    "fit": "41mm Case Diameter • 13mm Depth",
+    "pattern": "Sunray Lacquered Dial with Maxi Luminescent Markers",
+    "occasion": "Scuba Diving, Yachting, Boardroom & Resort Living",
+    "care": "Rinse with fresh water after saltwater diving.",
+    "specifications": {
+      "Water Resistance": "30 ATM / 300 Meters / 1000 Feet",
+      "Country of Origin": "Switzerland"
+    },
+    "createdAt": "2026-01-18T10:00:00Z"
+  },
+  {
+    "id": "prod-b4",
+    "name": "Velmira Grand Voyage Full-Grain Leather Weekender Duffle Bag",
+    "brand": "MONTE CARLO ATELIER",
+    "category": "Leather Bags",
+    "subcategory": "Travel & Duffles",
+    "originalPrice": 29999,
+    "discountedPrice": 14499,
+    "originalPriceAED": 1330,
+    "priceAED": 640,
+    "discountPercentage": 51,
+    "rating": 4.9,
+    "ratingCount": 580,
+    "reviewCount": 190,
+    "images": [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80"
+    ],
+    "sizes": ["50cm Carry-On"],
+    "colors": [
+      { "name": "Antique Burnished Cognac", "hex": "#8F5438" }
     ],
     "stock": 5,
     "isTrending": true,
     "isBestSeller": true,
-    "isTopDeal": true,
-    "description": "A masterpiece bridal creation. 16-kali flared raw silk lehenga laden with heritage dabka, sequin, and gota work. Features dual dupattas: a regal velvet shoulder shawl and an airy sheer silk net head veil.",
-    "fabric": "Heavy Raw Silk, Micro Velvet & Silk Net",
-    "fit": "Bridal Flared Silhouette",
-    "pattern": "Royal Architectural Mughal Jaal & Dabka Work",
-    "occasion": "Bridal, Grand Sangeet & Reception",
-    "care": "Dry Clean Only. Air dry in shade before storing.",
+    "description": "The definitive private aviation and weekend getaway companion. Handcrafted in Florence from thick vegetable-tanned Tuscan saddle leather that develops a magnificent rich patina.",
+    "fabric": "Vegetable-Tanned Tuscan Saddle Leather, Heavy Cotton Canvas Lining",
+    "fit": "20\" Length × 11\" Height × 10\" Width",
+    "pattern": "Hand-Burnished Antique Leather Patina",
+    "occasion": "Private Jet Travel, Weekend Escapes, Luxury Resort Getaways",
+    "care": "Treat twice yearly with natural beeswax leather balsam.",
     "specifications": {
-      "Gher Flare": "6.2 meters Full Volume Flare",
-      "Included": "Lehenga Skirt, Embellished Blouse & Dual Dupattas",
-      "Country of Origin": "India"
+      "Capacity": "42 Liters Storage Volume",
+      "Country of Origin": "Tuscany, Italy"
     },
-    "createdAt": "2026-01-05T10:00:00Z"
+    "createdAt": "2026-01-22T10:00:00Z"
   }
 ]

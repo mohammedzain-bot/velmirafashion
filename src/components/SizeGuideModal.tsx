@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Ruler } from 'lucide-react';
+import { X, Ruler, Watch, Briefcase } from 'lucide-react';
 
 interface SizeGuideModalProps {
   isOpen: boolean;
@@ -8,35 +8,25 @@ interface SizeGuideModalProps {
 }
 
 export const SizeGuideModal: React.FC<SizeGuideModalProps> = ({ isOpen, onClose, category }) => {
-  const [unit, setUnit] = useState<'inches' | 'cm'>('inches');
+  const [guideTab, setGuideTab] = useState<'watches' | 'bags'>(
+    category?.toLowerCase().includes('bag') ? 'bags' : 'watches'
+  );
 
   if (!isOpen) return null;
 
-  const isFootwear = category === 'Footwear';
-
-  const clothingSizes = unit === 'inches' ? [
-    { size: 'XS', bustChest: '34-36', waist: '28-30', hip: '36-38', length: '28' },
-    { size: 'S', bustChest: '36-38', waist: '30-32', hip: '38-40', length: '29' },
-    { size: 'M', bustChest: '38-40', waist: '32-34', hip: '40-42', length: '30' },
-    { size: 'L', bustChest: '40-42', waist: '34-36', hip: '42-44', length: '31' },
-    { size: 'XL', bustChest: '42-44', waist: '36-38', hip: '44-46', length: '32' },
-    { size: 'XXL', bustChest: '44-46', waist: '38-40', hip: '46-48', length: '33' },
-  ] : [
-    { size: 'XS', bustChest: '86-91', waist: '71-76', hip: '91-96', length: '71' },
-    { size: 'S', bustChest: '91-96', waist: '76-81', hip: '96-101', length: '74' },
-    { size: 'M', bustChest: '96-101', waist: '81-86', hip: '101-106', length: '76' },
-    { size: 'L', bustChest: '101-106', waist: '86-91', hip: '106-111', length: '79' },
-    { size: 'XL', bustChest: '106-111', waist: '91-96', hip: '111-116', length: '81' },
-    { size: 'XXL', bustChest: '111-117', waist: '96-101', hip: '116-122', length: '84' },
+  const watchSizes = [
+    { size: '32mm - 34mm', wrist: '13cm - 16cm (5.0" - 6.3")', style: 'Petite / Classic Dress (Women / Slim Wrist)' },
+    { size: '38mm - 40mm', wrist: '15cm - 18cm (6.0" - 7.1")', style: 'Midsize Elegance (Unisex / Business Formal)' },
+    { size: '41mm - 42mm', wrist: '17cm - 20cm (6.7" - 7.9")', style: 'Contemporary Standard (Chronograph & Tourbillon)' },
+    { size: '44mm+', wrist: '19cm+ (7.5"+)', style: 'Commanding / Oceanic Diver (Sport & Aviation)' }
   ];
 
-  const footwearSizes = [
-    { uk: 'UK 6', eu: 'EU 40', us: 'US 7', footLength: unit === 'inches' ? '9.8"' : '25.0 cm' },
-    { uk: 'UK 7', eu: 'EU 41', us: 'US 8', footLength: unit === 'inches' ? '10.2"' : '26.0 cm' },
-    { uk: 'UK 8', eu: 'EU 42', us: 'US 9', footLength: unit === 'inches' ? '10.6"' : '27.0 cm' },
-    { uk: 'UK 9', eu: 'EU 43', us: 'US 10', footLength: unit === 'inches' ? '11.0"' : '28.0 cm' },
-    { uk: 'UK 10', eu: 'EU 44', us: 'US 11', footLength: unit === 'inches' ? '11.4"' : '29.0 cm' },
-    { uk: 'UK 11', eu: 'EU 45', us: 'US 12', footLength: unit === 'inches' ? '11.8"' : '30.0 cm' },
+  const bagSizes = [
+    { type: 'Continental Wallet / Clutch', dims: '7.8" × 4.1" × 1.0"', capacity: 'Cards, Passport, iPhone Pro Max' },
+    { type: 'Flap Crossbody Bag', dims: '10.0" × 7.0" × 3.5"', capacity: 'Cosmetics, Sunglasses, Keys, iPad Mini' },
+    { type: 'Kelly Top Handle Bag', dims: '11.0" × 8.5" × 4.5"', capacity: 'Daily Essentials, Small Diary, iPad Air' },
+    { type: 'Executive Saffiano Tote', dims: '14.0" × 11.0" × 5.0"', capacity: '14" MacBook Pro, Documents, Water Bottle' },
+    { type: 'Grand Voyage Duffle', dims: '20.0" × 11.0" × 10.0"', capacity: 'Weekend Clothing (42L), Shoes, Toiletries' }
   ];
 
   return (
@@ -48,9 +38,9 @@ export const SizeGuideModal: React.FC<SizeGuideModalProps> = ({ isOpen, onClose,
             <Ruler className="w-5 h-5 text-[#D4AF37]" />
             <div>
               <h3 className="font-cinzel text-lg font-bold tracking-wide">
-                {isFootwear ? 'Footwear Measurement Guide' : 'Couture Size & Measurement Guide'}
+                Horology & Leather Dimensions Guide
               </h3>
-              <p className="text-[11px] text-stone-400">Standard tailored fit specifications</p>
+              <p className="text-[11px] text-stone-400">Precision case sizing & bag capacity standards</p>
             </div>
           </div>
           <button
@@ -61,47 +51,50 @@ export const SizeGuideModal: React.FC<SizeGuideModalProps> = ({ isOpen, onClose,
           </button>
         </div>
 
+        {/* Tab switch */}
+        <div className="flex border-b border-stone-200 bg-[#FAFAF8]">
+          <button
+            onClick={() => setGuideTab('watches')}
+            className={`flex-1 py-3 text-xs font-semibold uppercase tracking-wider flex items-center justify-center space-x-1.5 transition ${
+              guideTab === 'watches'
+                ? 'text-[#0F0F0F] border-b-2 border-[#D4AF37] bg-white font-bold'
+                : 'text-stone-400 hover:text-stone-700'
+            }`}
+          >
+            <Watch className="w-4 h-4" />
+            <span>Timepiece Dial Sizing</span>
+          </button>
+          <button
+            onClick={() => setGuideTab('bags')}
+            className={`flex-1 py-3 text-xs font-semibold uppercase tracking-wider flex items-center justify-center space-x-1.5 transition ${
+              guideTab === 'bags'
+                ? 'text-[#0F0F0F] border-b-2 border-[#D4AF37] bg-white font-bold'
+                : 'text-stone-400 hover:text-stone-700'
+            }`}
+          >
+            <Briefcase className="w-4 h-4" />
+            <span>Bag Dimensions & Capacity</span>
+          </button>
+        </div>
+
         {/* Content */}
         <div className="p-6">
-          <div className="flex justify-end mb-4">
-            <div className="inline-flex rounded-lg border border-stone-300 p-0.5 bg-stone-100 text-xs font-semibold">
-              <button
-                onClick={() => setUnit('inches')}
-                className={`px-3 py-1 rounded-md transition ${
-                  unit === 'inches' ? 'bg-[#0F0F0F] text-white shadow-xs' : 'text-stone-600 hover:text-black'
-                }`}
-              >
-                Inches
-              </button>
-              <button
-                onClick={() => setUnit('cm')}
-                className={`px-3 py-1 rounded-md transition ${
-                  unit === 'cm' ? 'bg-[#0F0F0F] text-white shadow-xs' : 'text-stone-600 hover:text-black'
-                }`}
-              >
-                Centimeters
-              </button>
-            </div>
-          </div>
-
           <div className="overflow-x-auto border border-stone-200 rounded-xl">
-            {isFootwear ? (
+            {guideTab === 'watches' ? (
               <table className="w-full text-left text-xs">
                 <thead className="bg-[#FAFAF8] text-stone-900 border-b border-stone-200 font-semibold uppercase tracking-wider text-[11px]">
                   <tr>
-                    <th className="p-3">UK / India</th>
-                    <th className="p-3">EU</th>
-                    <th className="p-3">US</th>
-                    <th className="p-3">Foot Length</th>
+                    <th className="p-3">Dial Diameter</th>
+                    <th className="p-3">Recommended Wrist Size</th>
+                    <th className="p-3">Aesthetic Profile</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-100 font-mono">
-                  {footwearSizes.map((row, idx) => (
+                  {watchSizes.map((row, idx) => (
                     <tr key={idx} className="hover:bg-amber-50/40">
-                      <td className="p-3 font-semibold text-stone-900">{row.uk}</td>
-                      <td className="p-3 text-stone-600">{row.eu}</td>
-                      <td className="p-3 text-stone-600">{row.us}</td>
-                      <td className="p-3 text-stone-900 font-medium">{row.footLength}</td>
+                      <td className="p-3 font-semibold text-stone-900">{row.size}</td>
+                      <td className="p-3 text-stone-700">{row.wrist}</td>
+                      <td className="p-3 font-sans text-stone-600">{row.style}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -110,21 +103,17 @@ export const SizeGuideModal: React.FC<SizeGuideModalProps> = ({ isOpen, onClose,
               <table className="w-full text-left text-xs">
                 <thead className="bg-[#FAFAF8] text-stone-900 border-b border-stone-200 font-semibold uppercase tracking-wider text-[11px]">
                   <tr>
-                    <th className="p-3">Standard Size</th>
-                    <th className="p-3">Bust / Chest</th>
-                    <th className="p-3">Waist</th>
-                    <th className="p-3">Hip</th>
-                    <th className="p-3">Length</th>
+                    <th className="p-3">Bag Silhouette</th>
+                    <th className="p-3">Dimensions (L × H × W)</th>
+                    <th className="p-3">Holds / Fits</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-100 font-mono">
-                  {clothingSizes.map((row, idx) => (
+                  {bagSizes.map((row, idx) => (
                     <tr key={idx} className="hover:bg-amber-50/40">
-                      <td className="p-3 font-semibold text-stone-900">{row.size}</td>
-                      <td className="p-3 text-stone-700">{row.bustChest}</td>
-                      <td className="p-3 text-stone-700">{row.waist}</td>
-                      <td className="p-3 text-stone-700">{row.hip}</td>
-                      <td className="p-3 text-stone-700">{row.length}</td>
+                      <td className="p-3 font-sans font-semibold text-stone-900">{row.type}</td>
+                      <td className="p-3 text-stone-700">{row.dims}</td>
+                      <td className="p-3 font-sans text-stone-600">{row.capacity}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -132,9 +121,19 @@ export const SizeGuideModal: React.FC<SizeGuideModalProps> = ({ isOpen, onClose,
             )}
           </div>
 
-          <p className="text-[11px] text-stone-500 mt-4 leading-relaxed">
-            * Note: If you fall between two sizes, we recommend selecting the larger size for a relaxed luxury drape or opting for our complimentary custom tailoring service upon ordering.
-          </p>
+          <div className="mt-4 p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 flex items-center justify-between">
+            <span>
+              Need tailored bracelet sizing or custom leather embossing?
+            </span>
+            <a
+              href="https://wa.me/971556787854?text=Hello%20Velmira%20Concierge,%20I%20have%20a%20sizing%20question"
+              target="_blank"
+              rel="noreferrer"
+              className="text-black font-bold underline ml-2"
+            >
+              Ask on WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </div>

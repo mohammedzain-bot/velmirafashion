@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, Tag, Check, Sparkles } from 'lucide-react';
+import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, Tag, Check, Sparkles, MessageCircle } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useCurrency } from '../context/CurrencyContext';
+import { useAuth } from '../context/AuthContext';
+import { openWhatsAppOrder, OFFICIAL_WHATSAPP_NUMBER } from '../utils/whatsapp';
 
 export const CartDrawer: React.FC = () => {
   const {
@@ -21,6 +24,8 @@ export const CartDrawer: React.FC = () => {
     removeCoupon
   } = useCart();
 
+  const { formatPrice, currency, country } = useCurrency();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [couponInput, setCouponInput] = useState('');
   const [couponStatus, setCouponStatus] = useState<{ message: string; isError: boolean } | null>(null);
@@ -35,7 +40,44 @@ export const CartDrawer: React.FC = () => {
     if (res.success) setCouponInput('');
   };
 
-  const handleCheckout = () => {
+  const handleWhatsAppCheckout = () => {
+    const defaultAddress = user?.addresses[0] || {
+      id: 'temp',
+      fullName: user?.name || 'Valued Patron',
+      phone: user?.phone || '',
+      country: country,
+      addressLine1: country === 'UAE' ? 'Dubai / Abu Dhabi, UAE' : 'Mumbai / Delhi, India',
+      city: country === 'UAE' ? 'Dubai' : 'Mumbai',
+      state: country === 'UAE' ? 'Dubai' : 'Maharashtra',
+      pincode: country === 'UAE' ? '00000' : '400001',
+      addressType: 'Home',
+      isDefault: true
+    };
+
+    openWhatsAppOrder({
+      customerName: user?.name || 'Valued Patron',
+      customerPhone: user?.phone || 'Provided upon inquiry',
+      customerEmail: user?.email,
+      shippingAddress: defaultAddress,
+      items: cart.map(it => ({
+        name: it.name,
+        brand: it.brand,
+        size: it.size,
+        color: it.color,
+        quantity: it.quantity,
+        price: it.price,
+        priceAED: it.priceAED
+      })),
+      subtotal,
+      deliveryFee,
+      couponDiscount,
+      totalAmount: finalTotal,
+      currency,
+      paymentMethod: 'WhatsApp Direct Confirmation'
+    });
+  };
+
+  const handleStandardCheckout = () => {
     setIsCartDrawerOpen(false);
     navigate('/checkout');
   };
@@ -60,7 +102,7 @@ export const CartDrawer: React.FC = () => {
           <div className="p-4 sm:p-5 bg-[#0F0F0F] text-white flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <ShoppingBag className="w-5 h-5 text-[#D4AF37]" />
-              <h2 className="font-cinzel text-lg font-bold tracking-wider">Your Shopping Bag</h2>
+              <h2 className="font-cinzel text-lg font-bold tracking-wider">Your Bag</h2>
               <span className="text-xs bg-stone-800 text-[#D4AF37] px-2 py-0.5 rounded-full font-mono">
                 {cart.length}
               </span>
@@ -73,11 +115,22 @@ export const CartDrawer: React.FC = () => {
             </button>
           </div>
 
+          {/* Region Indicator & WhatsApp Notice */}
+          <div className="bg-emerald-900 text-white p-2.5 px-4 text-xs flex items-center justify-between">
+            <div className="flex items-center space-x-1.5 truncate">
+              <MessageCircle className="w-3.5 h-3.5 text-emerald-300 shrink-0" />
+              <span className="truncate">Instant WhatsApp Dispatch: <strong>{OFFICIAL_WHATSAPP_NUMBER}</strong></span>
+            </div>
+            <span className="font-mono text-[10px] bg-emerald-800 px-1.5 py-0.2 rounded shrink-0">
+              {country === 'UAE' ? '🇦🇪 UAE' : '🇮🇳 INDIA'}
+            </span>
+          </div>
+
           {/* Free Shipping Progress Indicator */}
           <div className="bg-[#FAF9F5] p-3 px-5 border-b border-stone-200 text-xs">
             {freeDeliveryRemaining > 0 ? (
               <p className="text-stone-700 font-medium">
-                Add <span className="font-bold text-[#0F0F0F]">₹{freeDeliveryRemaining.toLocaleString('en-IN')}</span> more to unlock <span className="text-emerald-700 font-bold">FREE Express Delivery</span>
+                Add <span className="font-bold text-[#0F0F0F]">{formatPrice(freeDeliveryRemaining)}</span> more to unlock <span className="text-emerald-700 font-bold">FREE Express Delivery</span>
               </p>
             ) : (
               <p className="text-emerald-700 font-bold flex items-center">
@@ -92,16 +145,16 @@ export const CartDrawer: React.FC = () => {
             </div>
           </div>
 
-          {/* Cart Items List */}
+          {/* Items */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
             {cart.length === 0 ? (
               <div className="text-center py-16">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-stone-100 flex items-center justify-center text-stone-400">
                   <ShoppingBag className="w-8 h-8" />
                 </div>
-                <h3 className="font-serif-luxury text-lg font-semibold text-stone-800">Your bag is empty</h3>
+                <h3 className="font-cinzel text-lg font-semibold text-stone-800">Your bag is empty</h3>
                 <p className="text-xs text-stone-500 mt-1 max-w-xs mx-auto">
-                  Explore our royal heritage & modern couture collections to curate your luxury wardrobe.
+                  Explore our luxury watches and Italian leather bags to begin your curation.
                 </p>
                 <button
                   onClick={() => {
@@ -110,7 +163,7 @@ export const CartDrawer: React.FC = () => {
                   }}
                   className="mt-6 px-6 py-2.5 rounded-full bg-[#0F0F0F] text-[#D4AF37] text-xs font-semibold uppercase tracking-wider hover:bg-stone-800 transition"
                 >
-                  Start Shopping
+                  Explore Watches & Bags
                 </button>
               </div>
             ) : (
@@ -126,13 +179,13 @@ export const CartDrawer: React.FC = () => {
                   />
                   <div className="flex-1 min-w-0 flex flex-col justify-between">
                     <div>
-                      <p className="text-[10px] font-bold text-[#D4AF37] tracking-wider uppercase truncate">
+                      <p className="text-[10px] font-bold text-[#D4AF37] tracking-wider uppercase truncate font-cinzel">
                         {item.brand}
                       </p>
                       <h4 className="text-xs font-medium text-stone-900 line-clamp-1 mt-0.5">{item.name}</h4>
                       <div className="flex items-center space-x-2 mt-1 text-[11px] text-stone-500">
                         <span className="bg-stone-200/70 px-1.5 py-0.5 rounded text-stone-700 font-medium">
-                          Size: {item.size}
+                          {item.size}
                         </span>
                         <span className="truncate">{item.color}</span>
                       </div>
@@ -156,11 +209,9 @@ export const CartDrawer: React.FC = () => {
                       </div>
 
                       <div className="flex items-center space-x-2">
-                        <div className="text-right">
-                          <span className="text-xs font-bold text-stone-900">
-                            ₹{(item.price * item.quantity).toLocaleString('en-IN')}
-                          </span>
-                        </div>
+                        <span className="text-xs font-bold text-stone-900 font-mono">
+                          {formatPrice(item.price * item.quantity, (item.priceAED || 0) * item.quantity)}
+                        </span>
                         <button
                           onClick={() => removeFromCart(item.id)}
                           className="text-stone-400 hover:text-red-600 p-1"
@@ -175,16 +226,16 @@ export const CartDrawer: React.FC = () => {
             )}
           </div>
 
-          {/* Footer & Checkout Action */}
+          {/* Footer & Actions */}
           {cart.length > 0 && (
             <div className="border-t border-stone-200 p-4 sm:p-5 bg-white space-y-3.5">
-              {/* Coupon Bar */}
+              {/* Coupon */}
               {appliedCoupon ? (
                 <div className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs">
                   <div className="flex items-center space-x-1.5 text-emerald-800">
                     <Check className="w-4 h-4 text-emerald-600" />
                     <span>
-                      Code <strong className="font-mono">{appliedCoupon.code}</strong> applied (-₹{couponDiscount.toLocaleString('en-IN')})
+                      Voucher <strong className="font-mono">{appliedCoupon.code}</strong> applied (-{formatPrice(couponDiscount)})
                     </span>
                   </div>
                   <button onClick={removeCoupon} className="text-stone-400 hover:text-stone-700 text-xs font-medium">
@@ -197,7 +248,7 @@ export const CartDrawer: React.FC = () => {
                     <Tag className="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5" />
                     <input
                       type="text"
-                      placeholder="Coupon Code (e.g. VELMIRA500)"
+                      placeholder="Promo Code (e.g. VELMIRA500)"
                       value={couponInput}
                       onChange={e => setCouponInput(e.target.value.toUpperCase())}
                       className="w-full pl-8 pr-2 py-1.5 text-xs rounded-lg border border-stone-300 focus:outline-none focus:border-[#D4AF37]"
@@ -212,53 +263,58 @@ export const CartDrawer: React.FC = () => {
                 </form>
               )}
 
-              {couponStatus && (
-                <p className={`text-[11px] ${couponStatus.isError ? 'text-red-600' : 'text-emerald-700'}`}>
-                  {couponStatus.message}
-                </p>
-              )}
-
-              {/* Summary Breakdown */}
+              {/* Summary */}
               <div className="space-y-1.5 text-xs text-stone-600 pt-2 border-t border-stone-100">
                 <div className="flex justify-between">
                   <span>Bag Subtotal</span>
-                  <span className="text-stone-900 font-medium">₹{subtotal.toLocaleString('en-IN')}</span>
+                  <span className="text-stone-900 font-medium font-mono">{formatPrice(subtotal)}</span>
                 </div>
                 {couponDiscount > 0 && (
                   <div className="flex justify-between text-emerald-700">
                     <span>Coupon Discount</span>
-                    <span>-₹{couponDiscount.toLocaleString('en-IN')}</span>
+                    <span className="font-mono">-{formatPrice(couponDiscount)}</span>
                   </div>
                 )}
                 <div className="flex justify-between">
-                  <span>Express Shipping</span>
+                  <span>Express White-Glove Handover</span>
                   {deliveryFee === 0 ? (
                     <span className="text-emerald-700 font-bold uppercase text-[10px]">FREE</span>
                   ) : (
-                    <span>₹{deliveryFee}</span>
+                    <span className="font-mono">{formatPrice(deliveryFee)}</span>
                   )}
                 </div>
                 <div className="flex justify-between text-sm font-bold text-stone-900 pt-2 border-t border-stone-200">
                   <span>Total Amount</span>
-                  <span className="text-base text-stone-900">₹{finalTotal.toLocaleString('en-IN')}</span>
+                  <span className="text-base text-stone-900 font-mono">{formatPrice(finalTotal)}</span>
                 </div>
               </div>
 
-              {/* Actions */}
-              <div className="grid grid-cols-2 gap-2 pt-1">
+              {/* Dual Primary Actions: WhatsApp Order & Online Checkout */}
+              <div className="space-y-2 pt-1">
+                {/* 1. ORDER ON WHATSAPP (+971 55 678 7854) */}
                 <button
-                  onClick={handleViewCart}
-                  className="w-full py-2.5 rounded-xl border border-stone-300 text-stone-800 font-semibold text-xs uppercase tracking-wider hover:bg-stone-50 transition"
+                  onClick={handleWhatsAppCheckout}
+                  className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition flex items-center justify-center space-x-2 shadow-md"
                 >
-                  View Full Bag
+                  <MessageCircle className="w-4 h-4 fill-white" />
+                  <span>Order on WhatsApp (+971 55 678 7854)</span>
                 </button>
-                <button
-                  onClick={handleCheckout}
-                  className="w-full py-2.5 rounded-xl bg-[#0F0F0F] text-[#D4AF37] font-semibold text-xs uppercase tracking-wider hover:bg-stone-800 transition flex items-center justify-center space-x-1 shadow-sm"
-                >
-                  <span>Checkout</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={handleViewCart}
+                    className="w-full py-2.5 rounded-xl border border-stone-300 text-stone-800 font-semibold text-xs uppercase tracking-wider hover:bg-stone-50 transition"
+                  >
+                    View Bag
+                  </button>
+                  <button
+                    onClick={handleStandardCheckout}
+                    className="w-full py-2.5 rounded-xl bg-[#0F0F0F] text-[#D4AF37] font-semibold text-xs uppercase tracking-wider hover:bg-stone-800 transition flex items-center justify-center space-x-1 shadow-sm"
+                  >
+                    <span>Checkout</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
           )}

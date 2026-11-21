@@ -53,6 +53,15 @@ export const OrderConfirmationPage: React.FC = () => {
 
           {/* Action Buttons */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href={`https://wa.me/971556787854?text=${encodeURIComponent(`Hello Velmira Dispatch, I am inquiring about my Order ID: ${order?.id || id}`)}`}
+              target="_blank"
+              rel="noreferrer"
+              className="px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-widest transition flex items-center space-x-2 shadow-md"
+            >
+              <span>Message on WhatsApp (+971 55 678 7854)</span>
+            </a>
+
             <button
               onClick={() => setIsTrackOpen(true)}
               className="px-6 py-3 rounded-full bg-[#0F0F0F] text-[#D4AF37] font-bold text-xs uppercase tracking-widest hover:bg-stone-800 transition flex items-center space-x-2 shadow-sm"

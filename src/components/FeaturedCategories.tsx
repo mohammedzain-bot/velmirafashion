@@ -13,38 +13,38 @@ interface FeaturedCategory {
 export const FeaturedCategories: React.FC = () => {
   const categories: FeaturedCategory[] = [
     {
-      title: "Women's Couture",
-      subtitle: 'Silk Sarees, Evening Gowns & Anarkalis',
-      image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=900&q=80',
-      link: '/products?category=Women',
+      title: "Automatic Chronographs",
+      subtitle: 'Swiss 24-Jewel Self-Winding & Sunburst Dials',
+      image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
+      link: "/products?category=Men's%20Watches",
       colSpan: 'lg:col-span-2'
     },
     {
-      title: "Men's Sartorial",
-      subtitle: 'Italian Blazers, Tuxedos & Chinos',
-      image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=900&q=80',
-      link: '/products?category=Men',
+      title: "Executive Saffiano Totes",
+      subtitle: 'Milanese Full-Grain Leather & Gold Hardware',
+      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80',
+      link: '/products?category=Tote%20Bags',
       colSpan: 'lg:col-span-1'
     },
     {
-      title: 'Ethnic Collection',
-      subtitle: 'Royal Banarasi Silks & Dabka Lehengas',
-      image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=80',
-      link: '/products?category=Ethnic%20Wear',
+      title: 'Grand Complications',
+      subtitle: 'Open-Heart Flying Tourbillons & Sapphire Cases',
+      image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80',
+      link: '/products?category=Watches',
       colSpan: 'lg:col-span-1'
     },
     {
-      title: 'Formal & Bespoke',
-      subtitle: 'Structured Two-Piece & Imperial Sherwanis',
-      image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=900&q=80',
-      link: '/products?category=Men',
+      title: 'Kelly & Flap Handbags',
+      subtitle: 'French Box Calfskin with Key Padlocks',
+      image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=900&q=80',
+      link: '/products?category=Leather%20Bags',
       colSpan: 'lg:col-span-1'
     },
     {
-      title: 'Luxury Footwear',
-      subtitle: 'Goodyear Welted Oxfords & Stiletto Pumps',
-      image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=900&q=80',
-      link: '/products?category=Footwear',
+      title: 'Weekend Travel Duffles',
+      subtitle: 'Tuscan Vegetable-Tanned Saddle Leather',
+      image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=80',
+      link: '/products?category=Bags',
       colSpan: 'lg:col-span-1'
     }
   ];
@@ -54,13 +54,13 @@ export const FeaturedCategories: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D4AF37]">
-            CURATED SELECTION
+            ATELIER CURATION
           </span>
           <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-stone-900 tracking-wide mt-1">
-            Featured Fashion Collections
+            Luxury Timepieces & Designer Leather Bags
           </h2>
           <p className="text-xs sm:text-sm text-stone-500 mt-2">
-            Immerse yourself in precision Italian tailoring, handloom Banarasi silk, and handcrafted leather masterworks.
+            Swiss precision automatic horology paired with Italian hand-stitched calfskin leather. Order to India & UAE.
           </p>
         </div>
 
@@ -76,7 +76,7 @@ export const FeaturedCategories: React.FC = () => {
               <img
                 src={cat.image}
                 alt={cat.title}
-                className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-108"
+                className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 

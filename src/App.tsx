@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { CartProvider } from './context/CartContext';
 import { ShopProvider } from './context/ShopContext';
+import { CurrencyProvider } from './context/CurrencyContext';
 
 import { Navbar } from './components/Navbar';
 import { CategoryBar } from './components/CategoryBar';
@@ -55,15 +56,17 @@ const AppLayout: React.FC = () => {
 export function App() {
   return (
     <Router>
-      <AuthProvider>
-        <WishlistProvider>
-          <CartProvider>
-            <ShopProvider>
-              <AppLayout />
-            </ShopProvider>
-          </CartProvider>
-        </WishlistProvider>
-      </AuthProvider>
+      <CurrencyProvider>
+        <AuthProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <ShopProvider>
+                <AppLayout />
+              </ShopProvider>
+            </CartProvider>
+          </WishlistProvider>
+        </AuthProvider>
+      </CurrencyProvider>
     </Router>
   );
 }

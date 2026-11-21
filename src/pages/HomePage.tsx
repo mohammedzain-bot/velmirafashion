@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, ArrowRight, Clock, Award, Shield, Gem } from 'lucide-react';
+import { Sparkles, ArrowRight, Clock, MessageCircle } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import { useCurrency } from '../context/CurrencyContext';
 import { HeroSlider } from '../components/HeroSlider';
 import { TrustBadges } from '../components/TrustBadges';
 import { FeaturedCategories } from '../components/FeaturedCategories';
 import { ProductSlider } from '../components/ProductSlider';
 import { ProductCard } from '../components/ProductCard';
+import { OFFICIAL_WHATSAPP_NUMBER, WHATSAPP_RAW_NUMBER } from '../utils/whatsapp';
 
 export const HomePage: React.FC = () => {
   const { products } = useShop();
+  const { country } = useCurrency();
 
-  // Curations
   const trendingProducts = products.filter(p => p.isTrending);
   const bestSellers = products.filter(p => p.isBestSeller);
   const newArrivals = products.filter(p => p.isNewArrival);
-  const topDeals = products.filter(p => p.isTopDeal || p.discountPercentage >= 50);
 
-  // Flipkart style flash deal countdown timer
   const [timeLeft, setTimeLeft] = useState({ hours: 7, minutes: 24, seconds: 48 });
 
   useEffect(() => {
@@ -37,13 +37,33 @@ export const HomePage: React.FC = () => {
       {/* 1. Hero Lifestyle Slider */}
       <HeroSlider />
 
-      {/* 2. Trust Assurance Strip */}
+      {/* 2. Direct WhatsApp Dispatch Strip */}
+      <section className="bg-emerald-800 text-white py-3.5 px-4 text-xs">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <div className="flex items-center space-x-2">
+            <MessageCircle className="w-5 h-5 text-emerald-300 shrink-0" />
+            <span>
+              <strong>Dual India & UAE White-Glove Service:</strong> Ordering on WhatsApp directly routes your selection to <strong className="underline">{OFFICIAL_WHATSAPP_NUMBER}</strong> for instant VIP handling.
+            </span>
+          </div>
+          <a
+            href={`https://wa.me/${WHATSAPP_RAW_NUMBER}?text=${encodeURIComponent('Hello Velmira Concierge, I would like to inquire about your luxury watches and bags.')}`}
+            target="_blank"
+            rel="noreferrer"
+            className="px-4 py-1.5 rounded-full bg-white text-emerald-900 font-bold uppercase tracking-wider text-[11px] hover:bg-emerald-50 shadow-sm shrink-0"
+          >
+            Chat with Concierge
+          </a>
+        </div>
+      </section>
+
+      {/* 3. Trust Assurance Strip */}
       <TrustBadges />
 
-      {/* 3. Featured Categories Grid */}
+      {/* 4. Featured Categories Grid */}
       <FeaturedCategories />
 
-      {/* 4. Flipkart-Style Flash Deals Banner */}
+      {/* 5. Flash Deals Banner */}
       <section className="py-6 bg-white border-y border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-r from-[#0F0F0F] via-stone-900 to-[#1C1917] rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden shadow-lg border border-[#D4AF37]/30">
@@ -51,13 +71,13 @@ export const HomePage: React.FC = () => {
               <div className="text-center md:text-left">
                 <div className="inline-flex items-center space-x-2 text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-1">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>Exclusive Flash Deal Event</span>
+                  <span>Exclusive Private Vault Event</span>
                 </div>
                 <h3 className="font-cinzel text-2xl sm:text-3xl font-bold tracking-wide">
-                  The Royal Heritage Trunk Sale — Up to 60% OFF
+                  The Horology & Saffiano Leather Showcase — Up to 55% OFF
                 </h3>
                 <p className="text-xs text-stone-300 mt-1 max-w-lg">
-                  Hand-embroidered pure Katan silks, Italian super-120s tailoring, and Goodyear-welted Oxfords.
+                  Precision Swiss automatic chronographs, 300M divers, and Italian full-grain calfskin leather totes. Direct delivery across {country === 'UAE' ? 'the UAE' : 'India'}.
                 </p>
               </div>
 
@@ -69,7 +89,7 @@ export const HomePage: React.FC = () => {
                     <span className="text-base sm:text-lg font-bold text-white">
                       {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
                     </span>
-                    <span className="block text-[9px] uppercase tracking-wider text-stone-400">Ends Today</span>
+                    <span className="block text-[9px] uppercase tracking-wider text-stone-400">Vault Closes</span>
                   </div>
                 </div>
 
@@ -77,7 +97,7 @@ export const HomePage: React.FC = () => {
                   to="/products?category=Sale"
                   className="px-6 py-3 rounded-full bg-[#D4AF37] text-black font-bold text-xs uppercase tracking-widest hover:bg-[#c5a059] transition shadow-md whitespace-nowrap"
                 >
-                  Explore Deals
+                  Explore Vault
                 </Link>
               </div>
             </div>
@@ -85,43 +105,43 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. Trending Now Slider */}
+      {/* 6. Trending Watches & Bags */}
       <ProductSlider
-        title="Trending In Haute Couture"
-        subtitle="The most sought-after silhouettes of the season"
+        title="Trending In Haute Horology & Leather"
+        subtitle="The most sought-after chronographs and structured totes"
         products={trendingProducts}
         viewAllLink="/products?category=All"
       />
 
-      {/* 6. Best Sellers Carousel */}
+      {/* 7. Best Sellers */}
       <ProductSlider
         title="Velmira Best Sellers"
-        subtitle="Unmatched craftsmanship cherished by over 10,000+ patrons"
+        subtitle="Cherished by connoisseurs across Mumbai, Delhi, Dubai & Abu Dhabi"
         products={bestSellers}
         viewAllLink="/products?category=All"
       />
 
-      {/* 7. New Arrivals Carousel */}
+      {/* 8. New Arrivals */}
       <ProductSlider
-        title="Fresh Runway Arrivals"
-        subtitle="Direct from the Paris & Milan fashion week ateliers"
+        title="Fresh Runway Horology"
+        subtitle="Direct from Swiss watchmakers and Milanese leather ateliers"
         products={newArrivals}
         viewAllLink="/products?category=New%20Arrivals"
       />
 
-      {/* 8. Flipkart-style Comprehensive "Recommended For You" Grid */}
+      {/* 9. Comprehensive Recommendation Grid */}
       <section className="py-12 bg-[#F8F9FA]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-8 pb-3 border-b border-stone-200">
             <div>
               <span className="text-[11px] font-bold uppercase tracking-widest text-[#D4AF37]">
-                PERSONALISED CURATION
+                BESPOKE CURATION
               </span>
               <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-stone-900 tracking-wide mt-1">
-                Recommended For You
+                Luxury Watches & Handbags
               </h2>
               <p className="text-xs text-stone-500 mt-1">
-                Handpicked couture pieces suited for your distinguished tastes
+                Authentic mechanical movements and handcrafted French/Italian leather creations
               </p>
             </div>
             <Link
@@ -141,19 +161,17 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 9. Featured Luxury Brands Ribbon */}
+      {/* 10. Featured Ateliers */}
       <section className="py-10 bg-white border-t border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-stone-400 mb-6">
-            ATELIERS & LUXURY HOUSES
+            HOROLOGY & LEATHER HOUSES
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-14 text-stone-500 font-cinzel text-sm sm:text-base tracking-widest">
-            <span className="hover:text-stone-900 transition">VELMIRA SIGNATURE</span>
-            <span className="hover:text-stone-900 transition">VELMIRA COUTURE</span>
+            <span className="hover:text-stone-900 transition">VELMIRA HOROLOGY</span>
+            <span className="hover:text-stone-900 transition">AURELIA SAFFIANO</span>
             <span className="hover:text-stone-900 transition">VALENTINO MILANO</span>
             <span className="hover:text-stone-900 transition">MONTE CARLO ATELIER</span>
-            <span className="hover:text-stone-900 transition">AURELIA LUXE</span>
-            <span className="hover:text-stone-900 transition">RAW MANGO</span>
           </div>
         </div>
       </section>

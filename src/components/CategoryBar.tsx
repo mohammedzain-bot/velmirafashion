@@ -3,13 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { 
   Sparkles, 
   Flame, 
-  Shirt, 
-  Crown, 
-  Footprints, 
   Watch, 
-  Baby, 
+  Briefcase, 
+  Clock, 
+  Gem, 
+  ShieldCheck, 
   Layers, 
-  Gem 
+  ShoppingBag 
 } from 'lucide-react';
 import { CategoryType } from '../types';
 
@@ -25,15 +25,16 @@ export const CategoryBar: React.FC = () => {
   const location = useLocation();
 
   const categories: CategoryItem[] = [
-    { name: 'Men', label: 'Men', icon: Shirt },
-    { name: 'Women', label: 'Women', icon: Crown },
-    { name: 'Kids', label: 'Kids', icon: Baby },
-    { name: 'Ethnic Wear', label: 'Ethnic Wear', icon: Gem },
-    { name: 'Western Wear', label: 'Western Wear', icon: Layers },
-    { name: 'Footwear', label: 'Footwear', icon: Footprints },
-    { name: 'Accessories', label: 'Accessories', icon: Watch },
+    { name: 'All', label: 'All Collections', icon: Layers },
+    { name: 'Watches', label: 'All Timepieces', icon: Watch },
+    { name: 'Bags', label: 'All Luxury Bags', icon: Briefcase },
+    { name: "Men's Watches", label: "Men's Horology", icon: Clock },
+    { name: "Women's Watches", label: "Women's Watches", icon: Gem },
+    { name: 'Leather Bags', label: 'Leather Bags', icon: ShoppingBag },
+    { name: 'Tote Bags', label: 'Executive Totes', icon: Briefcase },
+    { name: 'Clutches & Wallets', label: 'Clutches & Wallets', icon: ShieldCheck },
     { name: 'New Arrivals', label: 'New Arrivals', icon: Sparkles, badge: 'NEW' },
-    { name: 'Sale', label: 'Sale', icon: Flame, badge: 'HOT', isSpecial: true }
+    { name: 'Sale', label: 'Private Sale', icon: Flame, badge: 'UP TO 55%', isSpecial: true }
   ];
 
   return (
@@ -44,12 +45,12 @@ export const CategoryBar: React.FC = () => {
             const Icon = cat.icon;
             const searchParams = new URLSearchParams(location.search);
             const currentCat = searchParams.get('category');
-            const isActive = currentCat === cat.name;
+            const isActive = currentCat === cat.name || (!currentCat && cat.name === 'All');
 
             return (
               <Link
                 key={cat.name}
-                to={`/products?category=${encodeURIComponent(cat.name)}`}
+                to={cat.name === 'All' ? '/products' : `/products?category=${encodeURIComponent(cat.name)}`}
                 className={`flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-2 shrink-0 py-1 px-2 rounded-lg transition-all group ${
                   isActive
                     ? 'text-[#0F0F0F] font-bold border-b-2 border-[#D4AF37]'

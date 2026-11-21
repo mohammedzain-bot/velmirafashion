@@ -47,17 +47,17 @@ export const AdminDashboardPage: React.FC = () => {
   // Form State for Product Add / Edit
   const [formName, setFormName] = useState('');
   const [formBrand, setFormBrand] = useState('VELMIRA SIGNATURE');
-  const [formCategory, setFormCategory] = useState<CategoryType>('Men');
-  const [formSubcategory, setFormSubcategory] = useState('Blazers & Suits');
+  const [formCategory, setFormCategory] = useState<CategoryType>('Watches');
+  const [formSubcategory, setFormSubcategory] = useState('Automatic Chronographs');
   const [formOriginalPrice, setFormOriginalPrice] = useState(19999);
   const [formDiscountedPrice, setFormDiscountedPrice] = useState(9999);
   const [formStock, setFormStock] = useState(10);
-  const [formSizes, setFormSizes] = useState('S, M, L, XL');
+  const [formSizes, setFormSizes] = useState('40mm, 42mm');
   const [formColors, setFormColors] = useState('Midnight Black, Champagne Gold');
   const [formImageUrl, setFormImageUrl] = useState('');
   const [formDescription, setFormDescription] = useState('');
-  const [formFabric, setFormFabric] = useState('100% Super-120s Italian Virgin Wool');
-  const [formFit, setFormFit] = useState('Modern Tailored Slim Fit');
+  const [formFabric, setFormFabric] = useState('316L Surgical Stainless Steel / Sapphire Crystal');
+  const [formFit, setFormFit] = useState('Adjustable Butterfly Clasp');
 
   // Order Details Modal
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
@@ -72,17 +72,17 @@ export const AdminDashboardPage: React.FC = () => {
     setEditingProductId(null);
     setFormName('');
     setFormBrand('VELMIRA SIGNATURE');
-    setFormCategory('Men');
-    setFormSubcategory('Blazers & Suits');
+    setFormCategory('Watches');
+    setFormSubcategory('Automatic Chronographs');
     setFormOriginalPrice(19999);
     setFormDiscountedPrice(9999);
     setFormStock(10);
-    setFormSizes('S, M, L, XL');
+    setFormSizes('40mm, 42mm');
     setFormColors('Midnight Black, Champagne Gold');
-    setFormImageUrl('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=900&q=80');
-    setFormDescription('Artisanal bespoke luxury piece designed with highest precision craftsmanship.');
-    setFormFabric('100% Super-120s Italian Virgin Wool');
-    setFormFit('Modern Tailored Fit');
+    setFormImageUrl('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80');
+    setFormDescription('Artisanal bespoke luxury timepiece designed with highest precision craftsmanship.');
+    setFormFabric('316L Surgical Stainless Steel');
+    setFormFit('Precision Clasp');
     setIsProductModalOpen(true);
   };
 
@@ -771,13 +771,13 @@ export const AdminDashboardPage: React.FC = () => {
                     onChange={e => setFormCategory(e.target.value as CategoryType)}
                     className="w-full px-3 py-2 rounded-lg border border-stone-300"
                   >
-                    <option value="Men">Men</option>
-                    <option value="Women">Women</option>
-                    <option value="Kids">Kids</option>
-                    <option value="Ethnic Wear">Ethnic Wear</option>
-                    <option value="Western Wear">Western Wear</option>
-                    <option value="Footwear">Footwear</option>
-                    <option value="Accessories">Accessories</option>
+                    <option value="Watches">Watches</option>
+                    <option value="Bags">Bags</option>
+                    <option value="Men's Watches">Men's Watches</option>
+                    <option value="Women's Watches">Women's Watches</option>
+                    <option value="Leather Bags">Leather Bags</option>
+                    <option value="Tote Bags">Tote Bags</option>
+                    <option value="Clutches & Wallets">Clutches & Wallets</option>
                     <option value="New Arrivals">New Arrivals</option>
                     <option value="Sale">Sale</option>
                   </select>

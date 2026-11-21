@@ -9,12 +9,14 @@ import {
   ShieldCheck,
   Tag,
   Check,
-  RotateCcw,
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  MessageCircle
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { useWishlist } from '../context/WishlistContext';
+import { useCurrency } from '../context/CurrencyContext';
+import { useAuth } from '../context/AuthContext';
+import { openWhatsAppOrder, OFFICIAL_WHATSAPP_NUMBER } from '../utils/whatsapp';
 
 export const CartPage: React.FC = () => {
   const {
@@ -22,7 +24,6 @@ export const CartPage: React.FC = () => {
     removeFromCart,
     updateQuantity,
     updateItemSize,
-    clearCart,
     totalItemsCount,
     totalMRP,
     subtotal,
@@ -37,7 +38,8 @@ export const CartPage: React.FC = () => {
     removeCoupon
   } = useCart();
 
-  const { isInWishlist, toggleWishlist } = useWishlist();
+  const { formatPrice, currency, country } = useCurrency();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const [couponCode, setCouponCode] = useState('');
@@ -51,9 +53,41 @@ export const CartPage: React.FC = () => {
     if (res.success) setCouponCode('');
   };
 
-  const handleMoveToWishlist = (item: any) => {
-    // Add item to wishlist and remove from cart
-    removeFromCart(item.id);
+  const handleWhatsAppOrder = () => {
+    const defaultAddress = user?.addresses[0] || {
+      id: 'temp',
+      fullName: user?.name || 'Valued Patron',
+      phone: user?.phone || '',
+      country: country,
+      addressLine1: country === 'UAE' ? 'Dubai / Abu Dhabi, UAE' : 'Mumbai / Delhi, India',
+      city: country === 'UAE' ? 'Dubai' : 'Mumbai',
+      state: country === 'UAE' ? 'Dubai' : 'Maharashtra',
+      pincode: country === 'UAE' ? '00000' : '400001',
+      addressType: 'Home',
+      isDefault: true
+    };
+
+    openWhatsAppOrder({
+      customerName: user?.name || 'Valued Patron',
+      customerPhone: user?.phone || 'Provided via chat',
+      customerEmail: user?.email,
+      shippingAddress: defaultAddress,
+      items: cart.map(it => ({
+        name: it.name,
+        brand: it.brand,
+        size: it.size,
+        color: it.color,
+        quantity: it.quantity,
+        price: it.price,
+        priceAED: it.priceAED
+      })),
+      subtotal,
+      deliveryFee,
+      couponDiscount,
+      totalAmount: finalTotal,
+      currency,
+      paymentMethod: 'WhatsApp Direct Confirmation'
+    });
   };
 
   const shippingPercent = Math.min(100, Math.round((subtotal / freeDeliveryThreshold) * 100));
@@ -68,13 +102,13 @@ export const CartPage: React.FC = () => {
             </div>
             <h2 className="font-cinzel text-2xl font-bold text-stone-900">Your Shopping Bag Is Empty</h2>
             <p className="text-xs sm:text-sm text-stone-500 mt-2 max-w-md mx-auto leading-relaxed">
-              Explore our handcrafted Indian silks, Italian virgin wool blazers, and luxury footwear to curate your bespoke wardrobe.
+              Explore our luxury automatic watches and Italian Saffiano leather bags to curate your collection.
             </p>
             <Link
               to="/products"
               className="mt-8 inline-flex items-center space-x-2 px-8 py-3.5 rounded-full bg-[#0F0F0F] text-[#D4AF37] font-bold text-xs uppercase tracking-widest hover:bg-stone-800 transition shadow-md"
             >
-              <span>Explore Collections</span>
+              <span>Explore Timepieces & Bags</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -95,9 +129,15 @@ export const CartPage: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <h1 className="font-cinzel text-2xl sm:text-3xl font-bold text-stone-900 mb-6">
-          Your Shopping Bag
-        </h1>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <h1 className="font-cinzel text-2xl sm:text-3xl font-bold text-stone-900">
+            Your Shopping Bag
+          </h1>
+          <div className="flex items-center space-x-2 text-xs text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl font-medium">
+            <MessageCircle className="w-4 h-4 text-emerald-600" />
+            <span>Orders routed to WhatsApp Concierge: <strong>{OFFICIAL_WHATSAPP_NUMBER}</strong></span>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* LEFT: Items List (8 cols) */}
@@ -107,11 +147,11 @@ export const CartPage: React.FC = () => {
               <div className="flex items-center justify-between text-xs">
                 {freeDeliveryRemaining > 0 ? (
                   <span className="text-stone-700 font-medium">
-                    Add <strong className="text-stone-900 font-mono">₹{freeDeliveryRemaining.toLocaleString('en-IN')}</strong> more for <strong className="text-emerald-700">Complimentary Express Shipping</strong>
+                    Add <strong className="text-stone-900 font-mono">{formatPrice(freeDeliveryRemaining)}</strong> more for <strong className="text-emerald-700">Complimentary Express Shipping</strong>
                   </span>
                 ) : (
                   <span className="text-emerald-700 font-bold flex items-center">
-                    <Sparkles className="w-4 h-4 mr-1 text-[#D4AF37]" /> Congratulations! You have unlocked FREE Express Delivery
+                    <Sparkles className="w-4 h-4 mr-1 text-[#D4AF37]" /> Congratulations! You have unlocked FREE Express Delivery to {country === 'UAE' ? 'UAE' : 'India'}
                   </span>
                 )}
                 <span className="font-mono font-bold text-stone-500 text-[11px]">{shippingPercent}%</span>
@@ -132,7 +172,7 @@ export const CartPage: React.FC = () => {
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-24 h-32 sm:w-28 sm:h-36 object-cover object-top rounded-xl border border-stone-200 shadow-xs"
+                      className="w-24 h-32 sm:w-28 sm:h-36 object-cover object-center rounded-xl border border-stone-200 shadow-xs"
                     />
                   </Link>
 
@@ -150,43 +190,20 @@ export const CartPage: React.FC = () => {
                           </Link>
                         </div>
                         <span className="text-base font-bold text-stone-900 font-mono">
-                          ₹{(item.price * item.quantity).toLocaleString('en-IN')}
+                          {formatPrice(item.price * item.quantity, (item.priceAED || 0) * item.quantity)}
                         </span>
                       </div>
 
-                      {/* Size & Color Controls */}
                       <div className="flex flex-wrap items-center gap-3 mt-3 text-xs text-stone-600">
-                        <div className="flex items-center space-x-1.5 bg-stone-100 px-2.5 py-1 rounded-lg">
-                          <span className="text-stone-500">Size:</span>
-                          <select
-                            value={item.size}
-                            onChange={e => updateItemSize(item.id, e.target.value)}
-                            className="bg-transparent font-semibold text-stone-900 focus:outline-none cursor-pointer"
-                          >
-                            <option value="XS">XS</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                            <option value="XXL">XXL</option>
-                            <option value="38R">38R</option>
-                            <option value="40R">40R</option>
-                            <option value="42R">42R</option>
-                            <option value="44R">44R</option>
-                            <option value="UK 8">UK 8</option>
-                            <option value="UK 9">UK 9</option>
-                            <option value="UK 10">UK 10</option>
-                            <option value="Free Size">Free Size</option>
-                          </select>
-                        </div>
-
-                        <span className="bg-stone-100 px-2.5 py-1 rounded-lg text-stone-700">
-                          Shade: <strong className="text-stone-900">{item.color}</strong>
+                        <span className="bg-stone-100 px-2.5 py-1 rounded-lg text-stone-800 font-medium">
+                          Spec/Size: <strong>{item.size}</strong>
+                        </span>
+                        <span className="bg-stone-100 px-2.5 py-1 rounded-lg text-stone-800 font-medium">
+                          Shade: <strong>{item.color}</strong>
                         </span>
                       </div>
                     </div>
 
-                    {/* Bottom Actions: Quantity + Remove */}
                     <div className="flex items-center justify-between mt-5 pt-4 border-t border-stone-100">
                       <div className="flex items-center space-x-2">
                         <span className="text-xs text-stone-500 font-medium">Quantity:</span>
@@ -209,15 +226,13 @@ export const CartPage: React.FC = () => {
                         </div>
                       </div>
 
-                      <div className="flex items-center space-x-4">
-                        <button
-                          onClick={() => removeFromCart(item.id)}
-                          className="text-xs font-medium text-stone-500 hover:text-red-600 transition flex items-center space-x-1"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                          <span>Remove</span>
-                        </button>
-                      </div>
+                      <button
+                        onClick={() => removeFromCart(item.id)}
+                        className="text-xs font-medium text-stone-500 hover:text-red-600 transition flex items-center space-x-1"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Remove</span>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -225,9 +240,9 @@ export const CartPage: React.FC = () => {
             </div>
           </div>
 
-          {/* RIGHT: Price Details Sidebar (Flipkart Style) (4 cols) */}
+          {/* RIGHT: Summary & WhatsApp CTA (4 cols) */}
           <div className="lg:col-span-4 space-y-4 sticky top-32">
-            {/* Coupon Box */}
+            {/* Promo Code Box */}
             <div className="bg-white rounded-2xl p-5 border border-stone-200 shadow-xs">
               <label className="text-xs font-bold text-stone-900 uppercase tracking-wider block mb-2 flex items-center">
                 <Tag className="w-3.5 h-3.5 mr-1.5 text-[#D4AF37]" /> Apply Promo Voucher
@@ -237,7 +252,7 @@ export const CartPage: React.FC = () => {
                 <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs">
                   <div>
                     <p className="font-bold text-emerald-900">{appliedCoupon.code} Applied</p>
-                    <p className="text-[11px] text-emerald-700">Saved ₹{couponDiscount.toLocaleString('en-IN')}</p>
+                    <p className="text-[11px] text-emerald-700">Saved {formatPrice(couponDiscount)}</p>
                   </div>
                   <button
                     onClick={removeCoupon}
@@ -269,10 +284,6 @@ export const CartPage: React.FC = () => {
                       {couponResult.message}
                     </p>
                   )}
-
-                  <div className="pt-2 text-[11px] text-stone-500 space-y-1">
-                    <p>💡 Available codes: <button type="button" onClick={() => setCouponCode('VELMIRA500')} className="font-mono font-bold text-stone-800 underline">VELMIRA500</button> (Flat ₹500 off), <button type="button" onClick={() => setCouponCode('FIRSTBUY')} className="font-mono font-bold text-stone-800 underline">FIRSTBUY</button> (15% off)</p>
-                  </div>
                 </form>
               )}
             </div>
@@ -280,57 +291,59 @@ export const CartPage: React.FC = () => {
             {/* Price Details Card */}
             <div className="bg-white rounded-2xl p-6 border border-stone-200 shadow-xs space-y-4">
               <h3 className="font-cinzel text-sm font-bold text-stone-900 uppercase tracking-widest pb-3 border-b border-stone-100">
-                Price Breakdown
+                Order Summary
               </h3>
 
               <div className="space-y-2.5 text-xs text-stone-600">
                 <div className="flex justify-between">
-                  <span>Total M.R.P. ({totalItemsCount} items)</span>
-                  <span className="font-mono text-stone-900">₹{totalMRP.toLocaleString('en-IN')}</span>
-                </div>
-                <div className="flex justify-between text-emerald-700">
-                  <span>Discount on M.R.P.</span>
-                  <span className="font-mono">-₹{mrpDiscount.toLocaleString('en-IN')}</span>
+                  <span>Bag Subtotal ({totalItemsCount} items)</span>
+                  <span className="font-mono text-stone-900">{formatPrice(subtotal)}</span>
                 </div>
                 {couponDiscount > 0 && (
                   <div className="flex justify-between text-emerald-700">
-                    <span>Coupon Voucher ({appliedCoupon?.code})</span>
-                    <span className="font-mono">-₹{couponDiscount.toLocaleString('en-IN')}</span>
+                    <span>Voucher ({appliedCoupon?.code})</span>
+                    <span className="font-mono">-{formatPrice(couponDiscount)}</span>
                   </div>
                 )}
                 <div className="flex justify-between">
-                  <span>Express White-Glove Shipping</span>
+                  <span>Insured Express Air Cargo</span>
                   {deliveryFee === 0 ? (
                     <span className="text-emerald-700 font-bold uppercase text-[10px]">FREE</span>
                   ) : (
-                    <span className="font-mono text-stone-900">₹{deliveryFee}</span>
+                    <span className="font-mono text-stone-900">{formatPrice(deliveryFee)}</span>
                   )}
                 </div>
 
                 <div className="pt-3 border-t border-stone-200 flex justify-between items-baseline text-stone-900">
                   <span className="text-sm font-bold">Total Payable</span>
                   <span className="text-xl font-bold font-mono text-stone-900">
-                    ₹{finalTotal.toLocaleString('en-IN')}
+                    {formatPrice(finalTotal)}
                   </span>
                 </div>
-
-                <p className="text-[11px] text-emerald-700 font-semibold pt-1">
-                  You save ₹{(mrpDiscount + couponDiscount).toLocaleString('en-IN')} on this order!
-                </p>
               </div>
 
-              {/* Checkout Action Button */}
-              <button
-                onClick={() => navigate('/checkout')}
-                className="w-full py-3.5 px-6 rounded-xl bg-[#0F0F0F] text-[#D4AF37] font-bold text-xs uppercase tracking-widest hover:bg-stone-800 transition flex items-center justify-center space-x-2 shadow-md group"
-              >
-                <span>Proceed to Checkout</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
+              {/* DUAL CHECKOUT BUTTONS: WHATSAPP FIRST */}
+              <div className="space-y-2 pt-2">
+                <button
+                  onClick={handleWhatsAppOrder}
+                  className="w-full py-3.5 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-widest transition flex items-center justify-center space-x-2 shadow-md"
+                >
+                  <MessageCircle className="w-4 h-4 fill-white" />
+                  <span>Send Order to WhatsApp (+971 55 678 7854)</span>
+                </button>
+
+                <button
+                  onClick={() => navigate('/checkout')}
+                  className="w-full py-3 px-6 rounded-xl bg-[#0F0F0F] text-[#D4AF37] font-bold text-xs uppercase tracking-widest hover:bg-stone-800 transition flex items-center justify-center space-x-2 shadow-sm"
+                >
+                  <span>Complete Online Checkout</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
 
               <div className="pt-3 border-t border-stone-100 flex items-center justify-center space-x-1 text-[11px] text-stone-400">
                 <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
-                <span>256-Bit Bank Grade SSL Encrypted Checkout</span>
+                <span>Direct Dispatch to India & UAE via BlueDart / Aramex</span>
               </div>
             </div>
           </div>

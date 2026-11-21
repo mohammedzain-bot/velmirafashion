@@ -100,6 +100,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
           color: selectedColor,
           price: product.discountedPrice,
           originalPrice: product.originalPrice,
+          priceAED: product.priceAED || Math.round(product.discountedPrice / 22.5),
+          originalPriceAED: product.originalPriceAED || Math.round(product.originalPrice / 22.5),
           quantity: Math.min(quantity, product.stock),
           maxStock: product.stock
         };

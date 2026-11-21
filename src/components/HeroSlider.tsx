@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Sparkles, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Sparkles, ArrowRight, MessageCircle } from 'lucide-react';
+import { WHATSAPP_RAW_NUMBER } from '../utils/whatsapp';
 
 interface Slide {
   id: number;
@@ -12,46 +13,45 @@ interface Slide {
   primaryBtnLink: string;
   secondaryBtnText: string;
   secondaryBtnLink: string;
-  alignment: 'left' | 'center' | 'right';
+  isWhatsAppSecondary?: boolean;
 }
 
 export const HeroSlider: React.FC = () => {
   const slides: Slide[] = [
     {
       id: 1,
-      image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1800&q=85',
-      badge: 'SPRING / SUMMER 2026 COUTURE',
+      image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1800&q=85',
+      badge: 'ATELIER HOROLOGY & FINE LEATHER',
       headline: 'STYLE THAT DEFINES YOU',
-      subheading: 'Discover fashion that speaks your personality. Explore the latest collections at Velmira.',
-      primaryBtnText: 'SHOP NOW',
-      primaryBtnLink: '/products',
-      secondaryBtnText: 'EXPLORE COLLECTION',
-      secondaryBtnLink: '/products?category=New%20Arrivals',
-      alignment: 'left'
+      subheading: 'Discover bespoke automatic timepieces and handcrafted Italian leather bags. Fast express delivery across India & UAE.',
+      primaryBtnText: 'SHOP TIMEPIECES',
+      primaryBtnLink: '/products?category=Watches',
+      secondaryBtnText: 'EXPLORE BAGS',
+      secondaryBtnLink: '/products?category=Bags'
     },
     {
       id: 2,
-      image: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1800&q=85',
-      badge: 'ROYAL HERITAGE ATELIER',
-      headline: 'TIMELESS INDIAN REGALIA',
-      subheading: 'Handcrafted Varanasi Katan Silks, Dabka Lehengas & Imperial Zardozi Sherwanis.',
-      primaryBtnText: 'SHOP ETHNIC',
-      primaryBtnLink: '/products?category=Ethnic%20Wear',
-      secondaryBtnText: 'VIEW BRIDAL',
-      secondaryBtnLink: '/products?category=Sale',
-      alignment: 'center'
+      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1800&q=85',
+      badge: 'MILANESE ARTISANAL LEATHER',
+      headline: 'ITALIAN SAFFIANO BAGS',
+      subheading: 'Structured executive totes, French Box Calfskin Kelly bags & weekend travel duffles. Order directly to UAE & India.',
+      primaryBtnText: 'SHOP LUXURY BAGS',
+      primaryBtnLink: '/products?category=Bags',
+      secondaryBtnText: 'ORDER ON WHATSAPP',
+      secondaryBtnLink: `https://wa.me/${WHATSAPP_RAW_NUMBER}?text=${encodeURIComponent('Hello Velmira Concierge, I would like to explore your luxury bags collection.')}`,
+      isWhatsAppSecondary: true
     },
     {
       id: 3,
-      image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1800&q=85',
-      badge: 'MILANESE SARTORIAL EXCELLENCE',
-      headline: 'THE MODERN GENTLEMAN',
-      subheading: 'Precision-tailored Italian virgin wool blazers, Goodyear footwear and Swiss automatic timepieces.',
-      primaryBtnText: 'EXPLORE MEN',
-      primaryBtnLink: '/products?category=Men',
-      secondaryBtnText: 'ACCESSORIES',
-      secondaryBtnLink: '/products?category=Accessories',
-      alignment: 'left'
+      image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1800&q=85',
+      badge: 'SWISS PRECISION MOVEMENTS',
+      headline: 'HAUTE HOROLOGY TIMEPIECES',
+      subheading: 'Flying tourbillon complications, 300M ceramic divers, and Austrian diamond bezels with lifetime guarantee.',
+      primaryBtnText: 'EXPLORE WATCHES',
+      primaryBtnLink: '/products?category=Watches',
+      secondaryBtnText: 'WHATSAPP CONCIERGE',
+      secondaryBtnLink: `https://wa.me/${WHATSAPP_RAW_NUMBER}?text=${encodeURIComponent('Hello Velmira Horology Team, I would like to inquire about your automatic watches.')}`,
+      isWhatsAppSecondary: true
     }
   ];
 
@@ -80,7 +80,6 @@ export const HeroSlider: React.FC = () => {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Slides Container */}
       {slides.map((slide, index) => {
         const isActive = index === currentSlide;
         return (
@@ -90,8 +89,8 @@ export const HeroSlider: React.FC = () => {
               isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
             }`}
           >
-            {/* Background Lifestyle Photography with Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/20 z-1" />
+            {/* Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/30 z-1" />
             <img
               src={slide.image}
               alt={slide.headline}
@@ -100,52 +99,50 @@ export const HeroSlider: React.FC = () => {
               }`}
             />
 
-            {/* Slide Text Content */}
+            {/* Slide Content */}
             <div className="absolute inset-0 z-10 max-w-7xl mx-auto px-6 sm:px-12 flex flex-col justify-center">
-              <div
-                className={`max-w-2xl text-white ${
-                  slide.alignment === 'center' ? 'mx-auto text-center' : ''
-                }`}
-              >
-                {/* Badge */}
-                <div
-                  className={`inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#D4AF37] text-[10px] sm:text-xs font-semibold tracking-widest uppercase mb-4 ${
-                    slide.alignment === 'center' ? 'mx-auto' : ''
-                  }`}
-                >
+              <div className="max-w-2xl text-white">
+                <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#D4AF37] text-[10px] sm:text-xs font-semibold tracking-widest uppercase mb-4">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>{slide.badge}</span>
                 </div>
 
-                {/* Main Headline */}
                 <h1 className="font-cinzel text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight drop-shadow-md">
                   {slide.headline}
                 </h1>
 
-                {/* Subheading */}
                 <p className="mt-4 text-stone-200 text-xs sm:text-base lg:text-lg leading-relaxed max-w-xl font-light drop-shadow">
                   {slide.subheading}
                 </p>
 
-                {/* CTA Action Buttons */}
-                <div
-                  className={`mt-8 flex flex-wrap gap-3 sm:gap-4 ${
-                    slide.alignment === 'center' ? 'justify-center' : ''
-                  }`}
-                >
+                {/* Buttons */}
+                <div className="mt-8 flex flex-wrap gap-3 sm:gap-4">
                   <Link
                     to={slide.primaryBtnLink}
-                    className="px-7 py-3 rounded-full bg-[#D4AF37] text-black hover:bg-[#c5a059] font-bold text-xs sm:text-sm tracking-widest uppercase shadow-lg hover:shadow-xl transition flex items-center space-x-2 group"
+                    className="px-7 py-3 rounded-full bg-[#D4AF37] text-black hover:bg-[#c5a059] font-bold text-xs sm:text-sm tracking-widest uppercase shadow-lg transition flex items-center space-x-2 group"
                   >
                     <span>{slide.primaryBtnText}</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Link>
-                  <Link
-                    to={slide.secondaryBtnLink}
-                    className="px-7 py-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-semibold text-xs sm:text-sm tracking-widest uppercase transition"
-                  >
-                    {slide.secondaryBtnText}
-                  </Link>
+
+                  {slide.isWhatsAppSecondary ? (
+                    <a
+                      href={slide.secondaryBtnLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-7 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm tracking-widest uppercase transition flex items-center space-x-2 shadow-lg"
+                    >
+                      <MessageCircle className="w-4 h-4 fill-white" />
+                      <span>{slide.secondaryBtnText}</span>
+                    </a>
+                  ) : (
+                    <Link
+                      to={slide.secondaryBtnLink}
+                      className="px-7 py-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-semibold text-xs sm:text-sm tracking-widest uppercase transition"
+                    >
+                      {slide.secondaryBtnText}
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -153,7 +150,6 @@ export const HeroSlider: React.FC = () => {
         );
       })}
 
-      {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
         className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white backdrop-blur-xs transition border border-white/10"
@@ -170,7 +166,6 @@ export const HeroSlider: React.FC = () => {
         <ChevronRight className="w-5 h-5" />
       </button>
 
-      {/* Slide Indicator Dots */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center space-x-2.5">
         {slides.map((_, i) => (
           <button
@@ -181,7 +176,7 @@ export const HeroSlider: React.FC = () => {
                 ? 'w-8 h-2 bg-[#D4AF37]'
                 : 'w-2 h-2 bg-white/40 hover:bg-white/70'
             }`}
-            aria-label={`Go to slide ${i + 1}`}
+            aria-label={`Slide ${i + 1}`}
           />
         ))}
       </div>

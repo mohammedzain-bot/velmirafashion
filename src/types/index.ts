@@ -1,14 +1,17 @@
 export type CategoryType = 
   | 'All'
-  | 'Men' 
-  | 'Women' 
-  | 'Kids' 
-  | 'Ethnic Wear' 
-  | 'Western Wear' 
-  | 'Footwear' 
-  | 'Accessories' 
+  | 'Watches'
+  | 'Bags'
+  | "Men's Watches"
+  | "Women's Watches"
+  | 'Leather Bags'
+  | 'Tote Bags'
+  | 'Clutches & Wallets'
   | 'New Arrivals' 
   | 'Sale';
+
+export type CurrencyType = 'INR' | 'AED';
+export type CountryType = 'India' | 'UAE';
 
 export interface ProductColor {
   name: string;
@@ -34,14 +37,16 @@ export interface Product {
   brand: string;
   category: CategoryType;
   subcategory: string;
-  originalPrice: number;
-  discountedPrice: number;
+  originalPrice: number; // in INR
+  discountedPrice: number; // in INR
+  priceAED: number; // in AED
+  originalPriceAED: number; // in AED
   discountPercentage: number;
   rating: number;
   ratingCount: number;
   reviewCount: number;
   images: string[];
-  sizes: string[];
+  sizes: string[]; // for watches: dial size e.g. 40mm, 42mm; for bags: One Size, Medium, Large
   colors: ProductColor[];
   stock: number;
   isTrending?: boolean;
@@ -49,9 +54,9 @@ export interface Product {
   isNewArrival?: boolean;
   isTopDeal?: boolean;
   description: string;
-  fabric: string;
-  fit: string;
-  pattern: string;
+  fabric: string; // Material: e.g. 316L Surgical Steel & 18K Gold PVD, Full-Grain Italian Saffiano Calfskin
+  fit: string; // Case Dimension or Bag Dimension
+  pattern: string; // Finish / Texture: Sunburst Guilloché Dial, Crosshatch Saffiano Leather
   occasion: string;
   care: string;
   specifications: Record<string, string>;
@@ -62,12 +67,13 @@ export interface Address {
   id: string;
   fullName: string;
   phone: string;
+  country: CountryType;
   addressLine1: string;
   addressLine2?: string;
   landmark?: string;
   city: string;
-  state: string;
-  pincode: string;
+  state: string; // State (India) or Emirate (UAE)
+  pincode: string; // PIN Code (India) or Postal/Makani (UAE)
   addressType: 'Home' | 'Work' | 'Other';
   isDefault: boolean;
 }
@@ -83,15 +89,17 @@ export interface User {
 }
 
 export interface CartItem {
-  id: string; // unique item id = productId + size + color
+  id: string;
   productId: string;
   name: string;
   brand: string;
   image: string;
   size: string;
   color: string;
-  price: number;
+  price: number; // in INR
   originalPrice: number;
+  priceAED: number;
+  originalPriceAED: number;
   quantity: number;
   maxStock: number;
 }
@@ -99,8 +107,10 @@ export interface CartItem {
 export interface Coupon {
   code: string;
   discountType: 'percentage' | 'flat';
-  value: number;
+  value: number; // in INR
+  valueAED: number; // in AED
   minOrderValue: number;
+  minOrderValueAED: number;
   maxDiscount?: number;
   description: string;
   expiryDate: string;
@@ -123,19 +133,22 @@ export interface OrderItem {
   color: string;
   price: number;
   originalPrice: number;
+  priceAED: number;
   quantity: number;
 }
 
 export interface Order {
-  id: string; // e.g. VEL-89123
+  id: string;
   customerId: string;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
+  country: CountryType;
+  currency: CurrencyType;
   items: OrderItem[];
   shippingAddress: Address;
-  paymentMethod: 'cod' | 'upi' | 'card' | 'netbanking';
-  paymentStatus: 'pending' | 'completed' | 'failed';
+  paymentMethod: 'whatsapp' | 'cod' | 'upi' | 'card' | 'netbanking';
+  paymentStatus: 'pending' | 'completed' | 'whatsapp_order';
   orderStatus: 'Placed' | 'Processing' | 'Shipped' | 'Out for Delivery' | 'Delivered' | 'Cancelled';
   orderDate: string;
   estimatedDelivery: string;
@@ -148,6 +161,9 @@ export interface Order {
   couponDiscount: number;
   deliveryFee: number;
   totalAmount: number;
+  subtotalAED?: number;
+  totalAmountAED?: number;
+  whatsappMessageSent?: boolean;
   returnRequested?: boolean;
   returnStatus?: 'none' | 'requested' | 'approved' | 'picked_up' | 'refunded';
   returnReason?: string;

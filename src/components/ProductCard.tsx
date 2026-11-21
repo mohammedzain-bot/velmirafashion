@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Star, ShoppingBag, Eye, Zap } from 'lucide-react';
+import { Heart, Star, ShoppingBag, Eye, Zap, MessageCircle } from 'lucide-react';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import { useCurrency } from '../context/CurrencyContext';
+import { openDirectProductWhatsApp } from '../utils/whatsapp';
 
 interface ProductCardProps {
   product: Product;
@@ -13,6 +15,7 @@ interface ProductCardProps {
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }) => {
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
+  const { formatPrice, currency } = useCurrency();
   const [isHovered, setIsHovered] = useState(false);
   const inWish = isInWishlist(product.id);
 
@@ -24,9 +27,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
     e.stopPropagation();
     addToCart(
       product,
-      product.sizes[0] || 'Free Size',
+      product.sizes[0] || 'One Size',
       product.colors[0]?.name || 'Standard',
       1
+    );
+  };
+
+  const handleWhatsAppOrder = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    openDirectProductWhatsApp(
+      product,
+      product.sizes[0] || 'One Size',
+      product.colors[0]?.name || 'Standard',
+      currency
     );
   };
 
@@ -47,7 +61,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
         <img
           src={isHovered ? secondaryImage : primaryImage}
           alt={product.name}
-          className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+          className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
           loading="lazy"
         />
 
@@ -121,10 +135,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
             </h3>
           </Link>
 
-          {/* Available Sizes preview */}
+          {/* Available Sizes / Specs */}
           <div className="flex flex-wrap items-center gap-1 mt-2">
-            <span className="text-[10px] text-stone-400 font-medium">Sizes:</span>
-            {product.sizes.slice(0, 4).map((sz, idx) => (
+            <span className="text-[10px] text-stone-400 font-medium">Specs:</span>
+            {product.sizes.map((sz, idx) => (
               <span
                 key={idx}
                 className="text-[10px] px-1.5 py-0.2 rounded border border-stone-200 text-stone-600 font-medium"
@@ -132,38 +146,47 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
                 {sz}
               </span>
             ))}
-            {product.sizes.length > 4 && (
-              <span className="text-[10px] text-stone-400">+{product.sizes.length - 4}</span>
-            )}
           </div>
         </div>
 
-        {/* Pricing & Cart Action */}
-        <div className="mt-3 pt-2.5 border-t border-stone-100 flex items-end justify-between">
+        {/* Pricing & Actions (Add to Bag + WhatsApp Quick Order) */}
+        <div className="mt-3 pt-2.5 border-t border-stone-100 flex items-end justify-between gap-1">
           <div>
             <div className="flex items-baseline space-x-1.5">
               <span className="text-sm sm:text-base font-bold text-stone-900 font-mono">
-                ₹{product.discountedPrice.toLocaleString('en-IN')}
+                {formatPrice(product.discountedPrice, product.priceAED)}
               </span>
               <span className="text-xs text-stone-400 line-through font-mono">
-                ₹{product.originalPrice.toLocaleString('en-IN')}
+                {formatPrice(product.originalPrice, product.originalPriceAED)}
               </span>
             </div>
             {product.stock <= 5 && product.stock > 0 && (
               <p className="text-[10px] font-semibold text-amber-700 mt-0.5 flex items-center">
-                <Zap className="w-2.5 h-2.5 mr-0.5 fill-amber-500 text-amber-500" /> Only {product.stock} left in stock!
+                <Zap className="w-2.5 h-2.5 mr-0.5 fill-amber-500 text-amber-500" /> Only {product.stock} in stock!
               </p>
             )}
           </div>
 
-          <button
-            onClick={handleQuickAdd}
-            className="p-2 sm:px-3 sm:py-1.5 rounded-lg bg-[#0F0F0F] text-[#D4AF37] hover:bg-stone-800 transition-all flex items-center space-x-1 shadow-xs group/btn"
-            title="Add to Bag"
-          >
-            <ShoppingBag className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline text-xs font-semibold uppercase tracking-wider">Add</span>
-          </button>
+          <div className="flex items-center space-x-1">
+            {/* WhatsApp Quick Buy */}
+            <button
+              onClick={handleWhatsAppOrder}
+              className="p-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition-all shadow-xs"
+              title="Order on WhatsApp (+971 55 678 7854)"
+            >
+              <MessageCircle className="w-3.5 h-3.5 fill-white" />
+            </button>
+
+            {/* Add to Bag */}
+            <button
+              onClick={handleQuickAdd}
+              className="p-2 sm:px-3 sm:py-1.5 rounded-lg bg-[#0F0F0F] text-[#D4AF37] hover:bg-stone-800 transition-all flex items-center space-x-1 shadow-xs"
+              title="Add to Bag"
+            >
+              <ShoppingBag className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline text-xs font-semibold uppercase tracking-wider">Add</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { RotateCcw, Star, ChevronDown, Check } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import { useCurrency } from '../context/CurrencyContext';
 import { CategoryType } from '../types';
 
 interface FilterSidebarProps {
@@ -18,6 +19,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
     allSizes,
     filteredProducts
   } = useShop();
+  const { formatPrice } = useCurrency();
 
   const handleCategoryChange = (cat: CategoryType) => {
     setFilters(prev => ({ ...prev, category: cat }));
@@ -156,7 +158,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
             Price Range
           </label>
           <span className="text-xs font-mono font-bold text-stone-900">
-            Up to ₹{filters.maxPrice.toLocaleString('en-IN')}
+            Up to {formatPrice(filters.maxPrice)}
           </span>
         </div>
         <input
@@ -169,8 +171,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
           className="w-full accent-[#0F0F0F] h-1.5 bg-stone-200 rounded-lg cursor-pointer"
         />
         <div className="flex justify-between text-[10px] text-stone-400 font-mono">
-          <span>₹1,000</span>
-          <span>₹50,000</span>
+          <span>{formatPrice(1000)}</span>
+          <span>{formatPrice(50000)}</span>
         </div>
       </div>
 

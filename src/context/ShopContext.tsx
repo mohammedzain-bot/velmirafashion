@@ -82,13 +82,13 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Derive filter options dynamically from current catalog
   const categories: CategoryType[] = [
     'All',
-    'Men',
-    'Women',
-    'Kids',
-    'Ethnic Wear',
-    'Western Wear',
-    'Footwear',
-    'Accessories',
+    'Watches',
+    'Bags',
+    "Men's Watches",
+    "Women's Watches",
+    'Leather Bags',
+    'Tote Bags',
+    'Clutches & Wallets',
     'New Arrivals',
     'Sale'
   ];
