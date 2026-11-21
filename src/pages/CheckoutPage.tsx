@@ -1,785 +1,558 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import confetti from 'canvas-confetti';
+import { Link } from 'react-router-dom';
 import {
-  MapPin,
-  CreditCard,
-  QrCode,
-  Truck,
   ShieldCheck,
-  Plus,
-  Lock,
-  Building,
+  Truck,
   MessageCircle,
-  Globe
+  ArrowLeft,
+  CheckCircle2,
+  Clock
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext';
-import { useShop } from '../context/ShopContext';
 import { useCurrency } from '../context/CurrencyContext';
-import { Address, CountryType } from '../types';
-import { openWhatsAppOrder, OFFICIAL_WHATSAPP_NUMBER } from '../utils/whatsapp';
+import { OFFICIAL_WHATSAPP_NUMBER, WHATSAPP_RAW_NUMBER } from '../utils/whatsapp';
+
+const INDIAN_STATES = [
+  'Maharashtra',
+  'Delhi',
+  'Karnataka',
+  'Tamil Nadu',
+  'Gujarat',
+  'Telangana',
+  'Kerala',
+  'Uttar Pradesh',
+  'West Bengal',
+  'Rajasthan',
+  'Punjab',
+  'Haryana',
+  'Madhya Pradesh',
+  'Bihar',
+  'Andhra Pradesh',
+  'Goa',
+  'Odisha',
+  'Assam',
+  'Jammu & Kashmir',
+  'Chandigarh'
+];
+
+const UAE_EMIRATES = [
+  'Dubai',
+  'Abu Dhabi',
+  'Sharjah',
+  'Ajman',
+  'Ras Al Khaimah',
+  'Fujairah',
+  'Umm Al Quwain'
+];
 
 export const CheckoutPage: React.FC = () => {
-  const navigate = useNavigate();
-  const { cart, subtotal, deliveryFee, appliedCoupon, couponDiscount, finalTotal, clearCart } = useCart();
-  const { user, addAddress } = useAuth();
-  const { placeOrder } = useShop();
+  const { cart, finalTotal, clearCart } = useCart();
   const { formatPrice, currency, country, setRegion } = useCurrency();
 
-  // Multi-step state
-  const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(2);
-  const [selectedAddressId, setSelectedAddressId] = useState<string>(
-    user?.addresses.find(a => a.isDefault)?.id || user?.addresses[0]?.id || ''
-  );
+  // Clean empty shipping state (NO mock/demo addresses)
+  const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [addressLine, setAddressLine] = useState('');
+  const [landmark, setLandmark] = useState('');
+  const [city, setCity] = useState('');
+  const [stateOrEmirate, setStateOrEmirate] = useState(country === 'UAE' ? 'Dubai' : 'Maharashtra');
+  const [pincode, setPincode] = useState('');
+  const [notes, setNotes] = useState('');
 
-  // Address creation form
-  const [showNewAddressForm, setShowNewAddressForm] = useState(false);
-  const [newCountry, setNewCountry] = useState<CountryType>(country);
-  const [newFullName, setNewFullName] = useState(user?.name || '');
-  const [newPhone, setNewPhone] = useState(user?.phone || '');
-  const [newLine1, setNewLine1] = useState('');
-  const [newLine2, setNewLine2] = useState('');
-  const [newCity, setNewCity] = useState('');
-  const [newState, setNewState] = useState(country === 'UAE' ? 'Dubai' : 'Maharashtra');
-  const [newPincode, setNewPincode] = useState('');
-  const [newAddressType] = useState<'Home' | 'Work' | 'Other'>('Home');
+  // Submission / confirmation state
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [orderRef, setOrderRef] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  // Customer Details Form (Step 1)
-  const [customerName, setCustomerName] = useState(user?.name || 'Hamdan Al Maktoum');
-  const [customerEmail, setCustomerEmail] = useState(user?.email || 'patron@velmira.com');
-  const [customerPhone, setCustomerPhone] = useState(user?.phone || '+971 50 123 4567');
+  // Handle region switch directly on checkout
+  const handleCountryToggle = (newCountry: 'India' | 'UAE') => {
+    setRegion(newCountry);
+    setStateOrEmirate(newCountry === 'UAE' ? 'Dubai' : 'Maharashtra');
+  };
 
-  // Payment Method (Step 4)
-  const [paymentMethod, setPaymentMethod] = useState<'whatsapp' | 'cod' | 'upi' | 'card' | 'netbanking'>('whatsapp');
-  const [upiId, setUpiId] = useState('patron@upi');
-  const [cardNumber, setCardNumber] = useState('4532 •••• •••• 8921');
-  const [cardExpiry, setCardExpiry] = useState('08/29');
-  const [cardCvv, setCardCvv] = useState('784');
-  const [selectedBank, setSelectedBank] = useState('Emirates NBD');
-  const [isProcessingOrder, setIsProcessingOrder] = useState(false);
-
-  if (cart.length === 0) {
+  // If bag is empty and not yet submitted
+  if (cart.length === 0 && !isSubmitted) {
     return (
-      <div className="min-h-screen bg-[#F8F9FA] flex flex-col items-center justify-center p-8 text-center">
-        <h2 className="font-cinzel text-2xl font-bold text-stone-900">Your Shopping Bag Is Empty</h2>
-        <p className="text-xs text-stone-500 mt-2">Please select a luxury watch or bag before proceeding to checkout.</p>
+      <div className="min-h-[70vh] bg-[#FDFDFD] flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-16 h-16 rounded-full bg-stone-100 flex items-center justify-center text-stone-400 mb-4">
+          <Clock className="w-7 h-7" />
+        </div>
+        <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
+          Your Shopping Bag is Empty
+        </h2>
+        <p className="text-xs text-stone-500 mt-2 max-w-sm">
+          Please select an authentic timepiece or designer bag to submit your order inquiry.
+        </p>
         <Link
           to="/products"
-          className="mt-6 px-6 py-2.5 rounded-full bg-[#0F0F0F] text-[#D4AF37] font-semibold text-xs uppercase tracking-wider"
+          className="mt-6 px-7 py-3 rounded-full bg-[#0F0F0F] text-[#D4AF37] hover:bg-stone-800 font-cinzel text-xs font-bold tracking-widest uppercase transition"
         >
-          Explore Watches & Bags
+          Explore Collections
         </Link>
       </div>
     );
   }
 
-  const handleAddNewAddress = (e: React.FormEvent) => {
+  // Handle inquiry submission
+  const handleSubmitInquiry = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newFullName || !newPhone || !newLine1 || !newCity || !newPincode) return;
+    setErrorMessage('');
 
-    addAddress({
-      fullName: newFullName,
-      phone: newPhone,
-      country: newCountry,
-      addressLine1: newLine1,
-      addressLine2: newLine2,
-      city: newCity,
-      state: newState,
-      pincode: newPincode,
-      addressType: newAddressType,
-      isDefault: true
+    // Validation
+    if (!fullName.trim()) {
+      setErrorMessage('Please enter your full name.');
+      return;
+    }
+    if (!phone.trim() || phone.trim().length < 7) {
+      setErrorMessage('Please enter a valid WhatsApp mobile number.');
+      return;
+    }
+    if (!addressLine.trim()) {
+      setErrorMessage('Please enter your complete delivery address.');
+      return;
+    }
+    if (country === 'India') {
+      if (!city.trim()) {
+        setErrorMessage('Please enter your city.');
+        return;
+      }
+      if (!pincode.trim() || pincode.trim().length !== 6) {
+        setErrorMessage('Please enter a valid 6-digit Indian PIN code.');
+        return;
+      }
+    }
+
+    // Generate clean inquiry reference ID
+    const refId = `VEL-${Math.floor(100000 + Math.random() * 900000)}`;
+    setOrderRef(refId);
+
+    // Format luxury WhatsApp message
+    const lines: string[] = [
+      '👑 *VELMIRA ATELIER — ORDER ENQUIRY*',
+      '━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+      `*Reference:* ${refId}`,
+      `*Date:* ${new Date().toLocaleDateString('en-GB')}`,
+      `*Destination:* ${country === 'UAE' ? '🇦🇪 United Arab Emirates' : '🇮🇳 India'}`,
+      '',
+      '👤 *PATRON DETAILS:*',
+      `• *Name:* ${fullName.trim()}`,
+      `• *WhatsApp:* ${phone.trim()}`,
+      '',
+      '📍 *SHIPPING ADDRESS:*',
+      `• *Address:* ${addressLine.trim()}`
+    ];
+
+    if (landmark.trim()) {
+      lines.push(`• *Landmark:* ${landmark.trim()}`);
+    }
+
+    if (country === 'India') {
+      lines.push(`• *City:* ${city.trim()}`);
+      lines.push(`• *State:* ${stateOrEmirate}`);
+      lines.push(`• *PIN Code:* ${pincode.trim()}`);
+    } else {
+      lines.push(`• *Emirate:* ${stateOrEmirate}`);
+      if (city.trim()) lines.push(`• *Area / Makani:* ${city.trim()}`);
+    }
+
+    lines.push('');
+    lines.push('📦 *SELECTED PIECES:*');
+    cart.forEach((item, idx) => {
+      lines.push(`${idx + 1}. *${item.name}*`);
+      lines.push(`   • Atelier: ${item.brand}`);
+      lines.push(`   • Spec: ${item.size} | Color: ${item.color}`);
+      lines.push(`   • Qty: ${item.quantity} × ${formatPrice(item.price, item.priceAED)}`);
     });
 
-    setRegion(newCountry);
-    setShowNewAddressForm(false);
-  };
+    lines.push('');
+    lines.push(`💰 *TOTAL AMOUNT:* *${formatPrice(finalTotal)}*`);
+    lines.push('🚚 *Delivery:* Complimentary Insured White-Glove Dispatch');
 
-  const selectedAddress: Address =
-    user?.addresses.find(a => a.id === selectedAddressId) ||
-    user?.addresses[0] || {
-      id: 'addr-default',
-      fullName: customerName,
-      phone: customerPhone,
-      country: country,
-      addressLine1: country === 'UAE' ? 'Penthouse 24, Downtown Boulevard' : 'Penthouse 14B, Oberoi Sky Heights',
-      addressLine2: country === 'UAE' ? 'Downtown Dubai' : 'Andheri West',
-      city: country === 'UAE' ? 'Dubai' : 'Mumbai',
-      state: country === 'UAE' ? 'Dubai' : 'Maharashtra',
-      pincode: country === 'UAE' ? '00000' : '400053',
-      addressType: 'Home',
-      isDefault: true
-    };
-
-  const handlePlaceOrder = async () => {
-    setIsProcessingOrder(true);
-
-    try {
-      const order = await placeOrder({
-        customerId: user?.id || 'patron-1',
-        customerName: customerName,
-        customerEmail: customerEmail,
-        customerPhone: customerPhone,
-        country: selectedAddress.country || country,
-        currency: currency,
-        items: cart.map(item => ({
-          productId: item.productId,
-          name: item.name,
-          brand: item.brand,
-          image: item.image,
-          size: item.size,
-          color: item.color,
-          price: item.price,
-          originalPrice: item.originalPrice,
-          priceAED: item.priceAED,
-          quantity: item.quantity
-        })),
-        shippingAddress: selectedAddress,
-        paymentMethod,
-        paymentStatus: paymentMethod === 'whatsapp' ? 'whatsapp_order' : paymentMethod === 'cod' ? 'pending' : 'completed',
-        orderStatus: 'Placed',
-        subtotal,
-        discount: cart.reduce((acc, it) => acc + (it.originalPrice - it.price) * it.quantity, 0),
-        couponCode: appliedCoupon?.code,
-        couponDiscount,
-        deliveryFee,
-        totalAmount: finalTotal,
-        whatsappMessageSent: true
-      });
-
-      // Send to WhatsApp if paymentMethod is whatsapp OR always send order summary copy
-      openWhatsAppOrder({
-        orderId: order.id,
-        customerName: customerName,
-        customerPhone: customerPhone,
-        customerEmail: customerEmail,
-        shippingAddress: selectedAddress,
-        items: cart.map(it => ({
-          name: it.name,
-          brand: it.brand,
-          size: it.size,
-          color: it.color,
-          quantity: it.quantity,
-          price: it.price,
-          priceAED: it.priceAED
-        })),
-        subtotal,
-        deliveryFee,
-        couponDiscount,
-        totalAmount: finalTotal,
-        currency,
-        paymentMethod: paymentMethod === 'whatsapp' ? 'Direct WhatsApp Order' : paymentMethod.toUpperCase(),
-        notes: `Selected region: ${selectedAddress.country}`
-      });
-
-      confetti({
-        particleCount: 120,
-        spread: 80,
-        origin: { y: 0.6 }
-      });
-
-      clearCart();
-      navigate(`/order-confirmation/${order.id}`);
-    } catch (err) {
-      console.error('Order creation failed:', err);
-    } finally {
-      setIsProcessingOrder(false);
+    if (notes.trim()) {
+      lines.push('');
+      lines.push(`📝 *Special Instructions:* ${notes.trim()}`);
     }
+
+    lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    lines.push('Please confirm availability and dispatch schedule. Thank you.');
+
+    const encodedMsg = encodeURIComponent(lines.join('\n'));
+    const whatsappUrl = `https://wa.me/${WHATSAPP_RAW_NUMBER}?text=${encodedMsg}`;
+
+    // Open WhatsApp in new tab
+    window.open(whatsappUrl, '_blank');
+
+    // Clear cart and show classy confirmation view
+    clearCart();
+    setIsSubmitted(true);
   };
 
-  return (
-    <div className="min-h-screen bg-[#F8F9FA] pb-16">
-      {/* Top Header */}
-      <div className="bg-white border-b border-stone-200 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-1.5">
-            <span className="font-cinzel text-xl font-black tracking-widest text-[#0F0F0F]">
-              VELMIRA
-            </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
-          </Link>
+  // Classy Confirmation Screen
+  if (isSubmitted) {
+    return (
+      <div className="min-h-[75vh] bg-[#FDFDFD] flex items-center justify-center p-4 sm:p-8">
+        <div className="max-w-md w-full bg-white border border-stone-200 rounded-3xl p-8 sm:p-10 text-center shadow-xl">
+          <div className="w-16 h-16 rounded-full bg-stone-900 text-[#D4AF37] flex items-center justify-center mx-auto mb-6 shadow-md">
+            <CheckCircle2 className="w-8 h-8" />
+          </div>
 
-          <div className="flex items-center space-x-3 text-xs text-stone-600 font-medium">
-            <span className="hidden sm:inline bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-lg">
-              WhatsApp: {OFFICIAL_WHATSAPP_NUMBER}
-            </span>
-            <div className="flex items-center space-x-1 text-emerald-700">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>India & UAE Secured</span>
-            </div>
+          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4AF37] font-cinzel">
+            ENQUIRY SUBMITTED
+          </span>
+          <h2 className="font-cinzel text-2xl font-bold text-stone-900 tracking-wide mt-1">
+            Thank You, {fullName.split(' ')[0]}
+          </h2>
+          <p className="text-xs text-stone-500 mt-2 font-mono">
+            Reference ID: <strong className="text-stone-900 font-bold">{orderRef}</strong>
+          </p>
+
+          <div className="my-6 p-4 rounded-2xl bg-[#FAFAF8] border border-stone-200/80 text-left text-xs space-y-2 text-stone-600">
+            <p className="text-stone-800 font-medium">
+              Your inquiry has been transferred directly to our dispatch desk in {country === 'UAE' ? 'the UAE' : 'India'}.
+            </p>
+            <p className="text-[11px] text-stone-500">
+              Our concierge at <strong>{OFFICIAL_WHATSAPP_NUMBER}</strong> is reviewing your order details and will confirm dispatch tracking on WhatsApp shortly.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <a
+              href={`https://wa.me/${WHATSAPP_RAW_NUMBER}?text=${encodeURIComponent(`Hello Velmira Concierge, I am following up on my Order Enquiry Reference ${orderRef}.`)}`}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full py-3 px-6 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition flex items-center justify-center space-x-2 shadow-sm"
+            >
+              <MessageCircle className="w-4 h-4 fill-white" />
+              <span>Chat on WhatsApp ({OFFICIAL_WHATSAPP_NUMBER})</span>
+            </a>
+
+            <Link
+              to="/"
+              className="block w-full py-2.5 px-6 rounded-full border border-stone-300 hover:border-black text-stone-700 text-xs font-semibold uppercase tracking-wider transition"
+            >
+              Return to Boutique
+            </Link>
           </div>
         </div>
       </div>
+    );
+  }
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        {/* Step Indicator */}
-        <div className="mb-8 max-w-3xl mx-auto">
-          <div className="flex items-center justify-between text-xs font-semibold">
-            <div className={`flex items-center space-x-2 ${currentStep >= 1 ? 'text-black font-bold' : 'text-stone-400'}`}>
-              <span className={`w-6 h-6 rounded-full flex items-center justify-center font-mono ${currentStep >= 1 ? 'bg-[#0F0F0F] text-[#D4AF37]' : 'bg-stone-200 text-stone-500'}`}>1</span>
-              <span className="hidden sm:inline">Details</span>
-            </div>
-            <div className="w-12 sm:w-20 h-0.5 bg-stone-200" />
+  return (
+    <div className="min-h-screen bg-[#FDFDFD] py-8 sm:py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Top Minimal Navigation */}
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-stone-200/80">
+          <Link
+            to="/products"
+            className="inline-flex items-center space-x-1.5 text-xs text-stone-500 hover:text-black font-medium transition"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Continue Browsing</span>
+          </Link>
 
-            <div className={`flex items-center space-x-2 ${currentStep >= 2 ? 'text-black font-bold' : 'text-stone-400'}`}>
-              <span className={`w-6 h-6 rounded-full flex items-center justify-center font-mono ${currentStep >= 2 ? 'bg-[#0F0F0F] text-[#D4AF37]' : 'bg-stone-200 text-stone-500'}`}>2</span>
-              <span className="hidden sm:inline">Address (India / UAE)</span>
-            </div>
-            <div className="w-12 sm:w-20 h-0.5 bg-stone-200" />
-
-            <div className={`flex items-center space-x-2 ${currentStep >= 3 ? 'text-black font-bold' : 'text-stone-400'}`}>
-              <span className={`w-6 h-6 rounded-full flex items-center justify-center font-mono ${currentStep >= 3 ? 'bg-[#0F0F0F] text-[#D4AF37]' : 'bg-stone-200 text-stone-500'}`}>3</span>
-              <span className="hidden sm:inline">Summary</span>
-            </div>
-            <div className="w-12 sm:w-20 h-0.5 bg-stone-200" />
-
-            <div className={`flex items-center space-x-2 ${currentStep >= 4 ? 'text-black font-bold' : 'text-stone-400'}`}>
-              <span className={`w-6 h-6 rounded-full flex items-center justify-center font-mono ${currentStep >= 4 ? 'bg-[#0F0F0F] text-[#D4AF37]' : 'bg-stone-200 text-stone-500'}`}>4</span>
-              <span className="hidden sm:inline">Payment / WhatsApp</span>
-            </div>
+          <div className="text-right">
+            <span className="font-cinzel text-xs font-bold tracking-widest text-[#D4AF37] block">
+              VELMIRA ATELIER
+            </span>
+            <span className="text-[10px] text-stone-400 uppercase tracking-wider">
+              Bespoke Shipping Enquiry
+            </span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* LEFT: Multi-step checkout accordions (8 cols) */}
-          <div className="lg:col-span-8 space-y-5">
-            {/* STEP 1: Details */}
-            <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-xs">
-              <div
-                onClick={() => setCurrentStep(1)}
-                className="p-4 sm:p-5 flex items-center justify-between cursor-pointer hover:bg-stone-50/60"
-              >
-                <div className="flex items-center space-x-3">
-                  <span className="w-6 h-6 rounded-full bg-[#0F0F0F] text-[#D4AF37] font-mono text-xs font-bold flex items-center justify-center">
-                    1
-                  </span>
-                  <div>
-                    <h3 className="font-cinzel text-sm font-bold text-stone-900 uppercase tracking-wider">
-                      Patron Profile & WhatsApp Contact
-                    </h3>
-                    <p className="text-xs text-stone-500">{customerName} • {customerPhone}</p>
-                  </div>
+        {/* 2-Column Minimal Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          {/* LEFT: Clean Shipping Details Form */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="bg-white border border-stone-200/90 rounded-2xl p-6 sm:p-8 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-stone-100">
+                <div>
+                  <h3 className="font-cinzel text-lg font-bold text-stone-900 tracking-wide">
+                    Shipping Information
+                  </h3>
+                  <p className="text-xs text-stone-500 mt-0.5">
+                    No account required. Please enter your delivery coordinates.
+                  </p>
                 </div>
-                {currentStep > 1 && (
-                  <button className="text-xs text-[#C5A059] font-bold hover:underline">
-                    Edit
+
+                {/* Country Toggle Buttons */}
+                <div className="inline-flex items-center rounded-xl bg-stone-100 p-1 border border-stone-200">
+                  <button
+                    type="button"
+                    onClick={() => handleCountryToggle('India')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center space-x-1 ${
+                      country === 'India'
+                        ? 'bg-black text-[#D4AF37] shadow-xs'
+                        : 'text-stone-600 hover:text-black'
+                    }`}
+                  >
+                    <span>🇮🇳</span>
+                    <span>India</span>
                   </button>
-                )}
+                  <button
+                    type="button"
+                    onClick={() => handleCountryToggle('UAE')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center space-x-1 ${
+                      country === 'UAE'
+                        ? 'bg-black text-[#D4AF37] shadow-xs'
+                        : 'text-stone-600 hover:text-black'
+                    }`}
+                  >
+                    <span>🇦🇪</span>
+                    <span>UAE</span>
+                  </button>
+                </div>
               </div>
 
-              {currentStep === 1 && (
-                <div className="p-6 pt-2 border-t border-stone-100 space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                    <div>
-                      <label className="block font-semibold text-stone-700 mb-1">Full Name</label>
-                      <input
-                        type="text"
-                        value={customerName}
-                        onChange={e => setCustomerName(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:border-[#D4AF37]"
-                      />
-                    </div>
-                    <div>
-                      <label className="block font-semibold text-stone-700 mb-1">Email</label>
-                      <input
-                        type="email"
-                        value={customerEmail}
-                        onChange={e => setCustomerEmail(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:border-[#D4AF37]"
-                      />
-                    </div>
-                    <div>
-                      <label className="block font-semibold text-stone-700 mb-1">WhatsApp Mobile</label>
-                      <input
-                        type="tel"
-                        value={customerPhone}
-                        onChange={e => setCustomerPhone(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:border-[#D4AF37]"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex justify-end pt-2">
-                    <button
-                      onClick={() => setCurrentStep(2)}
-                      className="px-6 py-2.5 rounded-xl bg-[#0F0F0F] text-[#D4AF37] text-xs font-bold uppercase tracking-wider hover:bg-stone-800 transition"
-                    >
-                      Continue to Delivery Address
-                    </button>
-                  </div>
+              {errorMessage && (
+                <div className="mb-5 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs">
+                  {errorMessage}
                 </div>
               )}
-            </div>
 
-            {/* STEP 2: Delivery Address (India & UAE) */}
-            <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-xs">
-              <div
-                onClick={() => setCurrentStep(2)}
-                className="p-4 sm:p-5 flex items-center justify-between cursor-pointer hover:bg-stone-50/60"
-              >
-                <div className="flex items-center space-x-3">
-                  <span className="w-6 h-6 rounded-full bg-[#0F0F0F] text-[#D4AF37] font-mono text-xs font-bold flex items-center justify-center">
-                    2
-                  </span>
+              <form onSubmit={handleSubmitInquiry} className="space-y-4">
+                {/* Full Name & Phone */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <h3 className="font-cinzel text-sm font-bold text-stone-900 uppercase tracking-wider">
-                      Delivery Address (India & UAE)
-                    </h3>
-                    <p className="text-xs text-stone-500 truncate max-w-md">
-                      {selectedAddress.addressLine1}, {selectedAddress.city} ({selectedAddress.country})
-                    </p>
+                    <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                      Full Name <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Alexander Wright"
+                      value={fullName}
+                      onChange={e => setFullName(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs text-stone-900 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                      WhatsApp Mobile Number <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder={country === 'UAE' ? '+971 50 123 4567' : '+91 98765 43210'}
+                      value={phone}
+                      onChange={e => setPhone(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs text-stone-900 font-mono focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                    />
                   </div>
                 </div>
-                {currentStep > 2 && (
-                  <button className="text-xs text-[#C5A059] font-bold hover:underline">
-                    Change
-                  </button>
-                )}
-              </div>
 
-              {currentStep === 2 && (
-                <div className="p-6 pt-2 border-t border-stone-100 space-y-4">
-                  {/* Saved Addresses list */}
-                  <div className="space-y-3">
-                    {user?.addresses.map(addr => (
-                      <label
-                        key={addr.id}
-                        className={`block p-4 rounded-xl border cursor-pointer transition ${
-                          selectedAddressId === addr.id
-                            ? 'border-black bg-stone-50/70 shadow-xs'
-                            : 'border-stone-200 hover:border-stone-300'
-                        }`}
-                      >
-                        <div className="flex items-start space-x-3">
-                          <input
-                            type="radio"
-                            name="addressSelect"
-                            checked={selectedAddressId === addr.id}
-                            onChange={() => {
-                              setSelectedAddressId(addr.id);
-                              if (addr.country) setRegion(addr.country);
-                            }}
-                            className="mt-1 text-black focus:ring-[#D4AF37]"
-                          />
-                          <div className="flex-1 text-xs">
-                            <div className="flex items-center space-x-2">
-                              <span className="font-bold text-stone-900 text-sm">{addr.fullName}</span>
-                              <span className="px-2 py-0.2 rounded bg-stone-200 text-stone-700 font-semibold text-[10px]">
-                                {addr.country === 'UAE' ? '🇦🇪 UAE' : '🇮🇳 India'} • {addr.addressType}
-                              </span>
-                            </div>
-                            <p className="text-stone-600 mt-1">{addr.addressLine1}</p>
-                            {addr.addressLine2 && <p className="text-stone-600">{addr.addressLine2}</p>}
-                            <p className="text-stone-600">
-                              {addr.city}, {addr.state} - <strong className="text-stone-900 font-mono">{addr.pincode}</strong> ({addr.country || 'India'})
-                            </p>
-                            <p className="text-stone-600 mt-0.5">Mobile: {addr.phone}</p>
-                          </div>
-                        </div>
+                {/* Delivery Street Address */}
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                    Delivery Address <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder={
+                      country === 'UAE'
+                        ? 'Apartment / Villa No., Building Name, Street / Community'
+                        : 'House / Flat No., Apartment / Building, Street / Road'
+                    }
+                    value={addressLine}
+                    onChange={e => setAddressLine(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs text-stone-900 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                  />
+                </div>
+
+                {/* Landmark / Area */}
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                    {country === 'UAE' ? 'Area / Makani / Community (Optional)' : 'Landmark / Area (Optional)'}
+                  </label>
+                  <input
+                    type="text"
+                    placeholder={country === 'UAE' ? 'e.g. Downtown Dubai / Dubai Marina' : 'e.g. Near Grand Hotel'}
+                    value={landmark}
+                    onChange={e => setLandmark(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs text-stone-900 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                  />
+                </div>
+
+                {/* Region-Specific Fields */}
+                {country === 'India' ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                        City <span className="text-rose-500">*</span>
                       </label>
-                    ))}
-                  </div>
-
-                  {/* Add New Address with India / UAE toggle */}
-                  {showNewAddressForm ? (
-                    <form onSubmit={handleAddNewAddress} className="p-4 rounded-xl bg-[#FAFAF8] border border-stone-200 space-y-3 text-xs">
-                      <div className="flex items-center justify-between pb-2 border-b border-stone-200">
-                        <span className="font-bold text-stone-900">Add New Delivery Location</span>
-                        <div className="inline-flex rounded-lg border border-stone-300 p-0.5 bg-white text-xs font-semibold">
-                          <button
-                            type="button"
-                            onClick={() => { setNewCountry('India'); setNewState('Maharashtra'); }}
-                            className={`px-3 py-1 rounded transition ${newCountry === 'India' ? 'bg-[#0F0F0F] text-white' : 'text-stone-600'}`}
-                          >
-                            🇮🇳 India
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => { setNewCountry('UAE'); setNewState('Dubai'); }}
-                            className={`px-3 py-1 rounded transition ${newCountry === 'UAE' ? 'bg-[#0F0F0F] text-white' : 'text-stone-600'}`}
-                          >
-                            🇦🇪 UAE
-                          </button>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <input
-                          type="text"
-                          required
-                          placeholder="Recipient Name"
-                          value={newFullName}
-                          onChange={e => setNewFullName(e.target.value)}
-                          className="px-3 py-2 rounded-lg border border-stone-300 bg-white"
-                        />
-                        <input
-                          type="tel"
-                          required
-                          placeholder={newCountry === 'UAE' ? '+971 50 123 4567' : '+91 98765 43210'}
-                          value={newPhone}
-                          onChange={e => setNewPhone(e.target.value)}
-                          className="px-3 py-2 rounded-lg border border-stone-300 bg-white"
-                        />
-                      </div>
-
                       <input
                         type="text"
                         required
-                        placeholder={newCountry === 'UAE' ? 'Villa / Apartment No., Building / Street' : 'House / Flat No., Street, Area'}
-                        value={newLine1}
-                        onChange={e => setNewLine1(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg border border-stone-300 bg-white"
+                        placeholder="e.g. Mumbai"
+                        value={city}
+                        onChange={e => setCity(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs text-stone-900 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
                       />
+                    </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <input
-                          type="text"
-                          required
-                          placeholder={newCountry === 'UAE' ? 'City / Area (e.g. Downtown)' : 'City'}
-                          value={newCity}
-                          onChange={e => setNewCity(e.target.value)}
-                          className="px-3 py-2 rounded-lg border border-stone-300 bg-white"
-                        />
-
-                        {newCountry === 'UAE' ? (
-                          <select
-                            value={newState}
-                            onChange={e => setNewState(e.target.value)}
-                            className="px-3 py-2 rounded-lg border border-stone-300 bg-white font-medium"
-                          >
-                            <option value="Dubai">Dubai</option>
-                            <option value="Abu Dhabi">Abu Dhabi</option>
-                            <option value="Sharjah">Sharjah</option>
-                            <option value="Ajman">Ajman</option>
-                            <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-                            <option value="Fujairah">Fujairah</option>
-                            <option value="Umm Al Quwain">Umm Al Quwain</option>
-                          </select>
-                        ) : (
-                          <input
-                            type="text"
-                            required
-                            placeholder="State (e.g. Maharashtra)"
-                            value={newState}
-                            onChange={e => setNewState(e.target.value)}
-                            className="px-3 py-2 rounded-lg border border-stone-300 bg-white"
-                          />
-                        )}
-
-                        <input
-                          type="text"
-                          required
-                          placeholder={newCountry === 'UAE' ? 'Makani / Postal' : '6-digit PIN'}
-                          value={newPincode}
-                          onChange={e => setNewPincode(e.target.value)}
-                          className="px-3 py-2 rounded-lg border border-stone-300 bg-white font-mono"
-                        />
-                      </div>
-
-                      <div className="flex gap-2 pt-2">
-                        <button
-                          type="submit"
-                          className="px-4 py-2 bg-[#0F0F0F] text-[#D4AF37] font-bold text-xs uppercase tracking-wider rounded-lg"
-                        >
-                          Save Address
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setShowNewAddressForm(false)}
-                          className="px-4 py-2 bg-stone-200 text-stone-700 text-xs font-semibold rounded-lg"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </form>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => setShowNewAddressForm(true)}
-                      className="flex items-center space-x-1.5 text-xs font-semibold text-stone-800 hover:text-[#C5A059] transition"
-                    >
-                      <Plus className="w-4 h-4" />
-                      <span>Deliver to a New Address in India or UAE</span>
-                    </button>
-                  )}
-
-                  <div className="flex justify-end pt-3 border-t border-stone-100">
-                    <button
-                      onClick={() => setCurrentStep(3)}
-                      className="px-6 py-2.5 rounded-xl bg-[#0F0F0F] text-[#D4AF37] text-xs font-bold uppercase tracking-wider hover:bg-stone-800 transition"
-                    >
-                      Proceed to Order Summary
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* STEP 3: Order Summary */}
-            <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-xs">
-              <div
-                onClick={() => setCurrentStep(3)}
-                className="p-4 sm:p-5 flex items-center justify-between cursor-pointer hover:bg-stone-50/60"
-              >
-                <div className="flex items-center space-x-3">
-                  <span className="w-6 h-6 rounded-full bg-[#0F0F0F] text-[#D4AF37] font-mono text-xs font-bold flex items-center justify-center">
-                    3
-                  </span>
-                  <div>
-                    <h3 className="font-cinzel text-sm font-bold text-stone-900 uppercase tracking-wider">
-                      Order Summary
-                    </h3>
-                    <p className="text-xs text-stone-500">{cart.length} luxury watches/bags</p>
-                  </div>
-                </div>
-                {currentStep > 3 && (
-                  <button className="text-xs text-[#C5A059] font-bold hover:underline">
-                    View
-                  </button>
-                )}
-              </div>
-
-              {currentStep === 3 && (
-                <div className="p-6 pt-2 border-t border-stone-100 space-y-4">
-                  <div className="divide-y divide-stone-100">
-                    {cart.map(it => (
-                      <div key={it.id} className="py-3 flex items-center space-x-4 text-xs">
-                        <img src={it.image} alt={it.name} className="w-14 h-18 object-cover object-center rounded-lg border border-stone-200 shrink-0" />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-[10px] font-bold text-[#D4AF37] uppercase">{it.brand}</p>
-                          <p className="font-bold text-stone-900 truncate">{it.name}</p>
-                          <p className="text-stone-500">Spec: <strong>{it.size}</strong> | Shade: <strong>{it.color}</strong> | Qty: {it.quantity}</p>
-                        </div>
-                        <span className="font-bold font-mono text-stone-900">
-                          {formatPrice(it.price * it.quantity, (it.priceAED || 0) * it.quantity)}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="flex justify-end pt-3 border-t border-stone-100">
-                    <button
-                      onClick={() => setCurrentStep(4)}
-                      className="px-6 py-2.5 rounded-xl bg-[#0F0F0F] text-[#D4AF37] text-xs font-bold uppercase tracking-wider hover:bg-stone-800 transition"
-                    >
-                      Proceed to Payment & WhatsApp Dispatch
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* STEP 4: Payment / WhatsApp Ordering Method */}
-            <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-xs">
-              <div
-                onClick={() => setCurrentStep(4)}
-                className="p-4 sm:p-5 flex items-center justify-between cursor-pointer hover:bg-stone-50/60"
-              >
-                <div className="flex items-center space-x-3">
-                  <span className="w-6 h-6 rounded-full bg-[#0F0F0F] text-[#D4AF37] font-mono text-xs font-bold flex items-center justify-center">
-                    4
-                  </span>
-                  <div>
-                    <h3 className="font-cinzel text-sm font-bold text-stone-900 uppercase tracking-wider">
-                      Ordering & Payment Channel
-                    </h3>
-                    <p className="text-xs text-stone-500">Direct WhatsApp Ordering (+971 55 678 7854), COD or Online</p>
-                  </div>
-                </div>
-              </div>
-
-              {currentStep === 4 && (
-                <div className="p-6 pt-2 border-t border-stone-100 space-y-4">
-                  <div className="space-y-3">
-                    {/* 1. WHATSAPP ORDERING CHANNEL (RECOMMENDED) */}
-                    <label
-                      className={`block p-4 rounded-xl border cursor-pointer transition ${
-                        paymentMethod === 'whatsapp' ? 'border-emerald-600 bg-emerald-50/70 shadow-sm' : 'border-stone-200'
-                      }`}
-                    >
-                      <div className="flex items-start space-x-3">
-                        <input
-                          type="radio"
-                          name="payment"
-                          checked={paymentMethod === 'whatsapp'}
-                          onChange={() => setPaymentMethod('whatsapp')}
-                          className="mt-1 text-emerald-600 focus:ring-emerald-500"
-                        />
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2">
-                            <MessageCircle className="w-4 h-4 text-emerald-600 fill-emerald-600" />
-                            <span className="text-xs font-bold text-stone-900">
-                              Direct WhatsApp Dispatch ({OFFICIAL_WHATSAPP_NUMBER})
-                            </span>
-                            <span className="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-600 text-white">
-                              Official
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-stone-600 mt-1">
-                            Your complete order summary with address and selected items will be sent directly to our Dubai concierge (+971 55 678 7854) for instant confirmation and white-glove dispatch.
-                          </p>
-                        </div>
-                      </div>
-                    </label>
-
-                    {/* Cash on Delivery / Card on Handover */}
-                    <label
-                      className={`block p-4 rounded-xl border cursor-pointer transition ${
-                        paymentMethod === 'cod' ? 'border-black bg-stone-50' : 'border-stone-200'
-                      }`}
-                    >
-                      <div className="flex items-start space-x-3">
-                        <input
-                          type="radio"
-                          name="payment"
-                          checked={paymentMethod === 'cod'}
-                          onChange={() => setPaymentMethod('cod')}
-                          className="mt-1 text-black focus:ring-[#D4AF37]"
-                        />
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2">
-                            <Truck className="w-4 h-4 text-[#D4AF37]" />
-                            <span className="text-xs font-bold text-stone-900">
-                              Cash / Card on Delivery (Doorstep Handover)
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-stone-500 mt-0.5">
-                            Available across major UAE Emirates and all Indian PIN codes.
-                          </p>
-                        </div>
-                      </div>
-                    </label>
-
-                    {/* UPI (India) */}
-                    {selectedAddress.country === 'India' && (
-                      <label
-                        className={`block p-4 rounded-xl border cursor-pointer transition ${
-                          paymentMethod === 'upi' ? 'border-black bg-stone-50' : 'border-stone-200'
-                        }`}
-                      >
-                        <div className="flex items-start space-x-3">
-                          <input
-                            type="radio"
-                            name="payment"
-                            checked={paymentMethod === 'upi'}
-                            onChange={() => setPaymentMethod('upi')}
-                            className="mt-1 text-black focus:ring-[#D4AF37]"
-                          />
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-2">
-                              <QrCode className="w-4 h-4 text-[#D4AF37]" />
-                              <span className="text-xs font-bold text-stone-900">Instant UPI (GPay, PhonePe, Paytm, BHIM)</span>
-                            </div>
-                            <p className="text-[11px] text-stone-500 mt-0.5">Automated UPI payment gateway.</p>
-                          </div>
-                        </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                        State <span className="text-rose-500">*</span>
                       </label>
-                    )}
+                      <select
+                        value={stateOrEmirate}
+                        onChange={e => setStateOrEmirate(e.target.value)}
+                        className="w-full px-3 py-2.5 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                      >
+                        {INDIAN_STATES.map(st => (
+                          <option key={st} value={st}>{st}</option>
+                        ))}
+                      </select>
+                    </div>
 
-                    {/* Credit / Debit Card */}
-                    <label
-                      className={`block p-4 rounded-xl border cursor-pointer transition ${
-                        paymentMethod === 'card' ? 'border-black bg-stone-50' : 'border-stone-200'
-                      }`}
-                    >
-                      <div className="flex items-start space-x-3">
-                        <input
-                          type="radio"
-                          name="payment"
-                          checked={paymentMethod === 'card'}
-                          onChange={() => setPaymentMethod('card')}
-                          className="mt-1 text-black focus:ring-[#D4AF37]"
-                        />
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2">
-                            <CreditCard className="w-4 h-4 text-[#D4AF37]" />
-                            <span className="text-xs font-bold text-stone-900">International Credit / Debit Card (Visa, MasterCard, Amex)</span>
-                          </div>
-                          <p className="text-[11px] text-stone-500 mt-0.5">Supports AED and INR transactions.</p>
-                        </div>
-                      </div>
-                    </label>
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                        PIN Code <span className="text-rose-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        maxLength={6}
+                        placeholder="6 Digits"
+                        value={pincode}
+                        onChange={e => setPincode(e.target.value.replace(/\D/g, ''))}
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs text-stone-900 font-mono focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                      />
+                    </div>
                   </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                        Emirate <span className="text-rose-500">*</span>
+                      </label>
+                      <select
+                        value={stateOrEmirate}
+                        onChange={e => setStateOrEmirate(e.target.value)}
+                        className="w-full px-3 py-2.5 rounded-xl border border-stone-300 text-xs text-stone-900 bg-white focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                      >
+                        {UAE_EMIRATES.map(em => (
+                          <option key={em} value={em}>{em}</option>
+                        ))}
+                      </select>
+                    </div>
 
-                  {/* Complete Order Button */}
-                  <div className="pt-4 border-t border-stone-200">
-                    <button
-                      onClick={handlePlaceOrder}
-                      disabled={isProcessingOrder}
-                      className="w-full py-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm uppercase tracking-widest transition flex items-center justify-center space-x-2 shadow-lg disabled:opacity-50"
-                    >
-                      <MessageCircle className="w-5 h-5 fill-white" />
-                      <span>
-                        {isProcessingOrder
-                          ? 'Transmitting Order...'
-                          : `Complete Order & Send to WhatsApp (${OFFICIAL_WHATSAPP_NUMBER})`}
-                      </span>
-                    </button>
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                        Area / Sector
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Palm Jumeirah"
+                        value={city}
+                        onChange={e => setCity(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs text-stone-900 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                      />
+                    </div>
                   </div>
+                )}
+
+                {/* Special Instructions */}
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                    Special Inquiries / Gift Wrapping (Optional)
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="e.g. Please include bespoke gift packaging / call before delivery."
+                    value={notes}
+                    onChange={e => setNotes(e.target.value)}
+                    className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs text-stone-900 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                  />
                 </div>
-              )}
+
+                {/* Primary Action Button */}
+                <div className="pt-4">
+                  <button
+                    type="submit"
+                    className="w-full py-4 px-6 rounded-2xl bg-[#0F0F0F] text-[#D4AF37] hover:bg-stone-900 font-cinzel text-xs font-bold tracking-widest uppercase transition flex items-center justify-center space-x-2.5 shadow-lg hover:shadow-xl"
+                  >
+                    <MessageCircle className="w-4 h-4 fill-emerald-500 text-emerald-500" />
+                    <span>Send Order Enquiry on WhatsApp</span>
+                  </button>
+                  <p className="text-[11px] text-center text-stone-500 mt-2.5">
+                    Orders are confirmed directly with our concierge desk at <strong className="text-stone-800">{OFFICIAL_WHATSAPP_NUMBER}</strong>.
+                  </p>
+                </div>
+              </form>
             </div>
           </div>
 
-          {/* RIGHT: Price Details sticky card (4 cols) */}
-          <div className="lg:col-span-4 sticky top-28">
-            <div className="bg-white rounded-2xl p-6 border border-stone-200 shadow-xs space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-stone-100">
-                <h3 className="font-cinzel text-sm font-bold text-stone-900 uppercase tracking-widest">
-                  Order Summary
-                </h3>
-                <span className="text-xs bg-stone-100 text-stone-800 font-mono font-bold px-2 py-0.5 rounded">
-                  {selectedAddress.country === 'UAE' ? '🇦🇪 AED' : '🇮🇳 INR'}
-                </span>
+          {/* RIGHT: Order Summary */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="bg-white border border-stone-200/90 rounded-2xl p-6 shadow-xs sticky top-20">
+              <h3 className="font-cinzel text-sm font-bold uppercase tracking-wider text-stone-900 mb-4 pb-3 border-b border-stone-100">
+                Selected Pieces ({cart.length})
+              </h3>
+
+              {/* Items List */}
+              <div className="divide-y divide-stone-100 max-h-72 overflow-y-auto pr-1 space-y-3">
+                {cart.map(item => (
+                  <div key={item.id} className="pt-3 first:pt-0 flex items-center space-x-3">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-14 h-16 object-cover rounded-lg border border-stone-200 shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[10px] text-[#D4AF37] uppercase font-bold tracking-wider font-cinzel">
+                        {item.brand}
+                      </p>
+                      <h4 className="text-xs font-semibold text-stone-900 truncate">
+                        {item.name}
+                      </h4>
+                      <p className="text-[11px] text-stone-500">
+                        {item.size} • {item.color} • Qty: {item.quantity}
+                      </p>
+                    </div>
+                    <span className="text-xs font-bold font-mono text-stone-900 shrink-0">
+                      {formatPrice(item.price * item.quantity, (item.priceAED || 0) * item.quantity)}
+                    </span>
+                  </div>
+                ))}
               </div>
 
-              <div className="space-y-2 text-xs text-stone-600">
-                <div className="flex justify-between">
-                  <span>Subtotal ({cart.length} items)</span>
-                  <span className="font-mono text-stone-900">{formatPrice(subtotal)}</span>
+              {/* Cost Breakdown */}
+              <div className="mt-6 pt-4 border-t border-stone-200 space-y-2 text-xs">
+                <div className="flex justify-between text-stone-600">
+                  <span>Subtotal</span>
+                  <span className="font-mono">{formatPrice(finalTotal)}</span>
                 </div>
-                {couponDiscount > 0 && (
-                  <div className="flex justify-between text-emerald-700 font-semibold">
-                    <span>Voucher ({appliedCoupon?.code})</span>
-                    <span className="font-mono">-{formatPrice(couponDiscount)}</span>
-                  </div>
-                )}
-                <div className="flex justify-between">
-                  <span>Insured Air Cargo</span>
-                  {deliveryFee === 0 ? (
-                    <span className="text-emerald-700 font-bold uppercase text-[10px]">FREE</span>
-                  ) : (
-                    <span className="font-mono text-stone-900">{formatPrice(deliveryFee)}</span>
-                  )}
+                <div className="flex justify-between text-emerald-700 font-medium">
+                  <span className="flex items-center space-x-1">
+                    <Truck className="w-3.5 h-3.5" />
+                    <span>White-Glove Insured Cargo</span>
+                  </span>
+                  <span className="font-semibold uppercase tracking-wider text-[11px]">Complimentary</span>
                 </div>
-
-                <div className="pt-3 border-t border-stone-200 flex justify-between items-baseline text-stone-900">
-                  <span className="text-sm font-bold">Total Payable</span>
-                  <span className="text-xl font-bold font-mono text-stone-900">
+                <div className="pt-3 border-t border-stone-200 flex justify-between items-baseline">
+                  <span className="font-cinzel text-sm font-bold text-stone-900 uppercase tracking-wide">
+                    Total
+                  </span>
+                  <span className="font-mono text-lg font-bold text-stone-900">
                     {formatPrice(finalTotal)}
                   </span>
                 </div>
               </div>
 
-              {/* Destination preview */}
-              <div className="pt-3 border-t border-stone-100 text-xs text-stone-600">
-                <div className="flex items-center space-x-1.5 font-bold text-stone-900 mb-1">
-                  <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
-                  <span>Delivering To:</span>
+              {/* Trust Pillars */}
+              <div className="mt-6 pt-4 border-t border-stone-100 space-y-2 text-[11px] text-stone-500">
+                <div className="flex items-center space-x-2">
+                  <ShieldCheck className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                  <span>100% Certified Authentic Swiss Horology & Leather</span>
                 </div>
-                <p className="text-stone-700 font-medium truncate">{selectedAddress.fullName}</p>
-                <p className="text-[11px] text-stone-500 line-clamp-1">
-                  {selectedAddress.addressLine1}, {selectedAddress.city} ({selectedAddress.country})
-                </p>
-              </div>
-
-              {/* WhatsApp confirmation box */}
-              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] text-emerald-900 space-y-1">
-                <p className="font-bold flex items-center">
-                  <MessageCircle className="w-3.5 h-3.5 mr-1 text-emerald-600" /> WhatsApp Dispatch Channel
-                </p>
-                <p className="text-stone-600">
-                  Order summary auto-routes to: <strong className="text-stone-900">{OFFICIAL_WHATSAPP_NUMBER}</strong>
-                </p>
+                <div className="flex items-center space-x-2">
+                  <MessageCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Direct Concierge Verification on WhatsApp</span>
+                </div>
               </div>
             </div>
           </div>

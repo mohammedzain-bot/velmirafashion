@@ -16,41 +16,12 @@ interface AuthContextType {
 }
 
 const DEMO_CUSTOMER: User = {
-  id: 'usr-1',
-  name: 'Aarav Sharma',
-  email: 'aarav.sharma@velmira.in',
-  phone: '+91 98765 43210',
+  id: 'usr-guest',
+  name: '',
+  email: '',
+  phone: '',
   role: 'customer',
-  addresses: [
-    {
-      id: 'addr-1',
-      fullName: 'Aarav Sharma',
-      phone: '+91 98765 43210',
-      country: 'India',
-      addressLine1: 'Penthouse 14B, Oberoi Sky Heights',
-      addressLine2: 'Lokhandwala Complex, Andheri West',
-      landmark: 'Near Infiniti Mall',
-      city: 'Mumbai',
-      state: 'Maharashtra',
-      pincode: '400053',
-      addressType: 'Home',
-      isDefault: true
-    },
-    {
-      id: 'addr-2',
-      fullName: 'Aarav Sharma (Office)',
-      phone: '+91 98765 43210',
-      country: 'India',
-      addressLine1: 'Level 8, Maker Maxity, Bandra Kurla Complex',
-      addressLine2: 'BKC East',
-      landmark: 'Opposite Trident Hotel',
-      city: 'Mumbai',
-      state: 'Maharashtra',
-      pincode: '400051',
-      addressType: 'Work',
-      isDefault: false
-    }
-  ],
+  addresses: [],
   createdAt: '2026-01-01T10:00:00Z'
 };
 
@@ -70,9 +41,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(() => {
     try {
       const saved = localStorage.getItem('velmira_auth_user');
-      return saved ? JSON.parse(saved) : DEMO_CUSTOMER;
+      return saved ? JSON.parse(saved) : null;
     } catch {
-      return DEMO_CUSTOMER;
+      return null;
     }
   });
 

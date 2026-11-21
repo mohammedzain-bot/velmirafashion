@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Heart, Star, ShoppingBag, Eye, Zap, MessageCircle } from 'lucide-react';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
@@ -13,6 +13,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }) => {
+  const navigate = useNavigate();
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
   const { formatPrice, currency } = useCurrency();
@@ -31,6 +32,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
       product.colors[0]?.name || 'Standard',
       1
     );
+  };
+
+  const handleBuyNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(
+      product,
+      product.sizes[0] || 'One Size',
+      product.colors[0]?.name || 'Standard',
+      1
+    );
+    navigate('/checkout');
   };
 
   const handleWhatsAppOrder = (e: React.MouseEvent) => {
@@ -153,24 +166,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
             )}
           </div>
 
-          <div className="flex items-center space-x-1">
-            {/* WhatsApp Quick Buy */}
+          <div className="flex items-center space-x-1.5">
+            {/* Direct WhatsApp Concierge button */}
             <button
               onClick={handleWhatsAppOrder}
-              className="p-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition-all shadow-xs"
-              title="Order on WhatsApp (+971 55 678 7854)"
+              className="p-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition shadow-xs"
+              title="Quick WhatsApp Inquiry (+971 55 678 7854)"
             >
               <MessageCircle className="w-3.5 h-3.5 fill-white" />
             </button>
 
-            {/* Add to Bag */}
+            {/* Buy / Inquiry Button */}
             <button
-              onClick={handleQuickAdd}
-              className="p-2 sm:px-3 sm:py-1.5 rounded-lg bg-[#0F0F0F] text-[#D4AF37] hover:bg-stone-800 transition-all flex items-center space-x-1 shadow-xs"
-              title="Add to Bag"
+              onClick={handleBuyNow}
+              className="py-1 px-3 rounded-lg bg-[#0F0F0F] text-[#D4AF37] hover:bg-stone-800 transition text-[11px] font-bold uppercase tracking-wider font-cinzel shadow-xs"
+              title="Buy Now"
             >
-              <ShoppingBag className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline text-xs font-semibold uppercase tracking-wider">Add</span>
+              Buy
             </button>
           </div>
         </div>

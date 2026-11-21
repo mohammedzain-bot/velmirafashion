@@ -1,41 +1,5 @@
 [
   {
-    "id": "usr-1",
-    "name": "Aarav Sharma",
-    "email": "aarav.sharma@velmira.in",
-    "phone": "+91 98765 43210",
-    "role": "customer",
-    "addresses": [
-      {
-        "id": "addr-1",
-        "fullName": "Aarav Sharma",
-        "phone": "+91 98765 43210",
-        "addressLine1": "Penthouse 14B, Oberoi Sky Heights",
-        "addressLine2": "Lokhandwala Complex, Andheri West",
-        "landmark": "Near Infiniti Mall",
-        "city": "Mumbai",
-        "state": "Maharashtra",
-        "pincode": "400053",
-        "addressType": "Home",
-        "isDefault": true
-      },
-      {
-        "id": "addr-2",
-        "fullName": "Aarav Sharma (Office)",
-        "phone": "+91 98765 43210",
-        "addressLine1": "Level 8, Maker Maxity, Bandra Kurla Complex",
-        "addressLine2": "BKC",
-        "landmark": "Opposite Trident Hotel",
-        "city": "Mumbai",
-        "state": "Maharashtra",
-        "pincode": "400051",
-        "addressType": "Work",
-        "isDefault": false
-      }
-    ],
-    "createdAt": "2026-01-01T10:00:00Z"
-  },
-  {
     "id": "usr-admin",
     "name": "Velmira Fashion Director",
     "email": "admin@velmira.com",

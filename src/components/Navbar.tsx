@@ -152,12 +152,7 @@ export const Navbar: React.FC = () => {
             </div>
 
             <div className="hidden md:flex items-center space-x-4 text-stone-400">
-              <Link to="/dashboard?tab=orders" className="hover:text-[#D4AF37] transition flex items-center space-x-1">
-                <Package className="w-3.5 h-3.5" />
-                <span>Track</span>
-              </Link>
-              <span className="text-stone-700">|</span>
-              <Link to="/admin" className="hover:text-[#D4AF37] transition flex items-center space-x-1 text-amber-300">
+              <Link to="/admin" className="hover:text-[#D4AF37] transition flex items-center space-x-1 text-stone-400 hover:text-white text-[11px]">
                 <Shield className="w-3.5 h-3.5" />
                 <span>Admin</span>
               </Link>
@@ -274,68 +269,16 @@ export const Navbar: React.FC = () => {
               <span>WhatsApp: +971 55 678 7854</span>
             </a>
 
-            {/* Account Menu */}
-            <div ref={userMenuRef} className="relative">
-              {user ? (
-                <button
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center space-x-2 py-1.5 px-3 rounded-full bg-stone-900 hover:bg-stone-800 border border-stone-800 transition"
-                >
-                  <div className="w-6 h-6 rounded-full bg-[#D4AF37] text-black font-bold text-xs flex items-center justify-center font-cinzel">
-                    {user.name.charAt(0)}
-                  </div>
-                  <ChevronDown className="w-3.5 h-3.5 text-stone-400" />
-                </button>
-              ) : (
-                <button
-                  onClick={() => setIsAuthModalOpen(true)}
-                  className="px-3.5 py-1.5 rounded-full bg-stone-900 hover:bg-stone-800 border border-stone-700 text-white text-xs font-semibold uppercase tracking-wider flex items-center space-x-1.5 transition"
-                >
-                  <UserIcon className="w-3.5 h-3.5 text-[#D4AF37]" />
-                  <span>Login</span>
-                </button>
-              )}
-
-              {isUserMenuOpen && user && (
-                <div className="absolute right-0 mt-2 w-56 bg-white text-stone-800 rounded-xl shadow-2xl border border-stone-200 py-2 z-50">
-                  <div className="px-4 py-2 border-b border-stone-100">
-                    <p className="text-xs font-bold text-stone-900">{user.name}</p>
-                    <p className="text-[11px] text-stone-500 truncate">{user.email}</p>
-                  </div>
-                  <Link
-                    to="/dashboard?tab=orders"
-                    onClick={() => setIsUserMenuOpen(false)}
-                    className="flex items-center space-x-2 px-4 py-2 text-xs text-stone-700 hover:bg-stone-50"
-                  >
-                    <Package className="w-3.5 h-3.5 text-stone-400" />
-                    <span>My Orders</span>
-                  </Link>
-                  <Link
-                    to="/dashboard?tab=wishlist"
-                    onClick={() => setIsUserMenuOpen(false)}
-                    className="flex items-center space-x-2 px-4 py-2 text-xs text-stone-700 hover:bg-stone-50"
-                  >
-                    <Heart className="w-3.5 h-3.5 text-stone-400" />
-                    <span>Wishlist ({wishlistIds.length})</span>
-                  </Link>
-                  <Link
-                    to="/admin"
-                    onClick={() => setIsUserMenuOpen(false)}
-                    className="flex items-center space-x-2 px-4 py-2 text-xs font-semibold text-amber-800 bg-amber-50/60"
-                  >
-                    <Shield className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    <span>Admin Portal</span>
-                  </Link>
-                  <button
-                    onClick={() => { logout(); setIsUserMenuOpen(false); }}
-                    className="w-full text-left flex items-center space-x-2 px-4 py-2 text-xs text-red-600 hover:bg-red-50"
-                  >
-                    <LogOut className="w-3.5 h-3.5" />
-                    <span>Sign Out</span>
-                  </button>
-                </div>
-              )}
-            </div>
+            {/* Admin shortcut if logged in as admin */}
+            {user?.role === 'admin' && (
+              <Link
+                to="/admin"
+                className="py-1 px-2.5 rounded-lg bg-stone-900 border border-stone-700 text-[#D4AF37] text-xs font-semibold flex items-center space-x-1"
+              >
+                <Shield className="w-3.5 h-3.5" />
+                <span>Admin</span>
+              </Link>
+            )}
 
             {/* Wishlist Icon */}
             <Link
