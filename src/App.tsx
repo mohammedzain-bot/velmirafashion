@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { WishlistProvider } from './context/WishlistContext';
@@ -48,7 +48,7 @@ const AppLayout: React.FC = () => {
     }
   }, [showIntro, setIsRegionModalOpen]);
 
-  const handleIntroComplete = () => {
+  const handleIntroComplete = useCallback(() => {
     try {
       sessionStorage.setItem('velmira_has_seen_intro', 'true');
     } catch {
@@ -56,7 +56,7 @@ const AppLayout: React.FC = () => {
     }
     setShowIntro(false);
     setIsRegionModalOpen(true);
-  };
+  }, [setIsRegionModalOpen]);
 
   return (
     <div className="flex flex-col min-h-screen text-[#1A1A1A] bg-[#F8F9FA]">
@@ -95,21 +95,68 @@ const AppLayout: React.FC = () => {
   );
 };
 
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error?: Error;
+}
+
+class ErrorBoundary extends React.Component<{ children: React.ReactNode }, ErrorBoundaryState> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Velmira App Error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-[#0F0F0F] text-white flex flex-col items-center justify-center p-6 text-center">
+          <h2 className="font-cinzel text-2xl font-bold text-[#D4AF37] mb-2">VELMIRA</h2>
+          <p className="text-xs text-stone-300 max-w-sm mb-6">
+            Something went wrong while loading the page.
+          </p>
+          <button
+            onClick={() => {
+              try {
+                sessionStorage.clear();
+              } catch {}
+              window.location.href = '/';
+            }}
+            className="px-6 py-2.5 rounded-full bg-[#D4AF37] text-black font-cinzel text-xs font-bold tracking-widest uppercase hover:bg-[#c5a059] transition"
+          >
+            Reload Boutique
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export function App() {
   return (
-    <Router>
-      <CurrencyProvider>
-        <AuthProvider>
-          <WishlistProvider>
-            <CartProvider>
-              <ShopProvider>
-                <AppLayout />
-              </ShopProvider>
-            </CartProvider>
-          </WishlistProvider>
-        </AuthProvider>
-      </CurrencyProvider>
-    </Router>
+    <ErrorBoundary>
+      <Router>
+        <CurrencyProvider>
+          <AuthProvider>
+            <WishlistProvider>
+              <CartProvider>
+                <ShopProvider>
+                  <AppLayout />
+                </ShopProvider>
+              </CartProvider>
+            </WishlistProvider>
+          </AuthProvider>
+        </CurrencyProvider>
+      </Router>
+    </ErrorBoundary>
   );
 }
 

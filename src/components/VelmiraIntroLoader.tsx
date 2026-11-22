@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface VelmiraIntroLoaderProps {
   onComplete: () => void;
@@ -9,6 +9,8 @@ const BRAND_LETTERS = ['V', 'E', 'L', 'M', 'I', 'R', 'A'];
 export const VelmiraIntroLoader: React.FC<VelmiraIntroLoaderProps> = ({ onComplete }) => {
   const [visibleCount, setVisibleCount] = useState<number>(0);
   const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
     // Reveal VELMIRA letters one by one
@@ -17,30 +19,31 @@ export const VelmiraIntroLoader: React.FC<VelmiraIntroLoaderProps> = ({ onComple
     BRAND_LETTERS.forEach((_, index) => {
       const timer = setTimeout(() => {
         setVisibleCount(prev => Math.max(prev, index + 1));
-      }, 180 + index * 190); // 180ms, 370ms, 560ms, 750ms, 940ms, 1130ms, 1320ms
+      }, 140 + index * 160);
       intervals.push(timer);
     });
 
     // Fade out screen
     const fadeTimer = setTimeout(() => {
       setIsFadingOut(true);
-    }, 1900);
+    }, 1600);
 
     // Complete loader and trigger country pop-up
     const completeTimer = setTimeout(() => {
-      onComplete();
-    }, 2400);
+      onCompleteRef.current();
+    }, 2100);
 
     return () => {
       intervals.forEach(t => clearTimeout(t));
       clearTimeout(fadeTimer);
       clearTimeout(completeTimer);
     };
-  }, [onComplete]);
+  }, []);
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] bg-[#0F0F0F] flex items-center justify-center select-none transition-opacity duration-500 ${
+      onClick={() => onCompleteRef.current()}
+      className={`fixed inset-0 z-[9999] bg-[#0F0F0F] flex items-center justify-center select-none cursor-pointer transition-opacity duration-500 ${
         isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
