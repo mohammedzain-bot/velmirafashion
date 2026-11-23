@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Sparkles, Check, ArrowRight } from 'lucide-react';
+import { Mail, Phone, MapPin, Sparkles, Check, ArrowRight, MessageCircle } from 'lucide-react';
+import { OFFICIAL_WHATSAPP_NUMBER, WHATSAPP_RAW_NUMBER } from '../utils/whatsapp';
 
 export const Footer: React.FC = () => {
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -22,13 +23,13 @@ export const Footer: React.FC = () => {
           <div className="max-w-xl text-center lg:text-left">
             <div className="inline-flex items-center space-x-1.5 text-[#D4AF37] text-xs font-semibold uppercase tracking-widest mb-1.5">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Velmira Privé Newsletter</span>
+              <span>Velmira Privé Club</span>
             </div>
             <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide">
-              Receive Invitations to Private Runway Previews
+              Receive Private Horology & Leather Previews
             </h3>
             <p className="text-xs text-stone-400 mt-2">
-              Subscribe to unlock 15% off your maiden purchase and complimentary seasonal lookbooks.
+              Subscribe for private vault access to limited edition automatic timepieces and bespoke handcrafted leather bags.
             </p>
           </div>
 
@@ -60,7 +61,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* 4-Column Links Grid */}
+        {/* Links Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 pb-12 border-b border-stone-800/80">
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
@@ -72,20 +73,20 @@ export const Footer: React.FC = () => {
                 <span className="w-2 h-2 rounded-full bg-[#D4AF37]" />
               </div>
               <span className="text-[9px] font-semibold tracking-[0.3em] text-[#D4AF37] uppercase -mt-1 block font-sans">
-                Haute Couture & Living
+                Haute Horlogerie & Leather Atelier
               </span>
             </Link>
             <p className="text-xs text-stone-400 leading-relaxed max-w-sm">
-              Velmira Fashion is an independent luxury fashion house that marries timeless Indian handloom craftsmanship with European sartorial silhouettes. Dedicated to discerning connoisseurs across the globe.
+              Velmira is an independent luxury atelier curating bespoke Swiss precision automatic timepieces and handcrafted Italian leather bags. Direct delivery across India & the United Arab Emirates.
             </p>
             <div className="space-y-2 text-xs text-stone-400 pt-2">
               <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                <span>Atelier Velmira, Nariman Point, Mumbai 400021, India</span>
+                <MessageCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>WhatsApp Concierge: <strong className="text-emerald-400 font-mono">{OFFICIAL_WHATSAPP_NUMBER}</strong></span>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                <span>+91 (022) 8000-VELMIRA / +91 98200 11223</span>
+                <MapPin className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                <span>Regional Ateliers: Dubai, UAE & Mumbai, India</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-[#D4AF37] shrink-0" />
@@ -94,74 +95,69 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Categories */}
+          {/* Timepieces Categories */}
           <div>
             <h4 className="font-cinzel text-xs font-bold text-white uppercase tracking-widest mb-4">
-              Collections
+              Timepieces
             </h4>
             <ul className="space-y-2 text-xs text-stone-400">
               <li>
-                <Link to="/products?category=Ethnic%20Wear" className="hover:text-[#D4AF37] transition">
-                  Royal Ethnic & Sarees
+                <Link to="/products?category=Watches" className="hover:text-[#D4AF37] transition">
+                  Automatic Chronographs
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=Men" className="hover:text-[#D4AF37] transition">
-                  Men's Sartorial Blazers
+                <Link to="/products?category=Men's%20Watches" className="hover:text-[#D4AF37] transition">
+                  Men's Haute Horology
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=Women" className="hover:text-[#D4AF37] transition">
-                  Evening Silk Gowns
+                <Link to="/products?category=Women's%20Watches" className="hover:text-[#D4AF37] transition">
+                  Women's Diamond Bezels
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=Footwear" className="hover:text-[#D4AF37] transition">
-                  Goodyear Leather Footwear
+                <Link to="/products?category=Watches" className="hover:text-[#D4AF37] transition">
+                  300M Diver Complications
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=Accessories" className="hover:text-[#D4AF37] transition">
-                  Horology & Saffiano Bags
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=New%20Arrivals" className="hover:text-[#D4AF37] transition text-amber-300">
-                  New Season Runway
+                <Link to="/products?category=Watches" className="hover:text-[#D4AF37] transition">
+                  Open-Heart Tourbillons
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Client Concierge */}
+          {/* Luxury Bags Categories */}
           <div>
             <h4 className="font-cinzel text-xs font-bold text-white uppercase tracking-widest mb-4">
-              Client Concierge
+              Designer Bags
             </h4>
             <ul className="space-y-2 text-xs text-stone-400">
               <li>
-                <Link to="/dashboard?tab=orders" className="hover:text-[#D4AF37] transition">
-                  Track Live Consignment
+                <Link to="/products?category=Leather%20Bags" className="hover:text-[#D4AF37] transition">
+                  Italian Saffiano Handbags
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard?tab=returns" className="hover:text-[#D4AF37] transition">
-                  7-Day Returns & Exchanges
+                <Link to="/products?category=Tote%20Bags" className="hover:text-[#D4AF37] transition">
+                  Executive Leather Totes
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard?tab=addresses" className="hover:text-[#D4AF37] transition">
-                  White-Glove Delivery Info
+                <Link to="/products?category=Leather%20Bags" className="hover:text-[#D4AF37] transition">
+                  Box Calfskin Kelly Bags
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard?tab=profile" className="hover:text-[#D4AF37] transition">
-                  Personal Stylist Booking
+                <Link to="/products?category=Clutches%20%26%20Wallets" className="hover:text-[#D4AF37] transition">
+                  Evening Clutches & Wallets
                 </Link>
               </li>
               <li>
-                <Link to="/admin" className="hover:text-[#D4AF37] transition text-amber-400">
-                  Admin Management Portal
+                <Link to="/products?category=Bags" className="hover:text-[#D4AF37] transition">
+                  Weekend Travel Duffles
                 </Link>
               </li>
             </ul>
@@ -173,28 +169,26 @@ export const Footer: React.FC = () => {
               Assurance
             </h4>
             <div className="space-y-3 text-xs text-stone-400">
-              <div className="p-2.5 rounded-lg bg-stone-900 border border-stone-800">
-                <p className="font-semibold text-white text-[11px]">100% Genuine Certified</p>
-                <p className="text-[10px] text-stone-400 mt-0.5">Authentic Silk Mark & GI-Tagged textiles.</p>
+              <div className="p-3 rounded-xl bg-stone-900 border border-stone-800">
+                <p className="font-semibold text-white text-[11px]">100% Certified Authentic</p>
+                <p className="text-[10px] text-stone-400 mt-0.5">Swiss mechanical movements & Italian full-grain calfskin leather.</p>
               </div>
-              <div className="p-2.5 rounded-lg bg-stone-900 border border-stone-800">
-                <p className="font-semibold text-white text-[11px]">Express Air Cargo</p>
-                <p className="text-[10px] text-stone-400 mt-0.5">Dispatched via BlueDart Luxury Express.</p>
+              <div className="p-3 rounded-xl bg-stone-900 border border-stone-800">
+                <p className="font-semibold text-white text-[11px]">White-Glove Express Cargo</p>
+                <p className="text-[10px] text-stone-400 mt-0.5">Insured doorstep dispatch across India & UAE Emirates.</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar & Payments */}
+        {/* Bottom Bar */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
-          <p>© {new Date().getFullYear()} VELMIRA FASHION PRIVÉ LTD. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} VELMIRA ATELIER PRIVÉ. All rights reserved.</p>
 
           <div className="flex items-center space-x-3 text-[10px] uppercase font-mono tracking-wider">
-            <span className="px-2 py-0.5 rounded bg-stone-900 border border-stone-800 text-stone-300">UPI / GPay</span>
-            <span className="px-2 py-0.5 rounded bg-stone-900 border border-stone-800 text-stone-300">Visa</span>
-            <span className="px-2 py-0.5 rounded bg-stone-900 border border-stone-800 text-stone-300">Mastercard</span>
-            <span className="px-2 py-0.5 rounded bg-stone-900 border border-stone-800 text-stone-300">RuPay</span>
-            <span className="px-2 py-0.5 rounded bg-stone-900 border border-stone-800 text-stone-300">Cash on Delivery</span>
+            <span className="px-2.5 py-1 rounded-full bg-stone-900 border border-stone-800 text-stone-300">India 🇮🇳 (INR ₹)</span>
+            <span className="px-2.5 py-1 rounded-full bg-stone-900 border border-stone-800 text-stone-300">UAE 🇦🇪 (AED د.إ)</span>
+            <span className="px-2.5 py-1 rounded-full bg-stone-900 border border-stone-800 text-emerald-400 font-bold">WhatsApp Ordering</span>
           </div>
         </div>
       </div>

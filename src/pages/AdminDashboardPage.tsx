@@ -128,16 +128,16 @@ export const AdminDashboardPage: React.FC = () => {
       stock: Number(formStock),
       sizes: parsedSizes.length > 0 ? parsedSizes : ['Free Size'],
       colors: parsedColors.length > 0 ? parsedColors : [{ name: 'Standard', hex: '#D4AF37' }],
-      images: [formImageUrl || 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=900&q=80'],
+      images: [formImageUrl || 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80'],
       description: formDescription,
       fabric: formFabric,
       fit: formFit,
       occasion: 'Bespoke Luxury & Galas',
-      care: 'Specialist Dry Clean Only',
+      care: 'Specialist Atelier Care Only',
       specifications: {
         'Craftsmanship': 'Handcrafted Luxury Atelier',
-        'Lining': 'Pure Cupro Silk',
-        'Country of Origin': 'India & Italy'
+        'Material': '316L Steel & Top-Grain Leather',
+        'Country of Origin': 'Switzerland & Italy'
       }
     };
 
@@ -335,41 +335,41 @@ export const AdminDashboardPage: React.FC = () => {
                 <div className="space-y-4 text-xs">
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="font-semibold text-stone-800">Ethnic Wear & Royal Sarees</span>
-                      <span className="font-mono font-bold text-stone-900">42% (₹88,200)</span>
+                      <span className="font-semibold text-stone-800">Automatic Chronographs & Timepieces</span>
+                      <span className="font-mono font-bold text-stone-900">48% (₹100,800)</span>
                     </div>
                     <div className="w-full bg-stone-100 h-2 rounded-full overflow-hidden">
-                      <div className="bg-[#D4AF37] h-full rounded-full" style={{ width: '42%' }} />
+                      <div className="bg-[#D4AF37] h-full rounded-full" style={{ width: '48%' }} />
                     </div>
                   </div>
 
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="font-semibold text-stone-800">Men's Sartorial Blazers & Suits</span>
-                      <span className="font-mono font-bold text-stone-900">28% (₹58,800)</span>
+                      <span className="font-semibold text-stone-800">Designer Leather Totes & Handbags</span>
+                      <span className="font-mono font-bold text-stone-900">32% (₹67,200)</span>
                     </div>
                     <div className="w-full bg-stone-100 h-2 rounded-full overflow-hidden">
-                      <div className="bg-stone-800 h-full rounded-full" style={{ width: '28%' }} />
+                      <div className="bg-stone-800 h-full rounded-full" style={{ width: '32%' }} />
                     </div>
                   </div>
 
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="font-semibold text-stone-800">Luxury Footwear & Leather</span>
-                      <span className="font-mono font-bold text-stone-900">18% (₹37,800)</span>
-                    </div>
-                    <div className="w-full bg-stone-100 h-2 rounded-full overflow-hidden">
-                      <div className="bg-amber-600 h-full rounded-full" style={{ width: '18%' }} />
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between mb-1">
-                      <span className="font-semibold text-stone-800">Horology & Saffiano Bags</span>
+                      <span className="font-semibold text-stone-800">Tourbillon & Complication Watches</span>
                       <span className="font-mono font-bold text-stone-900">12% (₹25,200)</span>
                     </div>
                     <div className="w-full bg-stone-100 h-2 rounded-full overflow-hidden">
-                      <div className="bg-emerald-700 h-full rounded-full" style={{ width: '12%' }} />
+                      <div className="bg-amber-600 h-full rounded-full" style={{ width: '12%' }} />
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="font-semibold text-stone-800">Clutches, Wallets & Travel Bags</span>
+                      <span className="font-mono font-bold text-stone-900">8% (₹16,800)</span>
+                    </div>
+                    <div className="w-full bg-stone-100 h-2 rounded-full overflow-hidden">
+                      <div className="bg-emerald-700 h-full rounded-full" style={{ width: '8%' }} />
                     </div>
                   </div>
                 </div>
@@ -742,7 +742,7 @@ export const AdminDashboardPage: React.FC = () => {
                   required
                   value={formName}
                   onChange={e => setFormName(e.target.value)}
-                  placeholder="e.g. Royal Heritage Banarasi Silk Saree"
+                  placeholder="e.g. Royal Chronograph Automatic 42mm"
                   className="w-full px-3 py-2 rounded-lg border border-stone-300"
                 />
               </div>
@@ -760,7 +760,7 @@ export const AdminDashboardPage: React.FC = () => {
                     <option value="VALENTINO MILANO">VALENTINO MILANO</option>
                     <option value="MONTE CARLO ATELIER">MONTE CARLO ATELIER</option>
                     <option value="AURELIA LUXE">AURELIA LUXE</option>
-                    <option value="RAW MANGO">RAW MANGO</option>
+                    <option value="ATELIER HORLOGERIE">ATELIER HORLOGERIE</option>
                   </select>
                 </div>
 

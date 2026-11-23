@@ -77,7 +77,7 @@ export const apiService = {
       sizes: product.sizes && product.sizes.length > 0 ? product.sizes : ['Free Size'],
       colors: product.colors && product.colors.length > 0 ? product.colors : [{ name: 'Classic Gold', hex: '#D4AF37' }],
       images: product.images && product.images.length > 0 ? product.images : [
-        'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&w=900&q=80'
+        'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80'
       ],
       specifications: product.specifications || {},
     } as Product;

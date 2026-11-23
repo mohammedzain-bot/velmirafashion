@@ -15,7 +15,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({ order, isOpen, onClo
     window.print();
   };
 
-  const gstRate = 0.12; // 12% GST for luxury apparel
+  const gstRate = 0.18; // GST for luxury horology & leathergoods
   const taxableAmount = Math.round(order.totalAmount / (1 + gstRate));
   const totalTax = order.totalAmount - taxableAmount;
   const cgst = Math.round(totalTax / 2);

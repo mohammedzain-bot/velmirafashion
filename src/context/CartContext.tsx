@@ -34,26 +34,23 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [cart, setCart] = useState<CartItem[]>(() => {
     try {
       const saved = localStorage.getItem('velmira_cart');
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          // Filter out any stale dress/saree/apparel mock items
+          const cleaned = parsed.filter((item: CartItem) => 
+            !item.name?.toLowerCase().includes('saree') && 
+            !item.name?.toLowerCase().includes('blazer') &&
+            !item.name?.toLowerCase().includes('dress') &&
+            !item.name?.toLowerCase().includes('gown')
+          );
+          return cleaned;
+        }
+      }
     } catch {
       // fallback
     }
-    // Default starter item for instant interactive feel
-    return [
-      {
-        id: 'prod-101-Free Size-Royal Crimson Red',
-        productId: 'prod-101',
-        name: 'Royal Heritage Banarasi Katan Silk Saree with Zari Weave',
-        brand: 'VELMIRA COUTURE',
-        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=80',
-        size: 'Free Size',
-        color: 'Royal Crimson Red',
-        price: 8999,
-        originalPrice: 18999,
-        quantity: 1,
-        maxStock: 14
-      }
-    ];
+    return [];
   });
 
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(() => {

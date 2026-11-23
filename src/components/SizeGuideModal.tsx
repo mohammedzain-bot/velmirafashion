@@ -15,7 +15,7 @@ export const SizeGuideModal: React.FC<SizeGuideModalProps> = ({ isOpen, onClose,
   if (!isOpen) return null;
 
   const watchSizes = [
-    { size: '32mm - 34mm', wrist: '13cm - 16cm (5.0" - 6.3")', style: 'Petite / Classic Dress (Women / Slim Wrist)' },
+    { size: '32mm - 34mm', wrist: '13cm - 16cm (5.0" - 6.3")', style: 'Petite / Classic Dial (Women / Slim Wrist)' },
     { size: '38mm - 40mm', wrist: '15cm - 18cm (6.0" - 7.1")', style: 'Midsize Elegance (Unisex / Business Formal)' },
     { size: '41mm - 42mm', wrist: '17cm - 20cm (6.7" - 7.9")', style: 'Contemporary Standard (Chronograph & Tourbillon)' },
     { size: '44mm+', wrist: '19cm+ (7.5"+)', style: 'Commanding / Oceanic Diver (Sport & Aviation)' }
@@ -26,7 +26,7 @@ export const SizeGuideModal: React.FC<SizeGuideModalProps> = ({ isOpen, onClose,
     { type: 'Flap Crossbody Bag', dims: '10.0" × 7.0" × 3.5"', capacity: 'Cosmetics, Sunglasses, Keys, iPad Mini' },
     { type: 'Kelly Top Handle Bag', dims: '11.0" × 8.5" × 4.5"', capacity: 'Daily Essentials, Small Diary, iPad Air' },
     { type: 'Executive Saffiano Tote', dims: '14.0" × 11.0" × 5.0"', capacity: '14" MacBook Pro, Documents, Water Bottle' },
-    { type: 'Grand Voyage Duffle', dims: '20.0" × 11.0" × 10.0"', capacity: 'Weekend Clothing (42L), Shoes, Toiletries' }
+    { type: 'Grand Voyage Duffle', dims: '20.0" × 11.0" × 10.0"', capacity: 'Travel Gear (42L), Shoes, Toiletries' }
   ];
 
   return (
