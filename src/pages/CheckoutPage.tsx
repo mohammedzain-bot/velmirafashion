@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ShieldCheck,
@@ -9,7 +9,8 @@ import {
   Clock,
   ChevronDown,
   ChevronUp,
-  ShoppingBag
+  ShoppingBag,
+  Plus
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useCurrency } from '../context/CurrencyContext';
@@ -64,6 +65,10 @@ export const CheckoutPage: React.FC = () => {
   const [stateOrEmirate, setStateOrEmirate] = useState(country === 'UAE' ? 'Dubai' : 'Maharashtra');
   const [pincode, setPincode] = useState('');
   const [notes, setNotes] = useState('');
+  const [showOptionalFields, setShowOptionalFields] = useState(false);
+
+  // Form submission ref for mobile sticky bar trigger
+  const formRef = useRef<HTMLFormElement>(null);
 
   // Submission / confirmation state
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -100,21 +105,24 @@ export const CheckoutPage: React.FC = () => {
   }
 
   // Handle inquiry submission
-  const handleSubmitInquiry = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmitInquiry = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setErrorMessage('');
 
     // Validation
     if (!fullName.trim()) {
       setErrorMessage('Please enter your full name.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
     if (!phone.trim() || phone.trim().length < 7) {
       setErrorMessage('Please enter a valid WhatsApp mobile number.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
     if (!addressLine.trim()) {
       setErrorMessage('Please enter your complete delivery address.');
+      window.scrollTo({ top: 100, behavior: 'smooth' });
       return;
     }
     if (country === 'India') {
@@ -244,155 +252,135 @@ export const CheckoutPage: React.FC = () => {
     );
   }
 
+  const primaryItem = cart[0];
+
   return (
-    <div className="min-h-screen bg-[#FDFDFD] py-4 sm:py-8 lg:py-12">
-      <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8">
-        {/* Top Minimal Navigation Bar */}
-        <div className="flex items-center justify-between mb-4 sm:mb-8 pb-3 sm:pb-4 border-b border-stone-200/80">
+    <div className="min-h-screen bg-[#FDFDFD] pb-28 sm:pb-12 pt-3 sm:pt-6">
+      <div className="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8">
+        {/* Top Minimal Header Bar */}
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-stone-200/80">
           <Link
             to="/products"
-            className="inline-flex items-center space-x-1.5 text-xs text-stone-600 hover:text-black font-medium transition py-1"
+            className="inline-flex items-center space-x-1 text-xs text-stone-500 hover:text-black font-medium transition py-1"
           >
-            <ArrowLeft className="w-4 h-4 text-stone-500" />
-            <span>Back to Boutique</span>
+            <ArrowLeft className="w-4 h-4" />
+            <span className="hidden xs:inline">Back to Boutique</span>
           </Link>
 
-          <div className="text-right">
-            <span className="font-cinzel text-xs sm:text-sm font-bold tracking-widest text-[#D4AF37] block">
+          <div className="text-center">
+            <span className="font-cinzel text-sm sm:text-base font-bold tracking-widest text-[#D4AF37]">
               VELMIRA
             </span>
-            <span className="text-[9px] sm:text-[10px] text-stone-400 uppercase tracking-wider">
-              Order & Shipping Enquiry
+            <span className="text-[9px] text-stone-400 block tracking-wider uppercase">
+              Shipping & Order Enquiry
             </span>
+          </div>
+
+          {/* Compact Country Selector Pill */}
+          <div className="inline-flex rounded-full bg-stone-100 p-0.5 border border-stone-200">
+            <button
+              type="button"
+              onClick={() => handleCountryToggle('India')}
+              className={`px-2.5 py-1 rounded-full text-[11px] font-bold transition flex items-center space-x-1 ${
+                country === 'India'
+                  ? 'bg-black text-[#D4AF37] shadow-xs'
+                  : 'text-stone-500 hover:text-black'
+              }`}
+            >
+              <span>🇮🇳</span>
+              <span>₹</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => handleCountryToggle('UAE')}
+              className={`px-2.5 py-1 rounded-full text-[11px] font-bold transition flex items-center space-x-1 ${
+                country === 'UAE'
+                  ? 'bg-black text-[#D4AF37] shadow-xs'
+                  : 'text-stone-500 hover:text-black'
+              }`}
+            >
+              <span>🇦🇪</span>
+              <span>AED</span>
+            </button>
           </div>
         </div>
 
-        {/* MOBILE-ONLY: Collapsible Clean Order Summary Header */}
-        <div className="lg:hidden mb-5 bg-white border border-stone-200/90 rounded-2xl overflow-hidden shadow-xs">
-          <button
-            type="button"
-            onClick={() => setIsSummaryExpanded(!isSummaryExpanded)}
-            className="w-full px-4 py-3.5 flex items-center justify-between text-xs font-medium bg-[#FAFAF8] text-stone-800 transition hover:bg-stone-100"
-          >
-            <div className="flex items-center space-x-2">
-              <ShoppingBag className="w-4 h-4 text-[#D4AF37]" />
-              <span className="font-semibold text-stone-900">
-                Order Summary ({cart.length} {cart.length === 1 ? 'piece' : 'pieces'})
-              </span>
-              <span className="text-stone-400 text-[11px]">
-                {isSummaryExpanded ? 'Hide' : 'View'}
-              </span>
-            </div>
-
-            <div className="flex items-center space-x-1.5">
-              <span className="font-mono font-bold text-stone-900 text-sm">
-                {formatPrice(finalTotal)}
-              </span>
-              {isSummaryExpanded ? (
-                <ChevronUp className="w-4 h-4 text-stone-500" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-stone-500" />
+        {/* Compact Item Glance Preview Card (Visible on mobile & tablet) */}
+        <div className="lg:hidden mb-4 bg-white border border-stone-200/90 rounded-2xl p-3 shadow-xs">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3 min-w-0">
+              {primaryItem && (
+                <img
+                  src={primaryItem.image}
+                  alt={primaryItem.name}
+                  className="w-11 h-13 object-cover rounded-lg border border-stone-200 shrink-0"
+                />
               )}
+              <div className="min-w-0">
+                <p className="text-[9px] font-bold text-[#D4AF37] uppercase tracking-wider font-cinzel truncate">
+                  {primaryItem?.brand}
+                </p>
+                <h4 className="text-xs font-semibold text-stone-900 truncate">
+                  {primaryItem?.name} {cart.length > 1 && `+ ${cart.length - 1} more`}
+                </h4>
+                <p className="text-[10px] text-stone-500">
+                  {primaryItem?.size} • {primaryItem?.color} • Free Delivery
+                </p>
+              </div>
             </div>
-          </button>
 
+            <button
+              type="button"
+              onClick={() => setIsSummaryExpanded(!isSummaryExpanded)}
+              className="ml-2 px-2.5 py-1.5 rounded-xl bg-stone-50 border border-stone-200 text-stone-800 text-[11px] font-mono font-bold flex items-center space-x-1 shrink-0"
+            >
+              <span>{formatPrice(finalTotal)}</span>
+              {isSummaryExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+
+          {/* Expanded Item Breakdown */}
           {isSummaryExpanded && (
-            <div className="p-4 border-t border-stone-200 bg-white space-y-3 animate-fade-in">
-              <div className="divide-y divide-stone-100 max-h-60 overflow-y-auto pr-1 space-y-2.5">
+            <div className="mt-3 pt-3 border-t border-stone-100 space-y-2 text-xs animate-fade-in">
+              <div className="divide-y divide-stone-100 max-h-48 overflow-y-auto pr-1">
                 {cart.map(item => (
-                  <div key={item.id} className="pt-2.5 first:pt-0 flex items-center space-x-3">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-12 h-14 object-cover rounded-lg border border-stone-200 shrink-0"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[9px] text-[#D4AF37] uppercase font-bold tracking-wider font-cinzel">
-                        {item.brand}
-                      </p>
-                      <h4 className="text-xs font-semibold text-stone-900 truncate">
-                        {item.name}
-                      </h4>
-                      <p className="text-[10px] text-stone-500">
-                        {item.size} • {item.color} • Qty: {item.quantity}
-                      </p>
-                    </div>
-                    <span className="text-xs font-bold font-mono text-stone-900 shrink-0">
-                      {formatPrice(item.price * item.quantity, (item.priceAED || 0) * item.quantity)}
-                    </span>
+                  <div key={item.id} className="py-2 first:pt-0 flex items-center justify-between text-xs">
+                    <span className="text-stone-700 truncate max-w-[200px]">{item.name} × {item.quantity}</span>
+                    <span className="font-mono font-semibold text-stone-900">{formatPrice(item.price * item.quantity, (item.priceAED || 0) * item.quantity)}</span>
                   </div>
                 ))}
               </div>
-
-              <div className="pt-3 border-t border-stone-100 flex items-center justify-between text-xs text-stone-600">
-                <span className="flex items-center space-x-1 text-emerald-700 font-medium">
-                  <Truck className="w-3.5 h-3.5" />
-                  <span>White-Glove Insured Delivery</span>
-                </span>
-                <span className="text-emerald-700 font-bold uppercase text-[10px]">Complimentary</span>
+              <div className="pt-2 border-t border-stone-100 flex justify-between text-[11px] text-emerald-700 font-medium">
+                <span>Insured White-Glove Dispatch</span>
+                <span className="font-bold uppercase">Complimentary</span>
               </div>
             </div>
           )}
         </div>
 
-        {/* 2-Column Responsive Layout */}
+        {/* Responsive Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
-          {/* LEFT COLUMN: Shipping Details Form */}
-          <div className="lg:col-span-7">
-            <div className="bg-white border border-stone-200/90 rounded-2xl p-4 sm:p-7 lg:p-8 shadow-xs">
-              {/* Header with Title and Segment Control */}
-              <div className="mb-5 pb-4 border-b border-stone-100">
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <h3 className="font-cinzel text-base sm:text-lg font-bold text-stone-900 tracking-wide">
-                      Shipping Information
-                    </h3>
-                    <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5">
-                      Enter your delivery coordinates for direct WhatsApp dispatch.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Country Toggle - Mobile-Friendly 2-tab segment control */}
-                <div className="grid grid-cols-2 gap-2 p-1 bg-stone-100 rounded-xl border border-stone-200/80">
-                  <button
-                    type="button"
-                    onClick={() => handleCountryToggle('India')}
-                    className={`py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5 ${
-                      country === 'India'
-                        ? 'bg-black text-[#D4AF37] shadow-xs'
-                        : 'text-stone-600 hover:text-black hover:bg-stone-200/60'
-                    }`}
-                  >
-                    <span className="text-sm">🇮🇳</span>
-                    <span>India (₹ INR)</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleCountryToggle('UAE')}
-                    className={`py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5 ${
-                      country === 'UAE'
-                        ? 'bg-black text-[#D4AF37] shadow-xs'
-                        : 'text-stone-600 hover:text-black hover:bg-stone-200/60'
-                    }`}
-                  >
-                    <span className="text-sm">🇦🇪</span>
-                    <span>UAE (AED)</span>
-                  </button>
-                </div>
-              </div>
-
+          {/* LEFT: Streamlined Mobile-Friendly Shipping Form */}
+          <div className="lg:col-span-7 space-y-4">
+            <form ref={formRef} onSubmit={handleSubmitInquiry} className="space-y-4">
               {errorMessage && (
-                <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium">
+                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium">
                   {errorMessage}
                 </div>
               )}
 
-              <form onSubmit={handleSubmitInquiry} className="space-y-4">
-                {/* Full Name & Phone - Stacks gracefully on mobile, 2 cols on tablet+ */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+              {/* CARD 1: Patron Contact */}
+              <div className="bg-white border border-stone-200/90 rounded-2xl p-4 sm:p-6 shadow-xs space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-900">
+                    1. Contact Information
+                  </h4>
+                  <span className="text-[10px] text-stone-400">Direct WhatsApp</span>
+                </div>
+
+                <div className="rounded-xl border border-stone-200 overflow-hidden divide-y divide-stone-200 bg-stone-50/50">
+                  <div className="p-2.5 sm:p-3 bg-white">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-0.5">
                       Full Name <span className="text-rose-500">*</span>
                     </label>
                     <input
@@ -402,173 +390,206 @@ export const CheckoutPage: React.FC = () => {
                       placeholder="e.g. Alexander Wright"
                       value={fullName}
                       onChange={e => setFullName(e.target.value)}
-                      className="w-full px-3.5 py-3 rounded-xl border border-stone-300 text-sm text-stone-900 bg-white placeholder-stone-400 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                      className="w-full bg-transparent text-xs sm:text-sm text-stone-900 placeholder-stone-400 focus:outline-none"
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                  <div className="p-2.5 sm:p-3 bg-white">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-0.5">
                       WhatsApp Mobile Number <span className="text-rose-500">*</span>
                     </label>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xs font-mono font-bold text-stone-500 shrink-0">
+                        {country === 'UAE' ? '🇦🇪 +971' : '🇮🇳 +91'}
+                      </span>
+                      <input
+                        type="tel"
+                        required
+                        autoComplete="tel"
+                        placeholder={country === 'UAE' ? '50 123 4567' : '98765 43210'}
+                        value={phone}
+                        onChange={e => setPhone(e.target.value)}
+                        className="w-full bg-transparent text-xs sm:text-sm text-stone-900 font-mono placeholder-stone-400 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* CARD 2: Shipping Destination */}
+              <div className="bg-white border border-stone-200/90 rounded-2xl p-4 sm:p-6 shadow-xs space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-900">
+                    2. Shipping Address
+                  </h4>
+                  <span className="text-[10px] text-[#D4AF37] font-semibold">
+                    {country === 'UAE' ? 'United Arab Emirates' : 'India'}
+                  </span>
+                </div>
+
+                <div className="rounded-xl border border-stone-200 overflow-hidden divide-y divide-stone-200 bg-stone-50/50">
+                  {/* Street Address */}
+                  <div className="p-2.5 sm:p-3 bg-white">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-0.5">
+                      Delivery Address <span className="text-rose-500">*</span>
+                    </label>
                     <input
-                      type="tel"
+                      type="text"
                       required
-                      autoComplete="tel"
-                      placeholder={country === 'UAE' ? '+971 50 123 4567' : '+91 98765 43210'}
-                      value={phone}
-                      onChange={e => setPhone(e.target.value)}
-                      className="w-full px-3.5 py-3 rounded-xl border border-stone-300 text-sm text-stone-900 font-mono bg-white placeholder-stone-400 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                      autoComplete="street-address"
+                      placeholder={
+                        country === 'UAE'
+                          ? 'Villa / Apt No., Building, Street / Community'
+                          : 'Flat / House No., Building Name, Street / Road'
+                      }
+                      value={addressLine}
+                      onChange={e => setAddressLine(e.target.value)}
+                      className="w-full bg-transparent text-xs sm:text-sm text-stone-900 placeholder-stone-400 focus:outline-none"
                     />
                   </div>
-                </div>
 
-                {/* Delivery Street Address */}
-                <div>
-                  <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
-                    Delivery Address <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    autoComplete="street-address"
-                    placeholder={
-                      country === 'UAE'
-                        ? 'Apartment / Villa No., Building, Street / Community'
-                        : 'House / Flat No., Apartment / Building, Street / Road'
-                    }
-                    value={addressLine}
-                    onChange={e => setAddressLine(e.target.value)}
-                    className="w-full px-3.5 py-3 rounded-xl border border-stone-300 text-sm text-stone-900 bg-white placeholder-stone-400 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
-                  />
-                </div>
+                  {/* Region Specific Rows */}
+                  {country === 'India' ? (
+                    <>
+                      {/* State Dropdown */}
+                      <div className="p-2.5 sm:p-3 bg-white">
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-0.5">
+                          State <span className="text-rose-500">*</span>
+                        </label>
+                        <select
+                          value={stateOrEmirate}
+                          onChange={e => setStateOrEmirate(e.target.value)}
+                          className="w-full bg-transparent text-xs sm:text-sm text-stone-900 focus:outline-none cursor-pointer"
+                        >
+                          {INDIAN_STATES.map(st => (
+                            <option key={st} value={st}>{st}</option>
+                          ))}
+                        </select>
+                      </div>
 
-                {/* Landmark / Area */}
-                <div>
-                  <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
-                    {country === 'UAE' ? 'Area / Community / Makani (Optional)' : 'Landmark / Area (Optional)'}
-                  </label>
-                  <input
-                    type="text"
-                    placeholder={country === 'UAE' ? 'e.g. Downtown Dubai / Dubai Marina' : 'e.g. Near Grand Hotel'}
-                    value={landmark}
-                    onChange={e => setLandmark(e.target.value)}
-                    className="w-full px-3.5 py-3 rounded-xl border border-stone-300 text-sm text-stone-900 bg-white placeholder-stone-400 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
-                  />
-                </div>
+                      {/* City & PIN Code (Side by Side in 1 row) */}
+                      <div className="grid grid-cols-2 divide-x divide-stone-200 bg-white">
+                        <div className="p-2.5 sm:p-3">
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-0.5">
+                            City <span className="text-rose-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Mumbai"
+                            value={city}
+                            onChange={e => setCity(e.target.value)}
+                            className="w-full bg-transparent text-xs sm:text-sm text-stone-900 placeholder-stone-400 focus:outline-none"
+                          />
+                        </div>
 
-                {/* Region-Specific Fields (India: State full width, City & PIN 2-cols on mobile) */}
-                {country === 'India' ? (
-                  <div className="space-y-3.5">
-                    <div>
-                      <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
-                        State <span className="text-rose-500">*</span>
-                      </label>
-                      <select
-                        value={stateOrEmirate}
-                        onChange={e => setStateOrEmirate(e.target.value)}
-                        className="w-full px-3.5 py-3 rounded-xl border border-stone-300 text-sm text-stone-900 bg-white focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
-                      >
-                        {INDIAN_STATES.map(st => (
-                          <option key={st} value={st}>{st}</option>
-                        ))}
-                      </select>
-                    </div>
+                        <div className="p-2.5 sm:p-3">
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-0.5">
+                            PIN Code <span className="text-rose-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            maxLength={6}
+                            placeholder="6 Digits"
+                            value={pincode}
+                            onChange={e => setPincode(e.target.value.replace(/\D/g, ''))}
+                            className="w-full bg-transparent text-xs sm:text-sm text-stone-900 font-mono placeholder-stone-400 focus:outline-none"
+                          />
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    /* UAE Fields: Emirate & Area */
+                    <div className="grid grid-cols-2 divide-x divide-stone-200 bg-white">
+                      <div className="p-2.5 sm:p-3">
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-0.5">
+                          Emirate <span className="text-rose-500">*</span>
+                        </label>
+                        <select
+                          value={stateOrEmirate}
+                          onChange={e => setStateOrEmirate(e.target.value)}
+                          className="w-full bg-transparent text-xs sm:text-sm text-stone-900 focus:outline-none cursor-pointer"
+                        >
+                          {UAE_EMIRATES.map(em => (
+                            <option key={em} value={em}>{em}</option>
+                          ))}
+                        </select>
+                      </div>
 
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
-                          City <span className="text-rose-500">*</span>
+                      <div className="p-2.5 sm:p-3">
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-0.5">
+                          Area / Makani
                         </label>
                         <input
                           type="text"
-                          required
-                          placeholder="e.g. Mumbai"
+                          placeholder="e.g. Downtown"
                           value={city}
                           onChange={e => setCity(e.target.value)}
-                          className="w-full px-3.5 py-3 rounded-xl border border-stone-300 text-sm text-stone-900 bg-white placeholder-stone-400 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
-                          PIN Code <span className="text-rose-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          maxLength={6}
-                          placeholder="6 Digits"
-                          value={pincode}
-                          onChange={e => setPincode(e.target.value.replace(/\D/g, ''))}
-                          className="w-full px-3.5 py-3 rounded-xl border border-stone-300 text-sm text-stone-900 font-mono bg-white placeholder-stone-400 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                          className="w-full bg-transparent text-xs sm:text-sm text-stone-900 placeholder-stone-400 focus:outline-none"
                         />
                       </div>
                     </div>
-                  </div>
+                  )}
+                </div>
+
+                {/* Optional Landmark & Notes Toggle */}
+                {!showOptionalFields ? (
+                  <button
+                    type="button"
+                    onClick={() => setShowOptionalFields(true)}
+                    className="text-[11px] font-medium text-[#C5A059] hover:text-stone-900 flex items-center space-x-1 pt-1"
+                  >
+                    <Plus className="w-3 h-3" />
+                    <span>Add Landmark or Gift Instructions (Optional)</span>
+                  </button>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div className="pt-2 space-y-2.5 animate-fade-in">
                     <div>
-                      <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
-                        Emirate <span className="text-rose-500">*</span>
-                      </label>
-                      <select
-                        value={stateOrEmirate}
-                        onChange={e => setStateOrEmirate(e.target.value)}
-                        className="w-full px-3.5 py-3 rounded-xl border border-stone-300 text-sm text-stone-900 bg-white focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
-                      >
-                        {UAE_EMIRATES.map(em => (
-                          <option key={em} value={em}>{em}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
-                        Area / Sector
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-1">
+                        Landmark (Optional)
                       </label>
                       <input
                         type="text"
-                        placeholder="e.g. Palm Jumeirah"
-                        value={city}
-                        onChange={e => setCity(e.target.value)}
-                        className="w-full px-3.5 py-3 rounded-xl border border-stone-300 text-sm text-stone-900 bg-white placeholder-stone-400 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
+                        placeholder="e.g. Opposite City Mall"
+                        value={landmark}
+                        onChange={e => setLandmark(e.target.value)}
+                        className="w-full px-3 py-2 rounded-xl border border-stone-200 text-xs text-stone-900 focus:outline-none focus:border-stone-800"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-1">
+                        Special Instructions (Optional)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Bespoke gift wrap / call before arrival"
+                        value={notes}
+                        onChange={e => setNotes(e.target.value)}
+                        className="w-full px-3 py-2 rounded-xl border border-stone-200 text-xs text-stone-900 focus:outline-none focus:border-stone-800"
                       />
                     </div>
                   </div>
                 )}
+              </div>
 
-                {/* Special Instructions (Optional) */}
-                <div>
-                  <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
-                    Special Inquiries / Gift Wrapping (Optional)
-                  </label>
-                  <textarea
-                    rows={2}
-                    placeholder="e.g. Please include bespoke gift packaging / call before delivery."
-                    value={notes}
-                    onChange={e => setNotes(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm text-stone-900 bg-white placeholder-stone-400 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition"
-                  />
-                </div>
-
-                {/* Primary Action Button */}
-                <div className="pt-2 sm:pt-4">
-                  <button
-                    type="submit"
-                    className="w-full py-4 px-6 rounded-2xl bg-[#0F0F0F] text-[#D4AF37] hover:bg-stone-900 font-cinzel text-xs sm:text-sm font-bold tracking-widest uppercase transition flex items-center justify-center space-x-2.5 shadow-lg active:scale-[0.99]"
-                  >
-                    <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 fill-emerald-500 text-emerald-500 shrink-0" />
-                    <span>Send Order Enquiry on WhatsApp</span>
-                  </button>
-                  <p className="text-[11px] text-center text-stone-500 mt-2.5">
-                    Orders are verified directly with our concierge desk at <strong className="text-stone-800">{OFFICIAL_WHATSAPP_NUMBER}</strong>.
-                  </p>
-                </div>
-              </form>
-            </div>
+              {/* Desktop-Only Submit Button (Inside Form) */}
+              <div className="hidden sm:block pt-2">
+                <button
+                  type="submit"
+                  className="w-full py-4 px-6 rounded-2xl bg-[#0F0F0F] text-[#D4AF37] hover:bg-stone-900 font-cinzel text-xs sm:text-sm font-bold tracking-widest uppercase transition flex items-center justify-center space-x-2.5 shadow-lg active:scale-[0.99]"
+                >
+                  <MessageCircle className="w-4 h-4 fill-emerald-500 text-emerald-500 shrink-0" />
+                  <span>Send Order Enquiry on WhatsApp • {formatPrice(finalTotal)}</span>
+                </button>
+                <p className="text-[11px] text-center text-stone-500 mt-2">
+                  Orders are verified directly with our concierge desk at <strong className="text-stone-800">{OFFICIAL_WHATSAPP_NUMBER}</strong>.
+                </p>
+              </div>
+            </form>
           </div>
 
-          {/* RIGHT COLUMN: Desktop Sticky Order Summary Card (Hidden on mobile, since mobile has the top accordion) */}
+          {/* RIGHT: Desktop Sticky Order Summary Column (Hidden on mobile) */}
           <div className="hidden lg:block lg:col-span-5">
             <div className="bg-white border border-stone-200/90 rounded-2xl p-6 shadow-xs sticky top-20">
               <h3 className="font-cinzel text-sm font-bold uppercase tracking-wider text-stone-900 mb-4 pb-3 border-b border-stone-100 flex items-center justify-between">
@@ -641,6 +662,29 @@ export const CheckoutPage: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* MOBILE-ONLY: Sleek Sticky Bottom Action Bar */}
+      <div className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-stone-200/90 p-3 sm:hidden z-30 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
+        <div className="flex items-center justify-between gap-3">
+          <div className="shrink-0 pl-1">
+            <span className="text-[9px] uppercase tracking-wider text-stone-500 font-semibold block leading-tight">
+              Total Payable
+            </span>
+            <span className="font-mono text-sm font-bold text-stone-900 leading-none">
+              {formatPrice(finalTotal)}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => handleSubmitInquiry()}
+            className="flex-1 py-3 px-4 rounded-xl bg-[#0F0F0F] text-[#D4AF37] font-cinzel text-xs font-bold tracking-wider uppercase flex items-center justify-center space-x-2 shadow-md active:scale-98 transition"
+          >
+            <MessageCircle className="w-4 h-4 fill-emerald-500 text-emerald-500 shrink-0" />
+            <span>Order on WhatsApp</span>
+          </button>
         </div>
       </div>
     </div>
