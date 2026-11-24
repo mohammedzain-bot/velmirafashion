@@ -30,36 +30,56 @@ const AppLayout: React.FC = () => {
   const isCheckout = location.pathname.startsWith('/checkout');
 
   const { isRegionModalOpen, setIsRegionModalOpen } = useCurrency();
-  const [showIntro, setShowIntro] = useState<boolean>(() => {
-    try {
-      return !sessionStorage.getItem('velmira_has_seen_intro');
-    } catch {
-      return false;
-    }
-  });
+  
+  // When refreshing the site, always start fresh from the beginning with the minimal VELMIRA intro
+  const [showIntro, setShowIntro] = useState<boolean>(true);
+  const [scrollProgress, setScrollProgress] = useState<number>(0);
 
+  // Scroll to beginning on refresh and track sleek scroll progress bar
   useEffect(() => {
-    // If the intro was already seen in this session but region hasn't been chosen yet
-    if (!showIntro) {
-      const regionChosen = localStorage.getItem('velmira_region_chosen');
-      if (!regionChosen) {
-        setIsRegionModalOpen(true);
-      }
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
     }
-  }, [showIntro, setIsRegionModalOpen]);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        const progress = (window.scrollY / totalScroll) * 100;
+        setScrollProgress(Math.min(100, Math.max(0, progress)));
+      } else {
+        setScrollProgress(0);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [location.pathname]);
 
   const handleIntroComplete = useCallback(() => {
-    try {
-      sessionStorage.setItem('velmira_has_seen_intro', 'true');
-    } catch {
-      // ignore
-    }
     setShowIntro(false);
-    setIsRegionModalOpen(true);
+    // After intro finishes, check if country is selected
+    const regionChosen = localStorage.getItem('velmira_region_chosen');
+    if (!regionChosen) {
+      setIsRegionModalOpen(true);
+    }
   }, [setIsRegionModalOpen]);
 
   return (
-    <div className="flex flex-col min-h-screen text-[#1A1A1A] bg-[#F8F9FA]">
+    <div className="flex flex-col min-h-screen text-[#1A1A1A] bg-[#0A0A0A] selection:bg-[#D4AF37]/30 selection:text-white">
+      {/* Sleek Modern Scrolling Bar Across the Website */}
+      <div className="fixed top-0 left-0 right-0 h-[2.5px] z-[99999] bg-transparent pointer-events-none">
+        <div 
+          className="h-full bg-gradient-to-r from-[#B89736] via-[#D4AF37] to-[#FFF2B2] shadow-[0_0_10px_rgba(212,175,55,0.8)] transition-all duration-75 ease-out"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+
       {/* 1. Initial Splash / Loading Page with Letter-by-Letter Animation */}
       {showIntro && !isAdmin && (
         <VelmiraIntroLoader onComplete={handleIntroComplete} />
@@ -74,7 +94,7 @@ const AppLayout: React.FC = () => {
       {!isCheckout && <Navbar />}
       {!isAdmin && !isCheckout && <CategoryBar />}
 
-      <main className="flex-1 pb-16 sm:pb-0">
+      <main className="flex-1 pb-16 sm:pb-0 bg-[#0A0A0A]">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductListingPage />} />
@@ -117,8 +137,8 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode }, Error
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-[#0F0F0F] text-white flex flex-col items-center justify-center p-6 text-center">
-          <h2 className="font-cinzel text-2xl font-bold text-[#D4AF37] mb-2">VELMIRA</h2>
+        <div className="min-h-screen bg-[#0A0A0A] text-white flex flex-col items-center justify-center p-6 text-center">
+          <h2 className="font-cinzel text-2xl font-bold text-[#D4AF37] mb-2 tracking-widest">VELMIRA</h2>
           <p className="text-xs text-stone-300 max-w-sm mb-6">
             Something went wrong while loading the page.
           </p>
@@ -131,7 +151,7 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode }, Error
             }}
             className="px-6 py-2.5 rounded-full bg-[#D4AF37] text-black font-cinzel text-xs font-bold tracking-widest uppercase hover:bg-[#c5a059] transition"
           >
-            Reload Boutique
+            Reload Atelier
           </button>
         </div>
       );

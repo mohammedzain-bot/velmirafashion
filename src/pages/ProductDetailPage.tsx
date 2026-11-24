@@ -68,8 +68,8 @@ export const ProductDetailPage: React.FC = () => {
   if (!product) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center bg-[#F8F9FA]">
-        <h2 className="font-cinzel text-2xl font-bold text-stone-900">Silhouette Not Found</h2>
-        <p className="text-xs text-stone-500 mt-2">The requested timepiece or bag could not be found.</p>
+        <h2 className="font-cinzel text-2xl font-bold text-stone-900">Timepiece Not Found</h2>
+        <p className="text-xs text-stone-500 mt-2">The requested luxury timepiece could not be found.</p>
         <Link
           to="/products"
           className="mt-6 px-6 py-2.5 rounded-full bg-[#0F0F0F] text-[#D4AF37] font-semibold text-xs uppercase tracking-wider"
@@ -352,7 +352,7 @@ export const ProductDetailPage: React.FC = () => {
                       className="py-3 px-6 rounded-xl bg-white border-2 border-stone-900 text-stone-900 hover:bg-stone-50 font-bold text-xs uppercase tracking-widest transition flex items-center justify-center space-x-2 shadow-xs"
                     >
                       <ShoppingBag className="w-4 h-4 text-[#D4AF37]" />
-                      <span>Add to Bag</span>
+                      <span>Add to Vault</span>
                     </button>
 
                     <button

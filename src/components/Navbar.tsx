@@ -78,12 +78,12 @@ export const Navbar: React.FC = () => {
 
   const trendingKeywords = [
     'Chrono Royal',
-    'Saffiano Tote',
-    'Tourbillon 42mm',
-    'Submariner Diver',
-    'Kelly Handbag',
-    'Diamond Lady Date',
-    'Weekender Duffle'
+    'Flying Tourbillon',
+    'Oceanic 300M Diver',
+    'Openwork Skeleton',
+    'Moonphase Calendar',
+    'Bauhaus Ultra-Thin',
+    'Titanium GMT'
   ];
 
   const liveMatches = searchQuery.trim()
@@ -172,7 +172,7 @@ export const Navbar: React.FC = () => {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] inline-block mb-1" />
               </div>
               <span className="text-[8px] sm:text-[9px] font-medium tracking-[0.25em] text-[#D4AF37] uppercase -mt-1 font-sans">
-                Luxury Watches & Bags Atelier
+                Haute Horlogerie Ateliers
               </span>
             </Link>
           </div>
@@ -182,7 +182,7 @@ export const Navbar: React.FC = () => {
             <form onSubmit={handleSearchSubmit} className="relative flex items-center">
               <input
                 type="text"
-                placeholder="Search luxury automatic watches, chronographs, Saffiano totes, duffle bags..."
+                placeholder="Search Swiss automatic chronographs, tourbillons, 300M divers, skeleton dials..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
@@ -204,7 +204,7 @@ export const Navbar: React.FC = () => {
                 {liveMatches.length > 0 && (
                   <div className="p-3 border-b border-stone-100">
                     <p className="text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">
-                      Matching Watches & Bags
+                      Matching Timepieces
                     </p>
                     <div className="space-y-2">
                       {liveMatches.map(product => (
@@ -313,7 +313,7 @@ export const Navbar: React.FC = () => {
           <form onSubmit={handleSearchSubmit} className="relative flex items-center">
             <input
               type="text"
-              placeholder="Search watches & bags..."
+              placeholder="Search timepieces & complications..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               className="w-full bg-[#FAFAF8] text-stone-900 placeholder-stone-400 pl-10 pr-20 py-2 rounded-full text-xs font-medium focus:outline-none"

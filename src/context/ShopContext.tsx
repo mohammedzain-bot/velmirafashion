@@ -84,12 +84,13 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const categories: CategoryType[] = [
     'All',
     'Watches',
-    'Bags',
-    "Men's Watches",
-    "Women's Watches",
-    'Leather Bags',
-    'Tote Bags',
-    'Clutches & Wallets',
+    'Chronograph',
+    'Automatic',
+    'Tourbillon',
+    'Diver',
+    'Skeleton',
+    'Moonphase',
+    'Classic Dress',
     'New Arrivals',
     'Sale'
   ];
@@ -102,11 +103,17 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const filteredProducts = products.filter(product => {
     // Category match
     if (filters.category !== 'All') {
-      if (filters.category === 'New Arrivals') {
+      if (filters.category === 'Watches') {
+        // All products in Velmira are luxury timepieces
+        return true;
+      } else if (filters.category === 'New Arrivals') {
         if (!product.isNewArrival) return false;
       } else if (filters.category === 'Sale') {
         if (!product.isTopDeal && product.discountPercentage < 50 && product.category !== 'Sale') return false;
-      } else if (product.category !== filters.category) {
+      } else if (
+        product.category !== filters.category &&
+        !product.subcategory.toLowerCase().includes(filters.category.toLowerCase())
+      ) {
         return false;
       }
     }

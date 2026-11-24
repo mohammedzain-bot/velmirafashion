@@ -1,12 +1,12 @@
 import { Product, Coupon, Review } from '../types';
 
 export const INITIAL_PRODUCTS: Product[] = [
-  // 1. WATCH: Velmira Chrono Royal 41mm
+  // 1. WATCH: Velmira Chrono Royal Automatic 41mm
   {
     id: 'prod-w1',
     name: 'Velmira Chrono Royal Automatic 41mm Emerald Sunburst Dial',
     brand: 'VELMIRA SIGNATURE',
-    category: "Men's Watches",
+    category: 'Chronograph',
     subcategory: 'Chronograph Watches',
     originalPrice: 28999,
     discountedPrice: 13999,
@@ -19,7 +19,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     images: [
       'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=80'
+      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80'
     ],
     sizes: ['41mm Dial'],
     colors: [
@@ -38,7 +38,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     occasion: 'Executive Boardrooms, Black Tie Galas & Everyday Luxury',
     care: '5 ATM Water Resistant (50 meters). Wipe with microfiber polishing cloth.',
     specifications: {
-      'Movement': 'Japanese Miyota 9015 Automatic (28,800 vph)',
+      'Movement': 'In-House Calibre V-9015 Automatic (28,800 vph)',
       'Glass': 'Domed Anti-Reflective Scratchproof Sapphire Crystal',
       'Power Reserve': '42 Hours Power Reserve',
       'Strap Material': 'Italian Full-Grain Alligator Embossed Leather',
@@ -48,57 +48,12 @@ export const INITIAL_PRODUCTS: Product[] = [
     createdAt: '2026-01-10T10:00:00Z'
   },
 
-  // 2. BAG: Velmira Saffiano Executive Tote Bag
-  {
-    id: 'prod-b1',
-    name: 'Italian Saffiano Leather Structured Executive Tote Bag',
-    brand: 'AURELIA LUXE',
-    category: 'Tote Bags',
-    subcategory: 'Tote Bags',
-    originalPrice: 19999,
-    discountedPrice: 9499,
-    originalPriceAED: 890,
-    priceAED: 420,
-    discountPercentage: 53,
-    rating: 4.8,
-    ratingCount: 890,
-    reviewCount: 245,
-    images: [
-      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=900&q=80'
-    ],
-    sizes: ['Medium (14" × 11" × 5")', 'Large (16" × 12" × 6")'],
-    colors: [
-      { name: 'Midnight Onyx Black', hex: '#111111' },
-      { name: 'Warm Cognac Tan', hex: '#9E5B32' },
-      { name: 'Powder Ivory Cream', hex: '#FFFFF0' }
-    ],
-    stock: 12,
-    isTrending: true,
-    isBestSeller: true,
-    description: 'Handcrafted in Milan from scratch-resistant Saffiano calf leather. Accented with brushed champagne gold hardware, dedicated 14-inch padded laptop compartment, and dual top-carry handles plus detachable leather shoulder strap.',
-    fabric: '100% Saffiano Calfskin Leather with Micro-Suede Velvet Lining',
-    fit: '14" Length × 11" Height × 5" Depth',
-    pattern: 'Crosshatch Saffiano Textured Leather',
-    occasion: 'Executive Business, Luxury Travel & Fine Dining',
-    care: 'Wipe with soft damp cloth. Store wrapped in protective cotton dust cover.',
-    specifications: {
-      'Hardware': '18K Champagne Gold Electroplated Solid Brass',
-      'Compartments': '3 Zip Sections + Padded 14" Laptop Pocket',
-      'Closure': 'Heavy-Duty Gold YKK Zip & Magnetic Snap',
-      'Strap Drop': '9" Handle Drop + 48" Detachable Shoulder Strap',
-      'Country of Origin': 'Milan, Italy'
-    },
-    createdAt: '2026-01-12T10:00:00Z'
-  },
-
-  // 3. WATCH: Velmira Tourbillon Grand Complication
+  // 2. WATCH: Velmira Celestial Flying Tourbillon 42mm
   {
     id: 'prod-w2',
-    name: 'Velmira Tourbillon Grand Complication Rose Gold & Obsidian',
-    brand: 'VELMIRA SIGNATURE',
-    category: "Men's Watches",
+    name: 'Velmira Celestial Flying Tourbillon Rose Gold 42mm',
+    brand: 'VELMIRA COUTURE',
+    category: 'Tourbillon',
     subcategory: 'Tourbillon Watches',
     originalPrice: 42999,
     discountedPrice: 21999,
@@ -121,7 +76,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 5,
     isTrending: true,
     isNewArrival: true,
-    description: 'An extraordinary triumph of mechanical horology. Features an open-heart flying tourbillon cage rotating at 6 o’clock, counteracting earth gravity to achieve pinpoint chronometric precision. Double sapphire crystal exhibition caseback.',
+    description: 'An extraordinary triumph of mechanical horology. Features an open-heart flying tourbillon cage rotating at 6 o’clock, counteracting earth gravity to achieve pinpoint chronometric precision. Double sapphire crystal exhibition caseback showcasing Côtes de Genève finishing.',
     fabric: 'Rose Gold PVD 316L Steel, Flying Tourbillon Cage, Sapphire Crystals',
     fit: '42mm Case Diameter • 12.5mm Height',
     pattern: 'Skeleton Open-Heart Tourbillon Guilloché',
@@ -137,401 +92,448 @@ export const INITIAL_PRODUCTS: Product[] = [
     createdAt: '2026-01-20T10:00:00Z'
   },
 
-  // 4. BAG: Velmira Royal Kelly-Style Handbag
+  // 3. WATCH: Velmira Oceanic Sub-Mariner 300M Diver 43mm
   {
-    id: 'prod-b2',
-    name: 'Velmira Royal Kelly-Style Top Handle Handbag in Full-Grain Calfskin',
-    brand: 'VALENTINO MILANO',
-    category: 'Leather Bags',
-    subcategory: 'Top Handle Bags',
-    originalPrice: 26999,
-    discountedPrice: 12999,
-    originalPriceAED: 1190,
-    priceAED: 580,
+    id: 'prod-w3',
+    name: 'Velmira Oceanic Sub-Mariner 300M Ceramic Diver 43mm',
+    brand: 'VELMIRA SIGNATURE',
+    category: 'Diver',
+    subcategory: 'Diver Watches',
+    originalPrice: 31999,
+    discountedPrice: 15499,
+    originalPriceAED: 1390,
+    priceAED: 690,
+    discountPercentage: 51,
+    rating: 4.9,
+    ratingCount: 1120,
+    reviewCount: 312,
+    images: [
+      'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80'
+    ],
+    sizes: ['43mm Dial'],
+    colors: [
+      { name: 'Deep Abyss Black & Ceramic', hex: '#111111' },
+      { name: 'Oceanic Blue & Silver Steel', hex: '#003366' },
+      { name: 'Kermit Green & Steel', hex: '#2E8B57' }
+    ],
+    stock: 14,
+    isTrending: true,
+    isBestSeller: true,
+    description: 'Engineered for marine explorers and ocean pioneers. 300-meter certified water resistance with helium escape valve, 120-click unidirectional ceramic bezel, Super-LumiNova BGW9 indices glowing ice-blue in total darkness.',
+    fabric: 'Solid 316L Marine Stainless Steel, Ceramic Bezel, Sapphire Crystal',
+    fit: '43mm Dial • 13.0mm Thickness • Solid Link Oyster Bracelet',
+    pattern: 'Sunburst Abyss Dial with Raised Luminous Indices',
+    occasion: 'Scuba Diving, Yachting Regattas & Everyday High Performance',
+    care: 'Screw crown tightly before submerging. Rinse with fresh water after saltwater immersion.',
+    specifications: {
+      'Movement': 'Calibre V-DIVER Automatic (28,800 vph, 24 Jewels)',
+      'Water Resistance': '30 ATM / 300 Meters (Helium Escape Valve)',
+      'Bezel': '120-Click Unidirectional Scratchproof High-Gloss Ceramic',
+      'Bracelet': 'Solid 316L Stainless Steel with Micro-Adjust Diver Clasp',
+      'Country of Origin': 'Switzerland'
+    },
+    createdAt: '2026-01-25T10:00:00Z'
+  },
+
+  // 4. WATCH: Velmira Skeleton Openwork Automatic 42mm
+  {
+    id: 'prod-w4',
+    name: 'Velmira Skeleton Openwork Automatic Ruthenium Reserve 42mm',
+    brand: 'VELMIRA COUTURE',
+    category: 'Skeleton',
+    subcategory: 'Skeleton Watches',
+    originalPrice: 34999,
+    discountedPrice: 16999,
+    originalPriceAED: 1550,
+    priceAED: 760,
+    discountPercentage: 51,
+    rating: 4.8,
+    ratingCount: 780,
+    reviewCount: 204,
+    images: [
+      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80'
+    ],
+    sizes: ['42mm Dial'],
+    colors: [
+      { name: 'Ruthenium Anthracite & Steel', hex: '#43464B' },
+      { name: 'Rose Gold Skeleton Bridges', hex: '#B76E79' },
+      { name: 'Stealth Matte Black', hex: '#1C1C1C' }
+    ],
+    stock: 7,
+    isTrending: true,
+    isTopDeal: true,
+    description: 'A mesmerizing architectural view of pure mechanical power. The skeletonized dial and movement eliminate unnecessary metal, exposing the beating balance wheel, intricate gear train, and engraved rotor through dual sapphire crystals.',
+    fabric: 'Surgical 316L Steel, Ruthenium Coated Bridges, Double Sapphire Glass',
+    fit: '42mm Dial • 10.8mm Thickness',
+    pattern: 'Three-Dimensional Openwork Skeleton Architecture',
+    occasion: 'Art Expositions, Black Tie Galas & Luxury Watch Meetups',
+    care: '5 ATM water resistant. Protect from extreme magnetic fields.',
+    specifications: {
+      'Movement': 'Calibre V-SKEL Openwork Skeleton Automatic (28,800 vph)',
+      'Escapement': 'Exposed 21,600 Beat Balance Wheel at 7 o’clock',
+      'Power Reserve': '45 Hours Autonomy',
+      'Strap': 'Handmade Italian Saddle Calfskin with Butterfly Clasp',
+      'Country of Origin': 'Switzerland'
+    },
+    createdAt: '2026-02-01T10:00:00Z'
+  },
+
+  // 5. WATCH: Velmira Perpetual Calendar Moonphase 40mm
+  {
+    id: 'prod-w5',
+    name: 'Velmira Perpetual Calendar Moonphase Astronomical 40mm',
+    brand: 'VELMIRA SIGNATURE',
+    category: 'Moonphase',
+    subcategory: 'Moonphase Watches',
+    originalPrice: 38999,
+    discountedPrice: 18499,
+    originalPriceAED: 1720,
+    priceAED: 820,
     discountPercentage: 52,
     rating: 4.9,
-    ratingCount: 780,
-    reviewCount: 215,
+    ratingCount: 520,
+    reviewCount: 162,
     images: [
-      'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=900&q=80'
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80'
     ],
-    sizes: ['28cm Kelly Size', '32cm Kelly Size'],
+    sizes: ['40mm Dial'],
     colors: [
-      { name: 'Heritage Tan Gold', hex: '#C19A6B' },
-      { name: 'Emerald Forest Green', hex: '#0B5345' },
-      { name: 'Pure Noir Black', hex: '#000000' }
+      { name: 'Porcelain White & Blued Steel', hex: '#FDFBF7' },
+      { name: 'Midnight Celestial Blue', hex: '#002366' },
+      { name: 'Champagne Gold & Enamel', hex: '#D4AF37' }
     ],
     stock: 6,
     isTrending: true,
-    isBestSeller: true,
-    isTopDeal: true,
-    description: 'The pinnacle of French luxury handbag design. Constructed using saddle-stitch craftsmanship from French Box Calfskin leather. Crowned with iconic turn-lock swivel clasp and functioning padlock with key clochette.',
-    fabric: 'Full-Grain French Box Calfskin, Chevre Kidskin Inner Lining',
-    fit: '28cm Base Length × 22cm Height × 11cm Width',
-    pattern: 'Smooth Satin-Touch Natural Grain Calfskin',
-    occasion: 'Weddings, VIP Luncheons, High Fashion Soirées',
-    care: 'Condition with natural leather cream.',
+    isNewArrival: true,
+    description: 'Astronomical poetry strapped to your wrist. Features an accurate photorealistic moonphase aperture at 6 o’clock synchronized with the lunar cycle, alongside day, date, and month sub-dials. Finished with heated blued Breguet hands.',
+    fabric: 'Polished 316L Steel, Heat-Treated Blued Hands, Sapphire Glass',
+    fit: '40mm Dial • 11.0mm Thickness',
+    pattern: 'Multi-Tiered Guilloché Grain d’Orge Dial with Moonphase Disc',
+    occasion: 'Executive Boardroom, Classical Galas & Private Dinners',
+    care: 'Keep in automated watch winder when not worn.',
     specifications: {
-      'Closure': 'Turn-Lock Swivel with Clochette, Key & Working Lock',
-      'Base': '4 Champagne Gold Protective Base Feet (Studs)',
-      'Hardware': '24K Gold Electroplated Solid Brass',
-      'Country of Origin': 'Paris, France'
+      'Movement': 'Calibre V-ASTRO Astronomical Automatic (28,800 vph)',
+      'Complications': 'Accurate Moonphase (122-year lunar disc), Day, Date, Month',
+      'Hands': 'Traditional Flame-Treated Blued Steel Breguet Hands',
+      'Strap': 'Hand-Sewn French Box Calf Leather with Deployant Clasp',
+      'Country of Origin': 'Switzerland'
     },
-    createdAt: '2026-01-15T10:00:00Z'
+    createdAt: '2026-02-05T10:00:00Z'
   },
 
-  // 5. WATCH: Velmira Diamond Bezel Lady Date 34mm
+  // 6. WATCH: Velmira Royal Baguette Diamond Pavé 38mm
   {
-    id: 'prod-w3',
-    name: 'Velmira Diamond Bezel Lady Date 34mm Mother-of-Pearl & Rose Gold',
-    brand: 'VELMIRA SIGNATURE',
-    category: "Women's Watches",
+    id: 'prod-w6',
+    name: 'Velmira Royal Baguette Diamond Pavé Mother-of-Pearl 38mm',
+    brand: 'AURELIA LUXE',
+    category: 'Classic Dress',
     subcategory: 'Diamond Watches',
     originalPrice: 24999,
     discountedPrice: 11999,
     originalPriceAED: 1100,
     priceAED: 530,
     discountPercentage: 52,
-    rating: 4.8,
-    ratingCount: 920,
-    reviewCount: 310,
+    rating: 4.9,
+    ratingCount: 940,
+    reviewCount: 260,
     images: [
       'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80'
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80'
     ],
-    sizes: ['34mm Petite Dial'],
+    sizes: ['38mm Dial'],
     colors: [
-      { name: 'Rose Gold & Natural Mother-of-Pearl', hex: '#FFDAB9' },
-      { name: 'Champagne Gold & Diamond Sunburst', hex: '#E5C158' }
+      { name: '18K Rose Gold & Tahitian Mother-of-Pearl', hex: '#B76E79' },
+      { name: 'White Gold & Iridescent Pearl', hex: '#F0F8FF' }
     ],
     stock: 9,
     isTrending: true,
     isBestSeller: true,
-    description: 'An enchanting jewel on your wrist. Set with 48 pavé Austrian crystal diamonds on the fluted bezel surrounding an iridescent natural oyster mother-of-pearl dial with date window cyclops magnifier.',
-    fabric: '316L Stainless Steel, 18K Rose Gold PVD, Pavé Austrian Crystals',
-    fit: '34mm Case Diameter • 10mm Thickness • Adjustable Jubilee Link',
-    pattern: 'Natural Shimmering Mother-of-Pearl Dial',
-    occasion: 'Weddings, Cocktail Galas & Everyday Glamour',
-    care: '5 ATM Water Resistant. Wipe clean with velvet cloth.',
+    description: 'An ethereal combination of high jewellery and haute horlogerie. Hand-set bezel featuring 48 precision-cut baguette Austrian crystals encircling a natural iridescent mother-of-pearl dial that changes luster under direct lighting.',
+    fabric: '18K Rose Gold Electroplated 316L Steel, Baguette Crystals, Pearl Dial',
+    fit: '38mm Case • 9.0mm Ultra-Slim Profile',
+    pattern: 'Natural Shimmering Mother-of-Pearl with Diamond Hour Markers',
+    occasion: 'Weddings, Red Carpets, Cocktail Soirées & Royal Galas',
+    care: '5 ATM water resistant. Clean with jewelry polishing cloth.',
     specifications: {
-      'Bezel': 'Fluted Bezel Set with 48 Hand-Selected Pavé Crystals',
-      'Dial': 'Authentic Iridescent White Mother-of-Pearl',
-      'Bracelet': 'Five-Piece Jubilee Style Solid Link Bracelet',
-      'Crystal': 'Sapphire Crystal with 2.5x Date Magnifier Lens',
-      'Country of Origin': 'Switzerland'
-    },
-    createdAt: '2026-01-25T10:00:00Z'
-  },
-
-  // 6. BAG: Velmira Quilted Velvet & Leather Evening Clutch
-  {
-    id: 'prod-b3',
-    name: 'Velmira Quilted Velvet & Leather Evening Chain Flap Clutch',
-    brand: 'VALENTINO MILANO',
-    category: 'Clutches & Wallets',
-    subcategory: 'Evening Clutches',
-    originalPrice: 14999,
-    discountedPrice: 6999,
-    originalPriceAED: 660,
-    priceAED: 310,
-    discountPercentage: 53,
-    rating: 4.9,
-    ratingCount: 540,
-    reviewCount: 165,
-    images: [
-      'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80'
-    ],
-    sizes: ['Compact (9" × 5.5" × 2.5")'],
-    colors: [
-      { name: 'Royal Velvet Noir', hex: '#0A0A0A' },
-      { name: 'Champagne Rose Gold', hex: '#B76E79' },
-      { name: 'Burgundy Wine Velvet', hex: '#4A0E17' }
-    ],
-    stock: 14,
-    isTrending: true,
-    isNewArrival: true,
-    description: 'Sumptuous chevron-quilted Italian velvet paired with supple lambskin leather trim. Features an elegant sliding champagne gold gourmette chain that transitions effortlessly from shoulder bag to evening clutch.',
-    fabric: 'Heavy Silk Velvet, Lambskin Leather Trim, Silk Satin Lining',
-    fit: '9" Width × 5.5" Height × 2.5" Depth',
-    pattern: 'Chevron Diagonal Quilted Velvet',
-    occasion: 'Red Carpet, Operas, Cocktail Soirées & Receptions',
-    care: 'Keep in satin pouch. Brush gently with soft velvet brush.',
-    specifications: {
-      'Strap': 'Sliding Champagne Gold Curb Chain (Drop: 12" to 22")',
-      'Closure': 'Magnetic Interlocking Flap Lock',
-      'Interior': 'Card Slots, Zip Pocket & Lip Gloss Holder',
-      'Country of Origin': 'Florence, Italy'
-    },
-    createdAt: '2026-02-01T10:00:00Z'
-  },
-
-  // 7. WATCH: Velmira Submariner Diver 300M
-  {
-    id: 'prod-w4',
-    name: 'Velmira Submariner Diver 300M Ceramic Bezel Ocean Deep Blue',
-    brand: 'VELMIRA SIGNATURE',
-    category: "Men's Watches",
-    subcategory: 'Diver Watches',
-    originalPrice: 31999,
-    discountedPrice: 15499,
-    originalPriceAED: 1420,
-    priceAED: 690,
-    discountPercentage: 51,
-    rating: 4.9,
-    ratingCount: 710,
-    reviewCount: 220,
-    images: [
-      'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80'
-    ],
-    sizes: ['41mm Case'],
-    colors: [
-      { name: 'Deep Ocean Blue & Silver Steel', hex: '#0B3C5D' },
-      { name: 'Hulk Emerald Green Bezel', hex: '#1E4B35' },
-      { name: 'Stealth Matte Black & Ceramic', hex: '#1A1A1A' }
-    ],
-    stock: 7,
-    isTrending: true,
-    isTopDeal: true,
-    description: 'Built for oceanic depths and executive elegance. Engineered with unidirectional 120-click scratchproof ceramic bezel, helium escape valve, SuperLumiNova BGW9 blue luminescence, and screw-down crown rated for 300 meters.',
-    fabric: '316L Solid Surgical Steel, High-Tech Zirconia Ceramic Bezel',
-    fit: '41mm Case Diameter • 13mm Depth • Solid Oyster Bracelet',
-    pattern: 'Sunray Lacquered Dial with Maxi Luminescent Markers',
-    occasion: 'Scuba Diving, Yachting, Boardroom & Resort Living',
-    care: 'Rinse with fresh water after saltwater diving.',
-    specifications: {
-      'Water Resistance': '30 ATM / 300 Meters / 1000 Feet',
-      'Bezel': 'Unidirectional 120-Click High-Gloss Ceramic Bezel',
-      'Luminescence': 'Swiss Super-LumiNova BGW9 (Glows Ocean Blue)',
-      'Crown': 'Triple-Lock Screw-Down Waterproof Crown',
-      'Country of Origin': 'Switzerland'
+      'Movement': 'Swiss Calibre V-380 Slim Precision Movement',
+      'Dial': 'Natural Sustainable Mother-of-Pearl with 12 Diamond Markers',
+      'Bezel': 'Channel-Set Baguette Cut Austrian Crystals (VVS Clarity)',
+      'Bracelet': 'Polished Rose Gold 5-Link Jubilee Bracelet',
+      'Country of Origin': 'Switzerland & Italy'
     },
     createdAt: '2026-01-18T10:00:00Z'
   },
 
-  // 8. BAG: Velmira Grand Voyage Leather Weekender Duffle
+  // 7. WATCH: Velmira Stealth Black Ceramic Monopusher 42mm
   {
-    id: 'prod-b4',
-    name: 'Velmira Grand Voyage Full-Grain Leather Weekender Duffle Bag',
-    brand: 'MONTE CARLO ATELIER',
-    category: 'Leather Bags',
-    subcategory: 'Travel & Duffles',
-    originalPrice: 29999,
-    discountedPrice: 14499,
-    originalPriceAED: 1330,
-    priceAED: 640,
-    discountPercentage: 51,
-    rating: 4.9,
-    ratingCount: 580,
-    reviewCount: 190,
-    images: [
-      'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=900&q=80'
-    ],
-    sizes: ['50cm Carry-On (20" × 11" × 10")'],
-    colors: [
-      { name: 'Antique Burnished Cognac', hex: '#8F5438' },
-      { name: 'Midnight Charcoal Black', hex: '#1C1C1C' }
-    ],
-    stock: 5,
-    isTrending: true,
-    isBestSeller: true,
-    description: 'The definitive private aviation and weekend getaway companion. Handcrafted in Florence from thick vegetable-tanned Tuscan saddle leather that develops a magnificent rich patina with every journey. Compliant with international flight cabin carry-on rules.',
-    fabric: 'Vegetable-Tanned Tuscan Saddle Leather, Heavy Cotton Canvas Lining',
-    fit: '20" Length × 11" Height × 10" Width (Carry-On Approved)',
-    pattern: 'Hand-Burnished Antique Leather Patina',
-    occasion: 'Private Jet Travel, Weekend Escapes, Luxury Resort Getaways',
-    care: 'Treat twice yearly with natural beeswax leather balsam.',
-    specifications: {
-      'Capacity': '42 Liters Storage Volume',
-      'Shoe Compartment': 'Side Zipped Waterproof Shoe Tunnel',
-      'Zippers': 'Oversized Solid Brass Two-Way YKK Zippers',
-      'Strap': 'Heavy Padded Adjustable Leather Shoulder Strap',
-      'Country of Origin': 'Tuscany, Italy'
-    },
-    createdAt: '2026-01-22T10:00:00Z'
-  },
-
-  // 9. WATCH: Velmira Skeleton Horizon Automatic
-  {
-    id: 'prod-w5',
-    name: 'Velmira Skeleton Horizon Automatic Sapphire Exhibition Case',
+    id: 'prod-w7',
+    name: 'Velmira Stealth Matte Black Ceramic Monopusher Chrono 42mm',
     brand: 'VELMIRA SIGNATURE',
-    category: "Men's Watches",
-    subcategory: 'Skeleton Watches',
-    originalPrice: 34999,
-    discountedPrice: 16999,
-    originalPriceAED: 1550,
-    priceAED: 750,
+    category: 'Chronograph',
+    subcategory: 'Chronograph Watches',
+    originalPrice: 32999,
+    discountedPrice: 15999,
+    originalPriceAED: 1450,
+    priceAED: 710,
     discountPercentage: 51,
     rating: 4.8,
-    ratingCount: 490,
-    reviewCount: 140,
-    images: [
-      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80'
-    ],
-    sizes: ['42mm Case'],
-    colors: [
-      { name: 'Matte Gunmetal & 18K Gold Gearwork', hex: '#4A4A4A' },
-      { name: 'Silver Steel & Cobalt Blue Hands', hex: '#002366' }
-    ],
-    stock: 4,
-    isNewArrival: true,
-    isTopDeal: true,
-    description: 'A captivating celebration of mechanical transparency. Both the front and rear crystals are cut from anti-reflective sapphire, revealing the intricate heartbeat of the balance wheel, escapement, and skeletonized bridges coated in satin ruthenium.',
-    fabric: 'Surgical Stainless Steel, Skeleton Ruthenium Bridges, Dual Sapphire',
-    fit: '42mm Diameter • 11.5mm Thickness',
-    pattern: 'Fully Skeletonized Open-Architecture Movement',
-    occasion: 'Architectural Galas, Tech Leadership, Black Tie Events',
-    care: 'Self-winds with wrist motion. Manual winding auxiliary supported.',
-    specifications: {
-      'Movement': 'Skeletonized Automatic Calibre V-42 (21,600 vph)',
-      'Jewels': '24 Ruby Synthetic Jewels',
-      'Crystals': 'Dual Front & Exhibition Caseback Sapphire Crystals',
-      'Band': 'Integrated Solid Link Bracelet with Butterfly Clasp',
-      'Country of Origin': 'Switzerland'
-    },
-    createdAt: '2026-02-04T10:00:00Z'
-  },
-
-  // 10. BAG: Velmira Parisian Monogram Crossbody Flap Bag
-  {
-    id: 'prod-b5',
-    name: 'Velmira Parisian Monogram Flap Crossbody Bag with Gold Lock',
-    brand: 'AURELIA LUXE',
-    category: 'Leather Bags',
-    subcategory: 'Crossbody Bags',
-    originalPrice: 17999,
-    discountedPrice: 8499,
-    originalPriceAED: 800,
-    priceAED: 380,
-    discountPercentage: 53,
-    rating: 4.8,
-    ratingCount: 630,
+    ratingCount: 640,
     reviewCount: 185,
     images: [
-      'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=900&q=80'
+      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80'
     ],
-    sizes: ['Medium (10" × 7" × 3.5")'],
+    sizes: ['42mm Dial'],
     colors: [
-      { name: 'Monogram Brown & Tan Calfskin', hex: '#654321' },
-      { name: 'Monogram Noir & Gold Hardware', hex: '#1E1E1E' }
+      { name: 'Stealth Matte Black & Crimson Accent', hex: '#111111' },
+      { name: 'Dark Titanium Grey', hex: '#333333' }
     ],
-    stock: 11,
+    stock: 6,
     isTrending: true,
-    isBestSeller: true,
-    description: 'Chic Parisian aesthetics reimagined. Embellished with the subtle Velmira interlocking crest monogram on coated canvas with vegetable-tanned cowhide leather piping and a secure brushed champagne gold push-lock closure.',
-    fabric: 'Luxury Coated Canvas with Natural Cowhide Vachetta Leather Trim',
-    fit: '10" Width × 7" Height × 3.5" Depth',
-    pattern: 'Subtle Velmira Crest Monogram with Contrast Stitching',
-    occasion: 'Brunch, High-Street Shopping, Travel & City Strolls',
-    care: 'Clean canvas with mild soap; avoid soaking the vachetta leather.',
+    isNewArrival: true,
+    description: 'Forged from micro-sandblasted high-tech zirconium oxide ceramic. Completely scratch-proof, hypoallergenic, and impervious to heat. Single monopusher crown activates start, stop, and reset functions with satisfying tactile clicks.',
+    fabric: 'High-Tech Zirconia Ceramic, Smoked Sapphire Glass, PVD Titanium',
+    fit: '42mm Dial • 11.5mm Thickness',
+    pattern: 'Matte Granulated Stealth Dial with Charcoal Luminescence',
+    occasion: 'Motorsport, Modern Architecture & Contemporary Luxury',
+    care: 'Ceramic case cannot be scratched by everyday metals. Wipe with damp cloth.',
     specifications: {
-      'Strap': 'Adjustable Leather & Gold Chain Crossbody Strap (21" drop)',
-      'Closure': 'Heavy Gold S-Lock with Push-Button Mechanism',
-      'Interior': 'Two Main Compartments + Zipped Central Divider',
-      'Country of Origin': 'France'
+      'Movement': 'Automatic Calibre V-MONO Column-Wheel Chronograph',
+      'Case Material': 'Pure Matte Zirconium Ceramic (1500 Vickers Hardness)',
+      'Crystal': 'Anti-Reflective Tinted Smoked Sapphire Crystal',
+      'Strap': 'FKM Fluoroelastomer Sport Strap with Titanium Deployment Clasp',
+      'Country of Origin': 'Switzerland'
     },
-    createdAt: '2026-01-28T10:00:00Z'
+    createdAt: '2026-02-08T10:00:00Z'
   },
 
-  // 11. WATCH: Velmira Petite Roman Classic
+  // 8. WATCH: Velmira Minimalist Ultra-Thin Bauhaus 38mm
   {
-    id: 'prod-w6',
-    name: 'Velmira Petite Roman Classic Champagne Dial Alligator Leather Strap',
-    brand: 'VALENTINO MILANO',
-    category: "Women's Watches",
+    id: 'prod-w8',
+    name: 'Velmira Minimalist Ultra-Thin Bauhaus Sub-Seconds 38mm',
+    brand: 'VELMIRA SIGNATURE',
+    category: 'Classic Dress',
     subcategory: 'Classic Watches',
     originalPrice: 18999,
     discountedPrice: 8999,
-    originalPriceAED: 840,
+    originalPriceAED: 850,
     priceAED: 400,
     discountPercentage: 53,
     rating: 4.9,
-    ratingCount: 520,
-    reviewCount: 160,
+    ratingCount: 1340,
+    reviewCount: 420,
     images: [
-      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80'
     ],
-    sizes: ['32mm Dial'],
+    sizes: ['38mm Dial'],
     colors: [
-      { name: 'Champagne Gold & Tan Alligator Leather', hex: '#D4AF37' },
-      { name: 'Silver Steel & Burgundy Red Leather', hex: '#800020' }
+      { name: 'Brushed Silver & Slate White', hex: '#E5E4E2' },
+      { name: 'Onyx Black & Gold Markers', hex: '#111111' },
+      { name: 'Champagne Ivory', hex: '#FFFFF0' }
+    ],
+    stock: 16,
+    isTrending: false,
+    isBestSeller: true,
+    description: 'The pinnacle of understated minimalist luxury. Less is truly more: an ultra-thin 6.8mm profile that slips effortlessly underneath a tailored shirt cuff, paired with clean typography, baton indices, and a delicate sub-seconds register at 6 o’clock.',
+    fabric: 'Ultra-Slim 316L Stainless Steel, Flat Sapphire Crystal',
+    fit: '38mm Dial • 6.8mm Ultra-Slim Profile',
+    pattern: 'Pure Matte Minimalist Bauhaus Dial with Recessed Sub-Seconds',
+    occasion: 'Daily Workwear, Minimalist Wardrobes & Black-Tie Galas',
+    care: '5 ATM water resistance. Clean with soft cloth.',
+    specifications: {
+      'Movement': 'Ultra-Slim Calibre V-THIN Manual Wind (28,800 vph)',
+      'Profile': '6.8mm Case Depth (One of the thinnest luxury calibres)',
+      'Dial': 'Domed Lacquered Minimalist Dial with Razor-Thin Baton Hands',
+      'Strap': 'Vegetable-Tanned Italian Cordovan Leather Strap',
+      'Country of Origin': 'Switzerland & Germany'
+    },
+    createdAt: '2026-01-08T10:00:00Z'
+  },
+
+  // 9. WATCH: Velmira Titanium Pilot Aviator Worldtimer GMT 43mm
+  {
+    id: 'prod-w9',
+    name: 'Velmira Titanium Pilot Aviator Dual-Time GMT 43mm',
+    brand: 'VELMIRA SIGNATURE',
+    category: 'Automatic',
+    subcategory: 'Automatic Watches',
+    originalPrice: 33999,
+    discountedPrice: 16499,
+    originalPriceAED: 1490,
+    priceAED: 730,
+    discountPercentage: 51,
+    rating: 4.8,
+    ratingCount: 710,
+    reviewCount: 195,
+    images: [
+      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80'
+    ],
+    sizes: ['43mm Dial'],
+    colors: [
+      { name: 'Grade 5 Satin Titanium & Matte Charcoal', hex: '#5A5A5A' },
+      { name: 'Titanium & Midnight Pilot Blue', hex: '#002B49' }
+    ],
+    stock: 9,
+    isTrending: true,
+    isNewArrival: true,
+    description: 'Crafted from aerospace Grade 5 titanium, offering twice the strength of steel at half the weight. Independent 24-hour GMT hand tracks dual time zones across Dubai, London, and Mumbai simultaneously. High-contrast Super-LumiNova markers.',
+    fabric: 'Grade 5 Aerospace Titanium, Anti-Glare Double Domed Sapphire',
+    fit: '43mm Dial • 11.8mm Case Height • Featherlight 78 Grams',
+    pattern: 'Instrument Matte Pilot Cockpit Dial with Orange GMT Hand',
+    occasion: 'International Jet-Setting, Transatlantic Travel & Aviation',
+    care: '10 ATM water resistant (100 meters). Safe for swimming.',
+    specifications: {
+      'Movement': 'Automatic Calibre V-GMT Dual-Timezone (28,800 vph)',
+      'Case': 'Grade 5 Sandblasted Aerospace Titanium (Featherlight)',
+      'GMT Function': 'Independent jumping 24h local time adjustment',
+      'Lume': 'Grade X1 Swiss Super-LumiNova on all hands and Arabic numerals',
+      'Country of Origin': 'Switzerland'
+    },
+    createdAt: '2026-02-03T10:00:00Z'
+  },
+
+  // 10. WATCH: Velmira Vintage Cushion-Case Guilloché 39mm
+  {
+    id: 'prod-w10',
+    name: 'Velmira Vintage Cushion-Case Guilloché Retrograde 39mm',
+    brand: 'VELMIRA COUTURE',
+    category: 'Classic Dress',
+    subcategory: 'Classic Watches',
+    originalPrice: 27999,
+    discountedPrice: 13499,
+    originalPriceAED: 1220,
+    priceAED: 600,
+    discountPercentage: 52,
+    rating: 4.9,
+    ratingCount: 460,
+    reviewCount: 130,
+    images: [
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80'
+    ],
+    sizes: ['39mm Dial'],
+    colors: [
+      { name: '18K Yellow Gold Cushion & Enamel', hex: '#DAA520' },
+      { name: 'Stainless Steel & Porcelain White', hex: '#FDFBF7' }
+    ],
+    stock: 7,
+    isTrending: false,
+    isTopDeal: true,
+    description: 'Inspired by the Roaring Twenties. Distinctive cushion-shaped square case with curved ergonomic corners, Roman numerals, railway minute track, and an onion crown set with a genuine cabochon sapphire.',
+    fabric: '316L Steel / 18K Yellow Gold PVD, Cabochon Sapphire Crown',
+    fit: '39mm Cushion Case • 9.8mm Thickness',
+    pattern: 'Hand-Turned Clous de Paris Guilloché Center Pattern',
+    occasion: 'Classic Galas, Heritage Collectors, Sartorial Suits',
+    care: '5 ATM water resistant. Keep in leather watch roll.',
+    specifications: {
+      'Movement': 'Automatic Calibre V-RETRO (28,800 vph, 26 Jewels)',
+      'Crown': 'Vintage Fluted Onion Crown with Natural Blue Sapphire Jewel',
+      'Crystal': 'Curved Box-Domed Sapphire Crystal with AR Coating',
+      'Strap': 'Hand-Burnished Italian Vegetable-Tanned Chestnut Leather',
+      'Country of Origin': 'Switzerland & France'
+    },
+    createdAt: '2026-01-14T10:00:00Z'
+  },
+
+  // 11. WATCH: Velmira Abyss 500M Oceanic Blue Sunray 44mm
+  {
+    id: 'prod-w11',
+    name: 'Velmira Abyss 500M Oceanic Blue Sunray Professional Diver 44mm',
+    brand: 'VELMIRA SIGNATURE',
+    category: 'Diver',
+    subcategory: 'Diver Watches',
+    originalPrice: 36999,
+    discountedPrice: 17999,
+    originalPriceAED: 1650,
+    priceAED: 800,
+    discountPercentage: 51,
+    rating: 4.9,
+    ratingCount: 880,
+    reviewCount: 240,
+    images: [
+      'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80'
+    ],
+    sizes: ['44mm Dial'],
+    colors: [
+      { name: 'Sunray Oceanic Royal Blue', hex: '#0047AB' },
+      { name: 'Abyss Carbon Black', hex: '#1C1C1C' }
     ],
     stock: 10,
     isTrending: true,
-    isTopDeal: true,
-    description: 'Understated Parisian and Milanese grace. Features traditional painted Roman numerals, blued steel sword hands, an engraved cabochon sapphire crown, and an ultra-slim 7mm profile that slips effortlessly under silk cuffs.',
-    fabric: '316L Stainless Steel, 18K Yellow Gold PVD, Blue Cabochon Crown',
-    fit: '32mm Case Diameter • Ultra-Thin 7.2mm Profile',
-    pattern: 'Champagne Lacquered Dial with Roman Numerals',
-    occasion: 'Cocktails, Afternoon High Tea & Formal Galas',
-    care: 'Water resistant to 3 ATM (splash resistant).',
+    isBestSeller: true,
+    description: 'Built to survive the crushing depths of the Marianas. Professional 500-meter water resistance with automatic helium decompression valve, 4mm-thick sapphire crystal, and high-visibility luminescent sword hands.',
+    fabric: 'Surgical 316L Steel, 4.0mm Thick Sapphire, Ceramic Bezel',
+    fit: '44mm Dial • 13.8mm Depth • Micro-Adjustable Diving Extension',
+    pattern: 'Sunray Radial Metallic Blue Dial',
+    occasion: 'Deep Sea Diving, Extreme Exploration & Sport Luxury',
+    care: '50 ATM water resistance. Certified ISO 6425 diving instrument.',
     specifications: {
-      'Movement': 'Swiss Ronda High-Precision Quartz Movement',
-      'Crown': 'Set with Synthetic Blue Cabochon Spinel Gemstone',
-      'Hands': 'Heat-Blued Steel Sword-Shaped Hands',
-      'Strap': 'Handmade Italian Alligator Grain Calf Leather',
+      'Movement': 'Automatic Calibre V-ABYSS 500M Heavy-Duty (28,800 vph)',
+      'Depth Rating': '50 ATM / 500 Meters (Automatic Helium Valve)',
+      'Crystal': '4.0mm Reinforced Flat Sapphire with Triple Internal Anti-Reflective Layer',
+      'Bracelet': 'Solid Engineer Stainless Steel Bracelet with Ratchet Wet-Suit Extension',
       'Country of Origin': 'Switzerland'
     },
-    createdAt: '2026-02-05T10:00:00Z'
+    createdAt: '2026-02-10T10:00:00Z'
   },
 
-  // 12. BAG: Velmira Continental Zip-Around Saffiano Wallet
+  // 12. WATCH: Velmira Horizon 18K Rose Gold Masterpiece 40mm
   {
-    id: 'prod-b6',
-    name: 'Velmira Continental Zip-Around Saffiano Leather Long Wallet',
-    brand: 'AURELIA LUXE',
-    category: 'Clutches & Wallets',
-    subcategory: 'Wallets & Cardholders',
-    originalPrice: 9999,
-    discountedPrice: 4499,
-    originalPriceAED: 450,
-    priceAED: 200,
-    discountPercentage: 55,
-    rating: 4.8,
-    ratingCount: 430,
-    reviewCount: 110,
+    id: 'prod-w12',
+    name: 'Velmira Horizon 18K Rose Gold Masterpiece Automatic 40mm',
+    brand: 'VELMIRA COUTURE',
+    category: 'Automatic',
+    subcategory: 'Automatic Watches',
+    originalPrice: 35999,
+    discountedPrice: 17499,
+    originalPriceAED: 1600,
+    priceAED: 780,
+    discountPercentage: 51,
+    rating: 4.9,
+    ratingCount: 790,
+    reviewCount: 215,
     images: [
-      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=900&q=80'
+      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80'
     ],
-    sizes: ['Continental (7.8" × 4.1" × 1.0")'],
+    sizes: ['40mm Dial'],
     colors: [
-      { name: 'Onyx Piano Black', hex: '#0F0F0F' },
-      { name: 'Blush Powder Rose', hex: '#FFC0CB' },
-      { name: 'Rich Emerald Green', hex: '#0B5345' }
+      { name: '18K Rose Gold & Slate Grey', hex: '#B76E79' },
+      { name: '18K Yellow Gold & Ivory', hex: '#DAA520' }
     ],
-    stock: 18,
+    stock: 5,
     isTrending: true,
-    isBestSeller: true,
-    description: 'The definitive luxury leather wallet. Holds up to 12 credit cards, international passports, smartphone, and bills with an all-around solid gold YKK zipper and RFID identity protection lining.',
-    fabric: 'Waterproof Saffiano Calfskin with RFID Blocking Core',
-    fit: '7.8" Length × 4.1" Height × 1.0" Width',
-    pattern: 'Durable Crosshatch Saffiano Leather',
-    occasion: 'Daily Luxury, Travel & Evening Organizing',
-    care: 'Wipe clean with dry lint-free cloth.',
+    isNewArrival: true,
+    description: 'The quintessential dress automatic. Triple-polished 18K rose gold casing with exhibition caseback displaying a solid 22K gold-plated rotor. A modern heirloom designed to be passed down through generations.',
+    fabric: 'Solid 18K Rose Gold PVD 316L Steel, Sapphire Glass, Alligator Strap',
+    fit: '40mm Dial • 10.2mm Thickness',
+    pattern: 'Sunburst Satin Slate Dial with Rose Gold Applied Indices',
+    occasion: 'Weddings, Board Meetings, Anniversary Milestones',
+    care: '5 ATM water resistant. Service every 5 years.',
     specifications: {
-      'Card Slots': '12 Credit Card Slots + Central Zipped Coin Pocket',
-      'Protection': 'Certified RFID Blocking Security Shield',
-      'Hardware': 'Champagne Gold Heavy YKK Zipper with Leather Pull',
-      'Country of Origin': 'Milan, Italy'
+      'Movement': 'Automatic Calibre V-HORIZON (28,800 vph, 28 Jewels)',
+      'Rotor': 'Engraved Côtes de Genève with 22K Gold PVD Mass',
+      'Power Reserve': '50 Hours Autonomy',
+      'Strap': 'Hand-Stitched Mississippiensis Alligator Leather Strap',
+      'Country of Origin': 'Switzerland'
     },
-    createdAt: '2026-02-06T10:00:00Z'
+    createdAt: '2026-02-12T10:00:00Z'
   }
 ];
 
@@ -543,18 +545,18 @@ export const INITIAL_COUPONS: Coupon[] = [
     valueAED: 25,
     minOrderValue: 2999,
     minOrderValueAED: 130,
-    description: 'Flat ₹500 (AED 25) OFF on luxury orders above ₹2,999 (AED 130)',
+    description: 'Flat ₹500 (AED 25) OFF on luxury timepiece orders above ₹2,999 (AED 130)',
     expiryDate: '2026-12-31'
   },
   {
-    code: 'FIRSTBUY',
+    code: 'HOROLOGY15',
     discountType: 'percentage',
     value: 15,
     valueAED: 15,
-    minOrderValue: 1999,
-    minOrderValueAED: 90,
-    maxDiscount: 1500,
-    description: '15% instant discount on your first order (up to ₹1,500 / AED 70)',
+    minOrderValue: 4999,
+    minOrderValueAED: 220,
+    maxDiscount: 2500,
+    description: '15% instant savings on your first automatic timepiece (up to ₹2,500 / AED 110)',
     expiryDate: '2026-12-31'
   },
   {
@@ -584,18 +586,6 @@ export const INITIAL_REVIEWS: Review[] = [
   },
   {
     id: 'rev-2',
-    productId: 'prod-b1',
-    userName: 'Kavita Singhania',
-    userLocation: 'Mumbai, India',
-    rating: 5,
-    title: 'Milanese leather quality on par with Prada',
-    comment: 'The Saffiano crosshatch leather is completely scratch-resistant. Fits my 14-inch MacBook Pro and travel essentials with ease. The WhatsApp concierge was so polite and helpful!',
-    verifiedPurchase: true,
-    helpfulCount: 31,
-    createdAt: '2026-02-15T09:15:00Z'
-  },
-  {
-    id: 'rev-3',
     productId: 'prod-w2',
     userName: 'Rashid Al Nuaimi',
     userLocation: 'Abu Dhabi, UAE',
@@ -605,5 +595,17 @@ export const INITIAL_REVIEWS: Review[] = [
     verifiedPurchase: true,
     helpfulCount: 28,
     createdAt: '2026-02-18T18:20:00Z'
+  },
+  {
+    id: 'rev-3',
+    productId: 'prod-w3',
+    userName: 'Vikramaditya Singhania',
+    userLocation: 'Mumbai, India',
+    rating: 5,
+    title: 'Flawless ceramic diver with ice-blue lume',
+    comment: 'The 300M Oceanic Diver is built like a tank. The 120-click ceramic bezel aligns with mathematical precision, and the micro-adjustable clasp makes sizing effortless. Fast delivery in Mumbai.',
+    verifiedPurchase: true,
+    helpfulCount: 35,
+    createdAt: '2026-02-19T11:45:00Z'
   }
 ];

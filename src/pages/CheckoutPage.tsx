@@ -89,10 +89,10 @@ export const CheckoutPage: React.FC = () => {
           <Clock className="w-6 h-6" />
         </div>
         <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
-          Your Shopping Bag is Empty
+          Your Timepiece Cart is Empty
         </h2>
         <p className="text-xs text-stone-500 mt-2 max-w-sm">
-          Please select an authentic timepiece or designer bag to submit your order inquiry.
+          Please select an authentic luxury timepiece to submit your order inquiry.
         </p>
         <Link
           to="/products"

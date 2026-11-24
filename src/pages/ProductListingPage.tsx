@@ -82,11 +82,11 @@ export const ProductListingPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 gap-4 border-b border-stone-200">
           <div>
             <h1 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
-              {filters.category === 'All' ? 'All Luxury Collections' : filters.category}
+              {filters.category === 'All' ? 'All Luxury Timepieces' : filters.category}
               {filters.searchQuery ? ` — Results for "${filters.searchQuery}"` : ''}
             </h1>
             <p className="text-xs text-stone-500 mt-0.5">
-              Showing <strong className="text-stone-900 font-mono">{filteredProducts.length}</strong> authenticated couture products
+              Showing <strong className="text-stone-900 font-mono">{filteredProducts.length}</strong> precision timepieces & complications
             </p>
           </div>
 

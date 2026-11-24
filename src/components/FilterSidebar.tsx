@@ -208,7 +208,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
       {allSizes.length > 0 && (
         <div className="pt-4 space-y-2">
           <label className="text-xs font-bold text-stone-900 uppercase tracking-wider block">
-            Size
+            Dial Diameter
           </label>
           <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto">
             {allSizes.map(size => {

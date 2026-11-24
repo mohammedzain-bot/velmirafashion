@@ -32,7 +32,7 @@ export function formatWhatsAppOrderMessage(data: WhatsAppOrderDetails): string {
   const currencySymbol = isAED ? 'AED ' : '₹';
   const countryFlag = data.shippingAddress.country === 'UAE' ? '🇦🇪 UAE' : '🇮🇳 INDIA';
 
-  let msg = `👑 *VELMIRA FASHION — LUXURY ORDER* 👑\n`;
+  let msg = `👑 *VELMIRA — HAUTE HORLOGERIE ORDER* 👑\n`;
   msg += `━━━━━━━━━━━━━━━━━━━━━━\n`;
   if (data.orderId) {
     msg += `🔖 *Order ID:* ${data.orderId}\n`;
@@ -55,7 +55,7 @@ export function formatWhatsAppOrderMessage(data: WhatsAppOrderDetails): string {
   msg += `*Postal / PIN / Makani:* ${data.shippingAddress.pincode}\n`;
   msg += `*Country:* ${data.shippingAddress.country}\n\n`;
 
-  msg += `🛍️ *ORDERED TIMEPIECES & BAGS:*\n`;
+  msg += `⌚ *ORDERED TIMEPIECES:*\n`;
   msg += `━━━━━━━━━━━━━━━━━━━━━━\n`;
 
   data.items.forEach((item, idx) => {
@@ -102,9 +102,9 @@ export function openDirectProductWhatsApp(product: Product, size: string, color:
   const symbol = isAED ? 'AED ' : '₹';
   const country = isAED ? '🇦🇪 UAE' : '🇮🇳 India';
 
-  let msg = `👑 *VELMIRA FASHION — INSTANT INQUIRY / ORDER* 👑\n\n`;
-  msg += `Hello Velmira Dispatch Concierge, I would like to order this piece:\n\n`;
-  msg += `⌚/👜 *Product:* ${product.name}\n`;
+  let msg = `👑 *VELMIRA — HAUTE HORLOGERIE INQUIRY / ORDER* 👑\n\n`;
+  msg += `Hello Velmira Dispatch Concierge, I would like to order this timepiece:\n\n`;
+  msg += `⌚ *Timepiece:* ${product.name}\n`;
   msg += `🏷️ *Atelier Brand:* ${product.brand}\n`;
   msg += `📐 *Selected Size / Spec:* ${size || product.sizes[0]}\n`;
   msg += `🎨 *Selected Shade / Dial:* ${color || product.colors[0]?.name}\n`;

@@ -1,12 +1,13 @@
 export type CategoryType = 
   | 'All'
   | 'Watches'
-  | 'Bags'
-  | "Men's Watches"
-  | "Women's Watches"
-  | 'Leather Bags'
-  | 'Tote Bags'
-  | 'Clutches & Wallets'
+  | 'Chronograph'
+  | 'Automatic'
+  | 'Tourbillon'
+  | 'Diver'
+  | 'Skeleton'
+  | 'Moonphase'
+  | 'Classic Dress'
   | 'New Arrivals' 
   | 'Sale';
 
@@ -46,7 +47,7 @@ export interface Product {
   ratingCount: number;
   reviewCount: number;
   images: string[];
-  sizes: string[]; // for watches: dial size e.g. 40mm, 42mm; for bags: One Size, Medium, Large
+  sizes: string[]; // for watches: dial size e.g. 38mm, 40mm, 42mm, 44mm
   colors: ProductColor[];
   stock: number;
   isTrending?: boolean;
@@ -54,9 +55,9 @@ export interface Product {
   isNewArrival?: boolean;
   isTopDeal?: boolean;
   description: string;
-  fabric: string; // Material: e.g. 316L Surgical Steel & 18K Gold PVD, Full-Grain Italian Saffiano Calfskin
-  fit: string; // Case Dimension or Bag Dimension
-  pattern: string; // Finish / Texture: Sunburst Guilloché Dial, Crosshatch Saffiano Leather
+  fabric: string; // Case Material: 316L Surgical Steel, 18K Rose Gold PVD, Grade 5 Titanium, High-Tech Ceramic
+  fit: string; // Case Dimension & Thickness
+  pattern: string; // Dial Finish: Sunburst Guilloché, Openwork Skeleton, Enamel
   occasion: string;
   care: string;
   specifications: Record<string, string>;

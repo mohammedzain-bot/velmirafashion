@@ -100,15 +100,15 @@ export const CartPage: React.FC = () => {
             <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-stone-100 flex items-center justify-center text-stone-400">
               <ShoppingBag className="w-10 h-10" />
             </div>
-            <h2 className="font-cinzel text-2xl font-bold text-stone-900">Your Shopping Bag Is Empty</h2>
+            <h2 className="font-cinzel text-2xl font-bold text-stone-900">Your Timepiece Cart Is Empty</h2>
             <p className="text-xs sm:text-sm text-stone-500 mt-2 max-w-md mx-auto leading-relaxed">
-              Explore our luxury automatic watches and Italian Saffiano leather bags to curate your collection.
+              Explore our precision Swiss automatic watches and tourbillons to curate your collection.
             </p>
             <Link
               to="/products"
               className="mt-8 inline-flex items-center space-x-2 px-8 py-3.5 rounded-full bg-[#0F0F0F] text-[#D4AF37] font-bold text-xs uppercase tracking-widest hover:bg-stone-800 transition shadow-md"
             >
-              <span>Explore Timepieces & Bags</span>
+              <span>Explore Timepieces</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -124,14 +124,14 @@ export const CartPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center space-x-2 text-xs text-stone-500">
           <Link to="/" className="hover:text-black">Home</Link>
           <ChevronRight className="w-3 h-3 text-stone-400" />
-          <span className="text-stone-900 font-semibold">Shopping Bag ({totalItemsCount} items)</span>
+          <span className="text-stone-900 font-semibold">Timepiece Cart ({totalItemsCount} items)</span>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <h1 className="font-cinzel text-2xl sm:text-3xl font-bold text-stone-900">
-            Your Shopping Bag
+            Your Timepiece Cart
           </h1>
           <div className="flex items-center space-x-2 text-xs text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl font-medium">
             <MessageCircle className="w-4 h-4 text-emerald-600" />

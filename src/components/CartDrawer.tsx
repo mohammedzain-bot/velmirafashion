@@ -152,9 +152,9 @@ export const CartDrawer: React.FC = () => {
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-stone-100 flex items-center justify-center text-stone-400">
                   <ShoppingBag className="w-8 h-8" />
                 </div>
-                <h3 className="font-cinzel text-lg font-semibold text-stone-800">Your bag is empty</h3>
+                <h3 className="font-cinzel text-lg font-semibold text-stone-800">Your vault is empty</h3>
                 <p className="text-xs text-stone-500 mt-1 max-w-xs mx-auto">
-                  Explore our luxury watches and Italian leather bags to begin your curation.
+                  Explore our precision Swiss automatic watches and tourbillons to begin your curation.
                 </p>
                 <button
                   onClick={() => {
@@ -163,7 +163,7 @@ export const CartDrawer: React.FC = () => {
                   }}
                   className="mt-6 px-6 py-2.5 rounded-full bg-[#0F0F0F] text-[#D4AF37] text-xs font-semibold uppercase tracking-wider hover:bg-stone-800 transition"
                 >
-                  Explore Watches & Bags
+                  Explore Timepieces
                 </button>
               </div>
             ) : (
