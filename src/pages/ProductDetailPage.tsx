@@ -198,66 +198,90 @@ export const ProductDetailPage: React.FC = () => {
             <div className="lg:col-span-6 flex flex-col justify-between space-y-6">
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold font-cinzel text-[#C5A059] tracking-widest uppercase">
+                  <span className="text-xs font-bold font-cinzel text-black tracking-widest uppercase">
                     {product.brand}
                   </span>
-                  <span className="text-xs text-stone-400">{product.subcategory}</span>
+                  <span className="text-xs text-[#777777] uppercase tracking-wider">{product.subcategory}</span>
                 </div>
 
-                <h1 className="font-cinzel text-xl sm:text-2xl lg:text-3xl font-bold text-stone-900 mt-1 leading-snug">
+                <h1 className="font-cinzel text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111111] mt-2 leading-tight">
                   {product.name}
                 </h1>
 
                 <div className="flex items-center space-x-3 mt-3">
-                  <div className="flex items-center space-x-1.5 bg-emerald-800 text-white text-xs font-bold px-2 py-0.5 rounded">
+                  <div className="flex items-center space-x-1.5 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-none">
                     <span>{product.rating}</span>
                     <Star className="w-3 h-3 fill-white text-white" />
                   </div>
-                  <span className="text-xs text-stone-500 font-medium">
+                  <span className="text-xs text-[#777777] font-medium">
                     {product.ratingCount.toLocaleString('en-IN')} Patron Ratings & {product.reviewCount} Reviews
                   </span>
                 </div>
 
-                {/* Price Callout in Dual Currency */}
-                <div className="mt-5 p-4 rounded-xl bg-[#FAFAF8] border border-stone-200">
+                {/* Price Callout */}
+                <div className="mt-5 p-4 bg-[#F8F8F8] border border-stone-200">
                   <div className="flex items-baseline space-x-3">
-                    <span className="text-2xl sm:text-3xl font-bold text-stone-900 font-mono">
+                    <span className="text-2xl sm:text-3xl font-bold text-[#111111] font-mono">
                       {formatPrice(product.discountedPrice, product.priceAED)}
                     </span>
-                    <span className="text-sm sm:text-base text-stone-400 line-through font-mono">
-                      {formatPrice(product.originalPrice, product.originalPriceAED)}
-                    </span>
-                    <span className="text-xs sm:text-sm font-bold text-emerald-700 font-mono">
-                      {product.discountPercentage}% OFF
-                    </span>
+                    {product.originalPrice > product.discountedPrice && (
+                      <span className="text-sm sm:text-base text-[#777777] line-through font-mono">
+                        {formatPrice(product.originalPrice, product.originalPriceAED)}
+                      </span>
+                    )}
+                    {product.discountPercentage > 0 && (
+                      <span className="text-xs sm:text-sm font-bold text-black font-mono">
+                        {product.discountPercentage}% OFF
+                      </span>
+                    )}
                   </div>
-                  <p className="text-[11px] text-stone-500 mt-1">
-                    Direct shipping available to <strong className="text-stone-800">{country === 'UAE' ? '🇦🇪 United Arab Emirates' : '🇮🇳 India'}</strong>. Free insured air cargo included.
+                  <p className="text-[11px] text-[#777777] mt-1.5">
+                    Direct insured delivery to <strong className="text-black">{country === 'UAE' ? '🇦🇪 United Arab Emirates' : '🇮🇳 India'}</strong>.
                   </p>
                 </div>
 
-                {/* Colors / Dials */}
+                {/* Key Watch Attributes Overview */}
+                <div className="mt-5 grid grid-cols-2 gap-3 text-xs border border-stone-200 p-3.5 bg-white">
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-[#777777] block">Watch Type:</span>
+                    <span className="font-bold text-black">{product.watchType || product.subcategory || 'Automatic'}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-[#777777] block">Dial Color:</span>
+                    <span className="font-bold text-black">{product.dialColor || selectedColor}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-[#777777] block">Case Material:</span>
+                    <span className="font-bold text-black">{product.caseMaterial || '316L Surgical Steel'}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-[#777777] block">Strap Material:</span>
+                    <span className="font-bold text-black">{product.strapMaterial || 'Italian Calfskin Leather'}</span>
+                  </div>
+                </div>
+
+                {/* Colors / Available Dials */}
                 {product.colors && product.colors.length > 0 && (
                   <div className="mt-5">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-bold text-stone-900 uppercase tracking-wider">
-                        Color / Dial Shade: <span className="text-[#C5A059] font-semibold">{selectedColor}</span>
+                      <span className="text-xs font-bold text-black uppercase tracking-wider">
+                        Available Colors / Dials: <span className="text-[#777777] font-semibold">{selectedColor}</span>
                       </span>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5">
                       {product.colors.map(col => (
                         <button
                           key={col.name}
                           type="button"
                           onClick={() => setSelectedColor(col.name)}
-                          className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full border text-xs font-medium transition ${
+                          className={`flex items-center space-x-1.5 px-3 py-1.5 border text-xs font-medium transition ${
                             selectedColor === col.name
-                              ? 'border-black bg-stone-900 text-white font-semibold'
-                              : 'border-stone-300 text-stone-700 hover:border-black'
+                              ? 'border-black bg-black text-white font-semibold'
+                              : 'border-stone-200 text-stone-700 hover:border-black bg-white'
                           }`}
                         >
                           <span
-                            className="w-3.5 h-3.5 rounded-full border border-black/20 shrink-0"
+                            className="w-3 h-3 rounded-full border border-black/20 shrink-0"
                             style={{ backgroundColor: col.hex }}
                           />
                           <span>{col.name}</span>
@@ -267,15 +291,15 @@ export const ProductDetailPage: React.FC = () => {
                   </div>
                 )}
 
-                {/* Size / Dimensions Selector */}
+                {/* Case / Dial Size */}
                 <div className="mt-5">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-stone-900 uppercase tracking-wider">
-                      Specification / Size:
+                    <span className="text-xs font-bold text-black uppercase tracking-wider">
+                      Dial Diameter:
                     </span>
                     <button
                       onClick={() => setIsSizeGuideOpen(true)}
-                      className="text-xs text-[#C5A059] hover:text-stone-900 font-semibold flex items-center space-x-1"
+                      className="text-xs text-[#777777] hover:text-black font-semibold flex items-center space-x-1"
                     >
                       <Ruler className="w-3.5 h-3.5" />
                       <span>Dimensions Guide</span>
@@ -287,10 +311,10 @@ export const ProductDetailPage: React.FC = () => {
                         key={size}
                         type="button"
                         onClick={() => setSelectedSize(size)}
-                        className={`min-w-14 py-2 px-3 text-xs font-bold rounded-lg border transition ${
+                        className={`min-w-14 py-2 px-3 text-xs font-bold border transition ${
                           selectedSize === size
-                            ? 'bg-[#0F0F0F] text-[#D4AF37] border-black shadow-xs'
-                            : 'bg-white border-stone-300 text-stone-800 hover:border-stone-900'
+                            ? 'bg-black text-white border-black'
+                            : 'bg-white border-stone-200 text-stone-800 hover:border-black'
                         }`}
                       >
                         {size}
@@ -299,20 +323,20 @@ export const ProductDetailPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Quantity */}
+                {/* Availability & Quantity */}
                 <div className="mt-5 flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <span className="text-xs font-bold text-stone-900 uppercase tracking-wider">
+                    <span className="text-xs font-bold text-black uppercase tracking-wider">
                       Qty:
                     </span>
-                    <div className="flex items-center border border-stone-300 rounded-lg px-2 py-1 bg-white">
+                    <div className="flex items-center border border-stone-300 px-2 py-1 bg-white">
                       <button
                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
                         className="p-1 text-stone-500 hover:text-black"
                       >
                         <Minus className="w-3.5 h-3.5" />
                       </button>
-                      <span className="px-3 text-xs font-bold text-stone-900 font-mono">{quantity}</span>
+                      <span className="px-3 text-xs font-bold text-black font-mono">{quantity}</span>
                       <button
                         onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
                         className="p-1 text-stone-500 hover:text-black"
@@ -323,44 +347,51 @@ export const ProductDetailPage: React.FC = () => {
                   </div>
 
                   <div>
-                    {product.stock <= 5 && product.stock > 0 ? (
-                      <span className="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full flex items-center">
-                        <Zap className="w-3 h-3 mr-1 fill-amber-500 text-amber-500" /> Only {product.stock} items left in stock!
-                      </span>
-                    ) : (
-                      <span className="text-xs font-semibold text-emerald-700 flex items-center">
-                        <Check className="w-3.5 h-3.5 mr-1" /> Ready for Immediate Dispatch
-                      </span>
-                    )}
+                    <span className="text-xs font-semibold text-black flex items-center">
+                      <Check className="w-3.5 h-3.5 mr-1" /> {product.availability || 'In Stock (Ships in 24 Hours)'}
+                    </span>
                   </div>
                 </div>
 
-                {/* PRIMARY ACTIONS: WHATSAPP ORDER (PROMINENT) + BAG + BUY NOW */}
-                <div className="mt-6 space-y-3">
-                  {/* DIRECT WHATSAPP ORDER BUTTON */}
-                  <button
-                    onClick={handleWhatsAppOrder}
-                    className="w-full py-3.5 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-widest transition flex items-center justify-center space-x-2 shadow-md"
-                  >
-                    <MessageCircle className="w-5 h-5 fill-white" />
-                    <span>Instant WhatsApp Order ({OFFICIAL_WHATSAPP_NUMBER})</span>
-                  </button>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* THE 4 REQUIRED BUTTONS: Add to Cart, Buy Now, Add to Wishlist, WhatsApp Enquiry */}
+                <div className="mt-6 space-y-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {/* 1. Add to Cart */}
                     <button
                       onClick={handleAddToCart}
-                      className="py-3 px-6 rounded-xl bg-white border-2 border-stone-900 text-stone-900 hover:bg-stone-50 font-bold text-xs uppercase tracking-widest transition flex items-center justify-center space-x-2 shadow-xs"
+                      className="py-3.5 px-6 bg-white border border-black text-black hover:bg-black hover:text-white font-bold text-xs uppercase tracking-widest transition flex items-center justify-center space-x-2"
                     >
-                      <ShoppingBag className="w-4 h-4 text-[#D4AF37]" />
-                      <span>Add to Vault</span>
+                      <ShoppingBag className="w-4 h-4" />
+                      <span>Add to Cart</span>
                     </button>
 
+                    {/* 2. Buy Now */}
                     <button
                       onClick={handleBuyNow}
-                      className="py-3 px-6 rounded-xl bg-[#0F0F0F] text-[#D4AF37] hover:bg-stone-800 font-bold text-xs uppercase tracking-widest transition flex items-center justify-center space-x-2 shadow-md"
+                      className="py-3.5 px-6 bg-[#111111] text-white hover:bg-black font-bold text-xs uppercase tracking-widest transition flex items-center justify-center space-x-2 shadow-xs"
                     >
-                      <Zap className="w-4 h-4 fill-[#D4AF37]" />
+                      <Zap className="w-4 h-4 fill-white" />
                       <span>Buy Now</span>
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {/* 3. Add to Wishlist */}
+                    <button
+                      onClick={() => toggleWishlist(product)}
+                      className="py-3 px-6 bg-white border border-stone-200 text-stone-700 hover:border-black hover:text-black font-semibold text-xs uppercase tracking-wider transition flex items-center justify-center space-x-2"
+                    >
+                      <Heart className={`w-4 h-4 ${inWish ? 'fill-black text-black' : ''}`} />
+                      <span>{inWish ? 'In Wishlist' : 'Add to Wishlist'}</span>
+                    </button>
+
+                    {/* 4. WhatsApp Enquiry */}
+                    <button
+                      onClick={handleWhatsAppOrder}
+                      className="py-3 px-6 bg-[#F8F8F8] border border-stone-300 text-black hover:bg-black hover:text-white font-semibold text-xs uppercase tracking-wider transition flex items-center justify-center space-x-2"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>WhatsApp Enquiry</span>
                     </button>
                   </div>
                 </div>
@@ -372,18 +403,18 @@ export const ProductDetailPage: React.FC = () => {
               </div>
 
               {/* Trust highlights */}
-              <div className="pt-6 border-t border-stone-200 grid grid-cols-3 gap-3 text-center text-xs text-stone-600">
+              <div className="pt-6 border-t border-stone-200 grid grid-cols-3 gap-3 text-center text-xs text-[#777777]">
                 <div className="flex flex-col items-center">
-                  <ShieldCheck className="w-5 h-5 text-[#D4AF37] mb-1" />
-                  <span className="font-semibold text-stone-900 text-[11px]">100% Authentic</span>
+                  <ShieldCheck className="w-5 h-5 text-black mb-1" />
+                  <span className="font-semibold text-black text-[11px]">100% Certified</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <RotateCcw className="w-5 h-5 text-[#D4AF37] mb-1" />
-                  <span className="font-semibold text-stone-900 text-[11px]">7-Day Returns</span>
+                  <RotateCcw className="w-5 h-5 text-black mb-1" />
+                  <span className="font-semibold text-black text-[11px]">7-Day Returns</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <Truck className="w-5 h-5 text-[#D4AF37] mb-1" />
-                  <span className="font-semibold text-stone-900 text-[11px]">India & UAE Cargo</span>
+                  <Truck className="w-5 h-5 text-black mb-1" />
+                  <span className="font-semibold text-black text-[11px]">Insured Cargo</span>
                 </div>
               </div>
             </div>
@@ -396,8 +427,8 @@ export const ProductDetailPage: React.FC = () => {
                 onClick={() => setActiveTab('details')}
                 className={`pb-3 text-xs font-bold uppercase tracking-widest transition ${
                   activeTab === 'details'
-                    ? 'border-b-2 border-[#D4AF37] text-stone-900'
-                    : 'text-stone-400 hover:text-stone-800'
+                    ? 'border-b-2 border-black text-black'
+                    : 'text-stone-400 hover:text-black'
                 }`}
               >
                 Materials & Craftsmanship
@@ -406,8 +437,8 @@ export const ProductDetailPage: React.FC = () => {
                 onClick={() => setActiveTab('specs')}
                 className={`pb-3 text-xs font-bold uppercase tracking-widest transition ${
                   activeTab === 'specs'
-                    ? 'border-b-2 border-[#D4AF37] text-stone-900'
-                    : 'text-stone-400 hover:text-stone-800'
+                    ? 'border-b-2 border-black text-black'
+                    : 'text-stone-400 hover:text-black'
                 }`}
               >
                 Atelier Specifications
@@ -416,8 +447,8 @@ export const ProductDetailPage: React.FC = () => {
                 onClick={() => setActiveTab('reviews')}
                 className={`pb-3 text-xs font-bold uppercase tracking-widest transition ${
                   activeTab === 'reviews'
-                    ? 'border-b-2 border-[#D4AF37] text-stone-900'
-                    : 'text-stone-400 hover:text-stone-800'
+                    ? 'border-b-2 border-black text-black'
+                    : 'text-stone-400 hover:text-black'
                 }`}
               >
                 Patron Reviews ({reviews.length})

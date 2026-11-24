@@ -1,13 +1,16 @@
 export type CategoryType = 
+  | 'All Watches'
   | 'All'
   | 'Watches'
+  | "Men's Watches"
+  | "Women's Watches"
+  | 'Luxury Watches'
+  | 'Classic Watches'
+  | 'Sports Watches'
+  | 'Minimal Watches'
   | 'Chronograph'
   | 'Automatic'
   | 'Tourbillon'
-  | 'Diver'
-  | 'Skeleton'
-  | 'Moonphase'
-  | 'Classic Dress'
   | 'New Arrivals' 
   | 'Sale';
 
@@ -47,17 +50,23 @@ export interface Product {
   ratingCount: number;
   reviewCount: number;
   images: string[];
-  sizes: string[]; // for watches: dial size e.g. 38mm, 40mm, 42mm, 44mm
+  sizes: string[]; // dial sizes e.g. 38mm, 40mm, 42mm
   colors: ProductColor[];
   stock: number;
+  isFeatured?: boolean;
   isTrending?: boolean;
   isBestSeller?: boolean;
   isNewArrival?: boolean;
   isTopDeal?: boolean;
   description: string;
-  fabric: string; // Case Material: 316L Surgical Steel, 18K Rose Gold PVD, Grade 5 Titanium, High-Tech Ceramic
+  watchType?: string; // e.g. Automatic, Chronograph, Quartz, Tourbillon
+  dialColor?: string; // e.g. Sunburst Emerald, Obsidian Black, Pure White, Silver Slate
+  strapMaterial?: string; // e.g. Italian Alligator Leather, 316L Stainless Steel Oyster, FKM Rubber
+  caseMaterial?: string; // e.g. 316L Surgical Steel, 18K Rose Gold, High-Tech Ceramic
+  availability?: string; // e.g. In Stock, Ships in 24 Hours
+  fabric: string; // Case Material / Movement descriptor
   fit: string; // Case Dimension & Thickness
-  pattern: string; // Dial Finish: Sunburst Guilloché, Openwork Skeleton, Enamel
+  pattern: string; // Dial Finish
   occasion: string;
   care: string;
   specifications: Record<string, string>;

@@ -11,40 +11,39 @@ export const MobileBottomNav: React.FC = () => {
   const { wishlistIds } = useWishlist();
 
   return (
-    <nav className="fixed bottom-0 inset-x-0 bg-[#0F0F0F] text-stone-300 border-t border-stone-800 z-40 sm:hidden">
-      <div className="grid grid-cols-4 items-center h-15">
+    <nav className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md text-[#777777] border-t border-neutral-200 z-40 sm:hidden">
+      <div className="grid grid-cols-4 items-center h-14">
         {/* Home */}
         <Link
           to="/"
           className={`flex flex-col items-center justify-center h-full relative transition ${
-            location.pathname === '/' ? 'text-[#D4AF37]' : 'text-stone-400 hover:text-stone-200'
+            location.pathname === '/' ? 'text-[#111111] font-semibold' : 'text-[#777777] hover:text-[#111111]'
           }`}
         >
-          <Home className="w-5 h-5" />
+          <Home className="w-4 h-4" />
           <span className="text-[10px] mt-1 font-medium">Home</span>
         </Link>
 
         {/* Collections */}
         <Link
-          to="/products"
+          to="/watches"
           className={`flex flex-col items-center justify-center h-full relative transition ${
-            location.pathname.startsWith('/products') ? 'text-[#D4AF37]' : 'text-stone-400 hover:text-stone-200'
+            location.pathname.startsWith('/watches') || location.pathname.startsWith('/products') ? 'text-[#111111] font-semibold' : 'text-[#777777] hover:text-[#111111]'
           }`}
         >
-          <Grid className="w-5 h-5" />
-          <span className="text-[10px] mt-1 font-medium">Catalog</span>
+          <Grid className="w-4 h-4" />
+          <span className="text-[10px] mt-1 font-medium">Watches</span>
         </Link>
 
         {/* Wishlist */}
         <Link
-          to="/products"
-          onClick={() => {}}
-          className="flex flex-col items-center justify-center h-full relative text-stone-400 hover:text-stone-200 transition"
+          to="/watches"
+          className="flex flex-col items-center justify-center h-full relative text-[#777777] hover:text-[#111111] transition"
         >
           <div className="relative">
-            <Heart className="w-5 h-5" />
+            <Heart className="w-4 h-4" />
             {wishlistIds.length > 0 && (
-              <span className="absolute -top-1.5 -right-2 bg-[#D4AF37] text-black font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-mono">
+              <span className="absolute -top-1.5 -right-2 bg-[#111111] text-white font-bold text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-mono">
                 {wishlistIds.length}
               </span>
             )}
@@ -55,12 +54,12 @@ export const MobileBottomNav: React.FC = () => {
         {/* Shopping Bag / Checkout */}
         <button
           onClick={() => setIsCartDrawerOpen(true)}
-          className="flex flex-col items-center justify-center h-full relative text-stone-400 hover:text-[#D4AF37] transition"
+          className="flex flex-col items-center justify-center h-full relative text-[#777777] hover:text-[#111111] transition"
         >
           <div className="relative">
-            <ShoppingBag className="w-5 h-5" />
+            <ShoppingBag className="w-4 h-4" />
             {totalItemsCount > 0 && (
-              <span className="absolute -top-1.5 -right-2 bg-[#D4AF37] text-black font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-mono">
+              <span className="absolute -top-1.5 -right-2 bg-[#111111] text-white font-bold text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-mono">
                 {totalItemsCount}
               </span>
             )}

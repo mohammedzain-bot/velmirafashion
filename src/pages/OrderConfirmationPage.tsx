@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { CheckCircle2, Package, Printer, Truck, ArrowRight, ShieldCheck, MapPin } from 'lucide-react';
+import { CheckCircle2, Truck, Printer, ArrowRight, MapPin, MessageCircle } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { InvoiceModal } from '../components/InvoiceModal';
 import { TrackOrderModal } from '../components/TrackOrderModal';
@@ -15,37 +15,37 @@ export const OrderConfirmationPage: React.FC = () => {
   const order = orders.find(o => o.id === id) || orders[0];
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] py-12 sm:py-16">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#111111] py-12 sm:py-16 font-sans">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <div className="bg-white rounded-3xl border border-stone-200 p-8 sm:p-12 shadow-sm text-center">
-          {/* Animated Gold Checkmark */}
-          <div className="w-20 h-20 rounded-full bg-emerald-50 border-2 border-emerald-500 text-emerald-600 flex items-center justify-center mx-auto mb-6 shadow-inner animate-in zoom-in duration-300">
-            <CheckCircle2 className="w-10 h-10" />
+        <div className="bg-white border border-neutral-200 p-8 sm:p-12 shadow-sm text-center">
+          {/* Minimal Black/White Icon */}
+          <div className="w-16 h-16 bg-[#111111] text-white flex items-center justify-center mx-auto mb-6">
+            <CheckCircle2 className="w-8 h-8" />
           </div>
 
-          <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4AF37]">
-            ORDER CONFIRMED & REGISTERED
+          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#777777]">
+            ORDER CONFIRMED
           </span>
-          <h1 className="font-cinzel text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-wide mt-1">
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#111111] tracking-wide mt-1">
             Thank You For Your Patronage
           </h1>
-          <p className="text-xs sm:text-sm text-stone-500 mt-2 max-w-md mx-auto">
-            Your luxury consignment has been booked and scheduled for white-glove inspection & air express dispatch.
+          <p className="text-xs sm:text-sm text-[#777777] mt-2 max-w-md mx-auto">
+            Your watch order has been scheduled for white-glove inspection and insured air express delivery.
           </p>
 
           {/* Order Details Strip */}
-          <div className="mt-8 p-6 rounded-2xl bg-[#FAFAF8] border border-stone-200 text-left grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div className="mt-8 p-6 bg-[#F8F8F8] border border-neutral-200 text-left grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
             <div>
-              <span className="text-stone-400 block font-semibold uppercase text-[10px]">Order Reference</span>
-              <span className="font-mono font-bold text-stone-900 text-sm mt-0.5 block">{order?.id || id}</span>
+              <span className="text-[#777777] block font-semibold uppercase text-[10px]">Reference</span>
+              <span className="font-mono font-bold text-[#111111] text-sm mt-0.5 block">{order?.id || id}</span>
             </div>
             <div>
-              <span className="text-stone-400 block font-semibold uppercase text-[10px]">Estimated Doorstep Handover</span>
-              <span className="font-bold text-stone-900 text-sm mt-0.5 block">{order?.estimatedDelivery || 'Within 3-4 Days'}</span>
+              <span className="text-[#777777] block font-semibold uppercase text-[10px]">Estimated Delivery</span>
+              <span className="font-medium text-[#111111] text-sm mt-0.5 block">{order?.estimatedDelivery || 'Within 2-3 Days'}</span>
             </div>
             <div>
-              <span className="text-stone-400 block font-semibold uppercase text-[10px]">Total Amount Paid</span>
-              <span className="font-mono font-bold text-stone-900 text-sm mt-0.5 block">
+              <span className="text-[#777777] block font-semibold uppercase text-[10px]">Total Amount</span>
+              <span className="font-mono font-bold text-[#111111] text-sm mt-0.5 block">
                 ₹{order?.totalAmount?.toLocaleString('en-IN') || '—'}
               </span>
             </div>
@@ -54,47 +54,48 @@ export const OrderConfirmationPage: React.FC = () => {
           {/* Action Buttons */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
-              href={`https://wa.me/971556787854?text=${encodeURIComponent(`Hello Velmira Dispatch, I am inquiring about my Order ID: ${order?.id || id}`)}`}
+              href={`https://wa.me/971556787854?text=${encodeURIComponent(`Hello Velmira Concierge, I am inquiring about my Watch Order ID: ${order?.id || id}`)}`}
               target="_blank"
               rel="noreferrer"
-              className="px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-widest transition flex items-center space-x-2 shadow-md"
+              className="px-6 py-3 bg-[#111111] hover:bg-neutral-800 text-white font-medium text-xs uppercase tracking-widest transition flex items-center space-x-2"
             >
-              <span>Message on WhatsApp (+971 55 678 7854)</span>
+              <MessageCircle className="w-4 h-4" />
+              <span>WhatsApp Concierge (+971 55 678 7854)</span>
             </a>
 
             <button
               onClick={() => setIsTrackOpen(true)}
-              className="px-6 py-3 rounded-full bg-[#0F0F0F] text-[#D4AF37] font-bold text-xs uppercase tracking-widest hover:bg-stone-800 transition flex items-center space-x-2 shadow-sm"
+              className="px-6 py-3 border border-neutral-300 hover:border-black text-[#111111] font-medium text-xs uppercase tracking-widest transition flex items-center space-x-2"
             >
               <Truck className="w-4 h-4" />
-              <span>Track Consignment</span>
+              <span>Track Delivery</span>
             </button>
 
             <button
               onClick={() => setIsInvoiceOpen(true)}
-              className="px-6 py-3 rounded-full bg-white border border-stone-300 text-stone-800 font-semibold text-xs uppercase tracking-widest hover:bg-stone-50 transition flex items-center space-x-2 shadow-xs"
+              className="px-6 py-3 border border-neutral-300 hover:border-black text-[#111111] font-medium text-xs uppercase tracking-widest transition flex items-center space-x-2"
             >
               <Printer className="w-4 h-4" />
-              <span>Tax Invoice</span>
+              <span>Invoice</span>
             </button>
 
             <Link
-              to="/products"
-              className="px-6 py-3 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-800 font-semibold text-xs uppercase tracking-widest transition flex items-center space-x-2"
+              to="/watches"
+              className="px-6 py-3 border border-neutral-300 hover:border-black text-[#111111] font-medium text-xs uppercase tracking-widest transition flex items-center space-x-2"
             >
-              <span>Continue Shopping</span>
+              <span>Explore Watches</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
           {/* Delivery Address summary */}
           {order?.shippingAddress && (
-            <div className="mt-10 pt-6 border-t border-stone-100 text-left text-xs text-stone-500 max-w-md mx-auto">
-              <div className="flex items-center space-x-1.5 font-bold text-stone-800 mb-1">
-                <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
-                <span>Shipping Destination:</span>
+            <div className="mt-10 pt-6 border-t border-neutral-100 text-left text-xs text-[#777777] max-w-md mx-auto">
+              <div className="flex items-center space-x-1.5 font-bold text-[#111111] mb-1">
+                <MapPin className="w-3.5 h-3.5 text-[#111111]" />
+                <span>Delivery Address:</span>
               </div>
-              <p className="text-stone-700 font-medium">{order.shippingAddress.fullName}</p>
+              <p className="text-[#111111] font-medium">{order.shippingAddress.fullName}</p>
               <p>{order.shippingAddress.addressLine1}, {order.shippingAddress.city}, {order.shippingAddress.state} - {order.shippingAddress.pincode}</p>
             </div>
           )}

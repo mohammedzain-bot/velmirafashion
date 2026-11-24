@@ -1,5 +1,5 @@
 import React from 'react';
-import { RotateCcw, Star, ChevronDown, Check } from 'lucide-react';
+import { RotateCcw, Check } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { CategoryType } from '../types';
@@ -82,82 +82,54 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
     filters.maxPrice < 50000;
 
   return (
-    <div className="bg-white rounded-xl border border-stone-200 p-4 sm:p-5 shadow-xs divide-y divide-stone-200 space-y-5">
+    <div className="bg-white border border-neutral-200 p-4 sm:p-5 divide-y divide-neutral-200 space-y-5 font-sans">
       {/* Header with Clear Button */}
       <div className="flex items-center justify-between pb-1">
         <div>
-          <h3 className="font-cinzel text-base font-bold text-stone-900 tracking-wide">Filters</h3>
-          <p className="text-[11px] text-stone-500 mt-0.5">{filteredProducts.length} items found</p>
+          <h3 className="font-serif text-sm font-bold uppercase tracking-wider text-[#111111]">Refine</h3>
+          <p className="text-[11px] text-[#777777] mt-0.5">{filteredProducts.length} watches</p>
         </div>
         {hasActiveFilters && (
           <button
             onClick={resetFilters}
-            className="text-[11px] font-semibold text-rose-600 hover:text-rose-800 flex items-center space-x-1"
+            className="text-[11px] font-medium text-[#111111] hover:underline flex items-center space-x-1"
           >
             <RotateCcw className="w-3 h-3" />
-            <span>Clear All</span>
+            <span>Reset</span>
           </button>
         )}
       </div>
 
       {/* Category Filter */}
       <div className="pt-4 space-y-2">
-        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider block">
+        <label className="text-xs font-semibold text-[#111111] uppercase tracking-wider block">
           Category
         </label>
-        <div className="space-y-1 max-h-44 overflow-y-auto pr-1">
+        <div className="space-y-1 max-h-48 overflow-y-auto pr-1">
           {categories.map(cat => (
             <button
               key={cat}
               onClick={() => handleCategoryChange(cat)}
-              className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-between ${
+              className={`w-full text-left px-2.5 py-1.5 text-xs font-medium transition flex items-center justify-between ${
                 filters.category === cat
-                  ? 'bg-[#0F0F0F] text-[#D4AF37] font-semibold'
-                  : 'text-stone-700 hover:bg-stone-100'
+                  ? 'bg-[#111111] text-white font-semibold'
+                  : 'text-[#777777] hover:bg-[#F8F8F8] hover:text-[#111111]'
               }`}
             >
               <span>{cat}</span>
-              {filters.category === cat && <Check className="w-3.5 h-3.5 text-[#D4AF37]" />}
+              {filters.category === cat && <Check className="w-3.5 h-3.5 text-white" />}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Subcategories */}
-      {allSubcategories.length > 0 && (
-        <div className="pt-4 space-y-2">
-          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider block">
-            Subcategory
-          </label>
-          <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
-            {allSubcategories.map(sub => {
-              const checked = filters.subcategories.includes(sub);
-              return (
-                <label
-                  key={sub}
-                  className="flex items-center space-x-2 text-xs text-stone-700 cursor-pointer hover:text-black select-none"
-                >
-                  <input
-                    type="checkbox"
-                    checked={checked}
-                    onChange={() => handleSubcategoryToggle(sub)}
-                    className="rounded border-stone-300 text-stone-900 focus:ring-[#D4AF37] h-3.5 w-3.5"
-                  />
-                  <span className="truncate">{sub}</span>
-                </label>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
       {/* Price Range Slider */}
       <div className="pt-4 space-y-3">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider">
+          <label className="text-xs font-semibold text-[#111111] uppercase tracking-wider">
             Price Range
           </label>
-          <span className="text-xs font-mono font-bold text-stone-900">
+          <span className="text-xs font-mono font-medium text-[#111111]">
             Up to {formatPrice(filters.maxPrice)}
           </span>
         </div>
@@ -168,9 +140,9 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
           step={500}
           value={filters.maxPrice}
           onChange={e => handlePriceChange(Number(e.target.value))}
-          className="w-full accent-[#0F0F0F] h-1.5 bg-stone-200 rounded-lg cursor-pointer"
+          className="w-full accent-black h-1 bg-neutral-200 cursor-pointer"
         />
-        <div className="flex justify-between text-[10px] text-stone-400 font-mono">
+        <div className="flex justify-between text-[10px] text-[#777777] font-mono">
           <span>{formatPrice(1000)}</span>
           <span>{formatPrice(50000)}</span>
         </div>
@@ -179,8 +151,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
       {/* Brand Filter */}
       {allBrands.length > 0 && (
         <div className="pt-4 space-y-2">
-          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider block">
-            Luxury Brand
+          <label className="text-xs font-semibold text-[#111111] uppercase tracking-wider block">
+            Brand / Atelier
           </label>
           <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
             {allBrands.map(brand => {
@@ -188,15 +160,15 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
               return (
                 <label
                   key={brand}
-                  className="flex items-center space-x-2 text-xs text-stone-700 cursor-pointer hover:text-black select-none"
+                  className="flex items-center space-x-2 text-xs text-[#777777] cursor-pointer hover:text-[#111111] select-none"
                 >
                   <input
                     type="checkbox"
                     checked={checked}
                     onChange={() => handleBrandToggle(brand)}
-                    className="rounded border-stone-300 text-stone-900 focus:ring-[#D4AF37] h-3.5 w-3.5"
+                    className="border-neutral-300 text-black focus:ring-black h-3.5 w-3.5"
                   />
-                  <span className="truncate font-medium">{brand}</span>
+                  <span className="truncate">{brand}</span>
                 </label>
               );
             })}
@@ -204,11 +176,11 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
         </div>
       )}
 
-      {/* Sizes Filter */}
+      {/* Sizes / Case Diameters Filter */}
       {allSizes.length > 0 && (
         <div className="pt-4 space-y-2">
-          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider block">
-            Dial Diameter
+          <label className="text-xs font-semibold text-[#111111] uppercase tracking-wider block">
+            Case Diameter
           </label>
           <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto">
             {allSizes.map(size => {
@@ -218,10 +190,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
                   key={size}
                   type="button"
                   onClick={() => handleSizeToggle(size)}
-                  className={`px-2.5 py-1 text-xs rounded-lg font-medium border transition ${
+                  className={`px-2.5 py-1 text-xs font-medium border transition ${
                     active
-                      ? 'bg-[#0F0F0F] text-[#D4AF37] border-black font-bold'
-                      : 'border-stone-300 text-stone-700 hover:border-black'
+                      ? 'bg-[#111111] text-white border-black font-semibold'
+                      : 'border-neutral-300 text-[#777777] hover:border-black hover:text-[#111111]'
                   }`}
                 >
                   {size}
@@ -232,65 +204,15 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
         </div>
       )}
 
-      {/* Customer Rating Filter */}
-      <div className="pt-4 space-y-2">
-        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider block">
-          Customer Rating
-        </label>
-        <div className="space-y-1.5">
-          {[4, 3].map(rating => (
-            <label
-              key={rating}
-              className="flex items-center space-x-2 text-xs text-stone-700 cursor-pointer hover:text-black select-none"
-            >
-              <input
-                type="radio"
-                name="rating"
-                checked={filters.minRating === rating}
-                onChange={() => handleRatingChange(rating)}
-                className="text-[#0F0F0F] focus:ring-[#D4AF37] h-3.5 w-3.5"
-              />
-              <div className="flex items-center space-x-1">
-                <span>{rating}★ & above</span>
-              </div>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {/* Discount Percentage */}
-      <div className="pt-4 space-y-2">
-        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider block">
-          Discount
-        </label>
-        <div className="space-y-1.5">
-          {[50, 40, 20].map(disc => (
-            <label
-              key={disc}
-              className="flex items-center space-x-2 text-xs text-stone-700 cursor-pointer hover:text-black select-none"
-            >
-              <input
-                type="radio"
-                name="discount"
-                checked={filters.minDiscount === disc}
-                onChange={() => handleDiscountChange(disc)}
-                className="text-[#0F0F0F] focus:ring-[#D4AF37] h-3.5 w-3.5"
-              />
-              <span>{disc}% and above</span>
-            </label>
-          ))}
-        </div>
-      </div>
-
       {/* In-Stock Only Toggle */}
       <div className="pt-4">
-        <label className="flex items-center justify-between text-xs text-stone-800 cursor-pointer select-none font-semibold">
-          <span>In-Stock Items Only</span>
+        <label className="flex items-center justify-between text-xs text-[#111111] cursor-pointer select-none font-medium">
+          <span>In-Stock Watches Only</span>
           <input
             type="checkbox"
             checked={filters.inStockOnly}
             onChange={e => setFilters(prev => ({ ...prev, inStockOnly: e.target.checked }))}
-            className="rounded border-stone-300 text-stone-900 focus:ring-[#D4AF37] h-4 w-4"
+            className="border-neutral-300 text-black focus:ring-black h-4 w-4"
           />
         </label>
       </div>
@@ -300,7 +222,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
         <div className="pt-4 lg:hidden">
           <button
             onClick={onCloseMobile}
-            className="w-full py-2.5 rounded-xl bg-[#0F0F0F] text-[#D4AF37] font-semibold text-xs uppercase tracking-wider"
+            className="w-full py-2.5 bg-[#111111] text-white font-medium text-xs uppercase tracking-wider hover:bg-neutral-800 transition"
           >
             Apply Filters
           </button>

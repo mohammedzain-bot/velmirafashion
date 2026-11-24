@@ -13,6 +13,7 @@ import { Footer } from './components/Footer';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { VelmiraIntroLoader } from './components/VelmiraIntroLoader';
 import { RegionSelectModal } from './components/RegionSelectModal';
+import { TiltedVerticalMarquee } from './components/TiltedVerticalMarquee';
 
 import { HomePage } from './pages/HomePage';
 import { ProductListingPage } from './pages/ProductListingPage';
@@ -71,14 +72,19 @@ const AppLayout: React.FC = () => {
   }, [setIsRegionModalOpen]);
 
   return (
-    <div className="flex flex-col min-h-screen text-[#1A1A1A] bg-[#0A0A0A] selection:bg-[#D4AF37]/30 selection:text-white">
-      {/* Sleek Modern Scrolling Bar Across the Website */}
-      <div className="fixed top-0 left-0 right-0 h-[2.5px] z-[99999] bg-transparent pointer-events-none">
+    <div className="flex flex-col min-h-screen text-[#111111] bg-white selection:bg-stone-900 selection:text-white pr-6 sm:pr-7.5">
+      {/* Sleek Minimalist Top Progress Indicator */}
+      <div className="fixed top-0 left-0 right-6 sm:right-7.5 h-[2px] z-[99999] bg-stone-100 pointer-events-none">
         <div 
-          className="h-full bg-gradient-to-r from-[#B89736] via-[#D4AF37] to-[#FFF2B2] shadow-[0_0_10px_rgba(212,175,55,0.8)] transition-all duration-75 ease-out"
+          className="h-full bg-[#111111] transition-all duration-75 ease-out"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
+
+      {/* 
+        The Continuous 90-Degree Tilted Scrolling Text Bar Running Vertically Along the Website 
+      */}
+      <TiltedVerticalMarquee />
 
       {/* 1. Initial Splash / Loading Page with Letter-by-Letter Animation */}
       {showIntro && !isAdmin && (
@@ -94,11 +100,14 @@ const AppLayout: React.FC = () => {
       {!isCheckout && <Navbar />}
       {!isAdmin && !isCheckout && <CategoryBar />}
 
-      <main className="flex-1 pb-16 sm:pb-0 bg-[#0A0A0A]">
+      <main className="flex-1 pb-16 sm:pb-0 bg-white">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/watches" element={<ProductListingPage />} />
+          <Route path="/watches/:id" element={<ProductDetailPage />} />
           <Route path="/products" element={<ProductListingPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/collections" element={<ProductListingPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/order-confirmation/:id" element={<OrderConfirmationPage />} />
@@ -137,10 +146,10 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode }, Error
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-[#0A0A0A] text-white flex flex-col items-center justify-center p-6 text-center">
-          <h2 className="font-cinzel text-2xl font-bold text-[#D4AF37] mb-2 tracking-widest">VELMIRA</h2>
-          <p className="text-xs text-stone-300 max-w-sm mb-6">
-            Something went wrong while loading the page.
+        <div className="min-h-screen bg-white text-[#111111] flex flex-col items-center justify-center p-6 text-center font-sans">
+          <h2 className="font-serif text-2xl font-bold tracking-[0.25em] mb-2">VELMIRA</h2>
+          <p className="text-xs text-[#777777] max-w-sm mb-6">
+            Something went wrong while loading the collection.
           </p>
           <button
             onClick={() => {
@@ -149,9 +158,9 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode }, Error
               } catch {}
               window.location.href = '/';
             }}
-            className="px-6 py-2.5 rounded-full bg-[#D4AF37] text-black font-cinzel text-xs font-bold tracking-widest uppercase hover:bg-[#c5a059] transition"
+            className="px-6 py-2.5 bg-[#111111] text-white font-medium text-xs tracking-widest uppercase hover:bg-neutral-800 transition"
           >
-            Reload Atelier
+            Reload Storefront
           </button>
         </div>
       );

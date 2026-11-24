@@ -1,16 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Search,
   ShoppingBag,
   Heart,
-  User as UserIcon,
   ChevronDown,
-  Sparkles,
-  Package,
-  LogOut,
   Shield,
-  MapPin,
   Menu,
   X,
   TrendingUp,
@@ -19,39 +14,34 @@ import {
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
-import { useAuth } from '../context/AuthContext';
 import { useShop } from '../context/ShopContext';
 import { useCurrency } from '../context/CurrencyContext';
-import { AuthModal } from './AuthModal';
 import { OFFICIAL_WHATSAPP_NUMBER, WHATSAPP_RAW_NUMBER } from '../utils/whatsapp';
 
 export const Navbar: React.FC = () => {
   const { totalItemsCount, setIsCartDrawerOpen } = useCart();
   const { wishlistIds } = useWishlist();
-  const { user, logout } = useAuth();
   const { products, setFilters } = useShop();
   const { country, currency, setRegion, setIsRegionModalOpen } = useCurrency();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isRegionMenuOpen, setIsRegionMenuOpen] = useState(false);
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const searchRef = useRef<HTMLDivElement>(null);
-  const userMenuRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const regionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (isSearchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isSearchOpen]);
+
+  useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-        setIsSearchFocused(false);
-      }
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
-        setIsUserMenuOpen(false);
-      }
       if (regionRef.current && !regionRef.current.contains(e.target as Node)) {
         setIsRegionMenuOpen(false);
       }
@@ -65,59 +55,49 @@ export const Navbar: React.FC = () => {
     if (searchQuery.trim()) {
       setFilters(prev => ({ ...prev, searchQuery: searchQuery.trim(), category: 'All' }));
       navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
-      setIsSearchFocused(false);
+      setIsSearchOpen(false);
     }
   };
 
-  const handleSuggestionClick = (query: string) => {
-    setSearchQuery(query);
-    setFilters(prev => ({ ...prev, searchQuery: query, category: 'All' }));
-    navigate(`/products?search=${encodeURIComponent(query)}`);
-    setIsSearchFocused(false);
-  };
-
-  const trendingKeywords = [
-    'Chrono Royal',
-    'Flying Tourbillon',
-    'Oceanic 300M Diver',
-    'Openwork Skeleton',
-    'Moonphase Calendar',
-    'Bauhaus Ultra-Thin',
-    'Titanium GMT'
+  const navLinks = [
+    { label: 'Home', path: '/' },
+    { label: 'All Watches', path: '/products' },
+    { label: "Men's Watches", path: "/products?category=Men's%20Watches" },
+    { label: "Women's Watches", path: "/products?category=Women's%20Watches" },
+    { label: 'Luxury Watches', path: '/products?category=Luxury%20Watches' },
+    { label: 'Collections', path: '/products' }
   ];
 
-  const liveMatches = searchQuery.trim()
-    ? products
-        .filter(
-          p =>
-            p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            p.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            p.subcategory.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-        .slice(0, 4)
-    : [];
+  const trendingSearches = [
+    'Chrono Royal',
+    'Tourbillon',
+    'Sub-Mariner 300M',
+    'Bauhaus Ultra-Thin',
+    'Diamond Pavé',
+    'Vintage Cushion'
+  ];
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-[#0F0F0F] text-white">
-        {/* Top Announcement Ribbon with WhatsApp Ordering Info & Currency Switcher */}
-        <div className="bg-[#141414] border-b border-stone-800 text-[11px] py-1 px-4 sm:px-8 flex items-center justify-between text-stone-300">
+      <header className="sticky top-0 z-50 bg-white border-b border-stone-200/90 text-[#111111] shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all">
+        {/* Subtle Top Utility Bar */}
+        <div className="bg-[#F8F8F8] border-b border-stone-100 text-[11px] py-1.5 px-4 sm:px-8 flex items-center justify-between text-stone-600 font-sans">
           <div className="flex items-center space-x-2 truncate">
-            <span className="text-[#D4AF37] text-[10px] font-bold tracking-widest uppercase font-cinzel">
-              India & UAE Atelier
+            <span className="font-semibold text-black tracking-wider uppercase font-cinzel text-[10px]">
+              VELMIRA ATELIER
             </span>
-            <span className="text-stone-600">|</span>
-            <span className="truncate text-stone-400">
-              White-Glove Delivery • WhatsApp Concierge: <a href={`https://wa.me/${WHATSAPP_RAW_NUMBER}`} target="_blank" rel="noreferrer" className="text-[#D4AF37] font-semibold hover:underline">{OFFICIAL_WHATSAPP_NUMBER}</a>
+            <span className="text-stone-300">|</span>
+            <span className="truncate text-stone-500 text-[10px] sm:text-[11px]">
+              Complimentary Insured Delivery (India & UAE) • Concierge: <a href={`https://wa.me/${WHATSAPP_RAW_NUMBER}`} target="_blank" rel="noreferrer" className="text-black font-semibold hover:underline">{OFFICIAL_WHATSAPP_NUMBER}</a>
             </span>
           </div>
 
-          <div className="flex items-center space-x-4 text-xs">
+          <div className="flex items-center space-x-4 text-xs shrink-0">
             {/* Region / Currency Switcher */}
             <div ref={regionRef} className="relative">
               <button
                 onClick={() => setIsRegionMenuOpen(!isRegionMenuOpen)}
-                className="flex items-center space-x-1.5 py-0.5 px-2 rounded bg-stone-900 border border-stone-700 text-stone-200 hover:text-white transition"
+                className="flex items-center space-x-1.5 py-0.5 px-2 rounded border border-stone-200 bg-white text-stone-700 hover:text-black hover:border-black transition text-[11px]"
               >
                 <span>{country === 'UAE' ? '🇦🇪 UAE (AED)' : '🇮🇳 India (INR ₹)'}</span>
                 <ChevronDown className="w-3 h-3 text-stone-400" />
@@ -127,209 +107,193 @@ export const Navbar: React.FC = () => {
                 <div className="absolute right-0 mt-1 w-44 bg-white text-stone-900 rounded-xl shadow-xl border border-stone-200 py-1.5 z-50 text-xs">
                   <button
                     onClick={() => { setRegion('India'); setIsRegionMenuOpen(false); }}
-                    className={`w-full text-left px-3 py-1.5 flex items-center justify-between hover:bg-stone-50 ${country === 'India' ? 'font-bold text-[#D4AF37]' : ''}`}
+                    className={`w-full text-left px-3 py-1.5 flex items-center justify-between hover:bg-stone-50 ${country === 'India' ? 'font-bold text-black' : ''}`}
                   >
                     <span>🇮🇳 India (₹ INR)</span>
-                    {country === 'India' && <span className="text-[10px] bg-amber-100 text-amber-900 px-1.5 rounded">Active</span>}
+                    {country === 'India' && <span className="text-[10px] bg-stone-100 text-black px-1.5 rounded">Active</span>}
                   </button>
                   <button
                     onClick={() => { setRegion('UAE'); setIsRegionMenuOpen(false); }}
-                    className={`w-full text-left px-3 py-1.5 flex items-center justify-between hover:bg-stone-50 ${country === 'UAE' ? 'font-bold text-[#D4AF37]' : ''}`}
+                    className={`w-full text-left px-3 py-1.5 flex items-center justify-between hover:bg-stone-50 ${country === 'UAE' ? 'font-bold text-black' : ''}`}
                   >
                     <span>🇦🇪 UAE (AED د.إ)</span>
-                    {country === 'UAE' && <span className="text-[10px] bg-emerald-100 text-emerald-900 px-1.5 rounded">Active</span>}
+                    {country === 'UAE' && <span className="text-[10px] bg-stone-100 text-black px-1.5 rounded">Active</span>}
                   </button>
                   <div className="border-t border-stone-100 mt-1 pt-1">
                     <button
                       onClick={() => { setIsRegionMenuOpen(false); setIsRegionModalOpen(true); }}
-                      className="w-full text-left px-3 py-1.5 text-[11px] text-[#D4AF37] hover:bg-stone-50 font-medium"
+                      className="w-full text-left px-3 py-1.5 text-[11px] text-stone-600 hover:text-black font-medium"
                     >
-                      🗺️ Change Destination...
+                      🗺️ Change Destination
                     </button>
                   </div>
                 </div>
               )}
             </div>
 
-            <div className="hidden md:flex items-center space-x-4 text-stone-400">
-              <Link to="/admin" className="hover:text-[#D4AF37] transition flex items-center space-x-1 text-stone-400 hover:text-white text-[11px]">
-                <Shield className="w-3.5 h-3.5" />
-                <span>Admin</span>
-              </Link>
-            </div>
+            <Link to="/admin" className="text-stone-400 hover:text-black transition flex items-center space-x-1 text-[11px]">
+              <Shield className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Admin</span>
+            </Link>
           </div>
         </div>
 
         {/* Main Navbar */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
-          {/* Logo */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-6">
+          {/* Left: Brand Logo */}
           <div className="flex items-center space-x-3">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-1 text-stone-700 hover:text-black"
+              aria-label="Toggle navigation menu"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+
             <Link to="/" className="flex flex-col group">
-              <div className="flex items-center space-x-1.5">
-                <span className="font-cinzel text-xl sm:text-2xl font-extrabold tracking-widest text-white group-hover:text-stone-100 transition">
-                  VELMIRA
-                </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] inline-block mb-1" />
-              </div>
-              <span className="text-[8px] sm:text-[9px] font-medium tracking-[0.25em] text-[#D4AF37] uppercase -mt-1 font-sans">
-                Haute Horlogerie Ateliers
+              <span className="font-cinzel text-2xl sm:text-3xl font-extrabold tracking-[0.18em] text-[#111111] group-hover:text-stone-700 transition">
+                VELMIRA
+              </span>
+              <span className="text-[8px] font-medium tracking-[0.3em] text-[#777777] uppercase -mt-1 font-sans">
+                Haute Horlogerie
               </span>
             </Link>
           </div>
 
-          {/* Center Search Bar */}
-          <div ref={searchRef} className="relative flex-1 max-w-xl hidden md:block">
-            <form onSubmit={handleSearchSubmit} className="relative flex items-center">
-              <input
-                type="text"
-                placeholder="Search Swiss automatic chronographs, tourbillons, 300M divers, skeleton dials..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                onFocus={() => setIsSearchFocused(true)}
-                className="w-full bg-[#FAFAF8] text-stone-900 placeholder-stone-400 pl-11 pr-24 py-2.5 rounded-full text-xs font-medium border border-transparent focus:border-[#D4AF37] focus:bg-white focus:outline-none transition shadow-inner"
-              />
-              <Search className="w-4 h-4 text-stone-400 absolute left-4 pointer-events-none" />
+          {/* Center: Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center space-x-7">
+            {navLinks.map(link => {
+              const isActive = location.pathname + location.search === link.path;
+              return (
+                <Link
+                  key={link.label}
+                  to={link.path}
+                  className={`text-xs font-semibold uppercase tracking-[0.15em] transition-colors py-1 relative ${
+                    isActive 
+                      ? 'text-black font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-black' 
+                      : 'text-stone-600 hover:text-black'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
 
-              <button
-                type="submit"
-                className="absolute right-1.5 px-4 py-1.5 rounded-full bg-[#0F0F0F] text-[#D4AF37] text-xs font-semibold uppercase tracking-wider hover:bg-stone-800 transition"
-              >
-                Search
-              </button>
-            </form>
-
-            {/* Search Dropdown */}
-            {isSearchFocused && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white text-stone-800 rounded-2xl shadow-2xl border border-stone-200 overflow-hidden z-50">
-                {liveMatches.length > 0 && (
-                  <div className="p-3 border-b border-stone-100">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">
-                      Matching Timepieces
-                    </p>
-                    <div className="space-y-2">
-                      {liveMatches.map(product => (
-                        <Link
-                          key={product.id}
-                          to={`/products/${product.id}`}
-                          onClick={() => setIsSearchFocused(false)}
-                          className="flex items-center space-x-3 p-1.5 rounded-lg hover:bg-stone-50 transition"
-                        >
-                          <img
-                            src={product.images[0]}
-                            alt={product.name}
-                            className="w-9 h-11 object-cover rounded border border-stone-200 shrink-0"
-                          />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-[10px] text-[#D4AF37] uppercase font-bold tracking-wide">
-                              {product.brand}
-                            </p>
-                            <p className="text-xs font-medium text-stone-900 truncate">{product.name}</p>
-                          </div>
-                          <span className="text-xs font-bold font-mono text-stone-900">
-                            {currency === 'AED' ? `AED ${product.priceAED}` : `₹${product.discountedPrice.toLocaleString('en-IN')}`}
-                          </span>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div className="p-4 bg-[#FAFAF8]">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2 flex items-center">
-                    <TrendingUp className="w-3 h-3 mr-1 text-[#D4AF37]" /> Trending Silhouettes
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {trendingKeywords.map((kw, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => handleSuggestionClick(kw)}
-                        className="px-2.5 py-1 text-xs rounded-full bg-white border border-stone-200 text-stone-700 hover:border-[#D4AF37] hover:text-[#0F0F0F] transition"
-                      >
-                        {kw}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Right Action Icons */}
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            {/* Direct WhatsApp Ordering Header Button */}
-            <a
-              href={`https://wa.me/${WHATSAPP_RAW_NUMBER}?text=${encodeURIComponent('Hello Velmira Dispatch Concierge, I would like to order a luxury watch/bag.')}`}
-              target="_blank"
-              rel="noreferrer"
-              className="hidden lg:flex items-center space-x-1.5 py-1.5 px-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs transition"
-              title="Order on WhatsApp"
+          {/* Right: Icons (Search, Wishlist, Bag) */}
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            {/* Search Toggle */}
+            <button
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className="p-2 text-stone-700 hover:text-black transition rounded-full hover:bg-stone-50"
+              aria-label="Search watches"
+              title="Search"
             >
-              <MessageCircle className="w-4 h-4 fill-white" />
-              <span>WhatsApp: +971 55 678 7854</span>
-            </a>
+              <Search className="w-5 h-5" />
+            </button>
 
-            {/* Admin shortcut if logged in as admin */}
-            {user?.role === 'admin' && (
-              <Link
-                to="/admin"
-                className="py-1 px-2.5 rounded-lg bg-stone-900 border border-stone-700 text-[#D4AF37] text-xs font-semibold flex items-center space-x-1"
-              >
-                <Shield className="w-3.5 h-3.5" />
-                <span>Admin</span>
-              </Link>
-            )}
-
-            {/* Wishlist Icon */}
+            {/* Wishlist */}
             <Link
-              to="/dashboard?tab=wishlist"
-              className="relative p-2 rounded-full text-stone-300 hover:text-white transition"
+              to="/products"
+              className="relative p-2 text-stone-700 hover:text-black transition rounded-full hover:bg-stone-50"
+              aria-label="Wishlist"
               title="Wishlist"
             >
               <Heart className="w-5 h-5" />
               {wishlistIds.length > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#D4AF37] text-black font-bold text-[10px] flex items-center justify-center font-mono">
+                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-black text-white font-bold text-[9px] flex items-center justify-center font-mono">
                   {wishlistIds.length}
                 </span>
               )}
             </Link>
 
-            {/* Cart Trigger */}
+            {/* Shopping Bag */}
             <button
               onClick={() => setIsCartDrawerOpen(true)}
-              className="relative flex items-center space-x-2 py-1.5 px-3 rounded-full bg-[#D4AF37] text-black hover:bg-[#c5a059] transition shadow-sm font-semibold"
+              className="relative flex items-center space-x-2 py-2 px-3.5 rounded-full bg-[#111111] text-white hover:bg-black transition shadow-xs font-medium"
+              aria-label="Open Shopping Bag"
             >
               <ShoppingBag className="w-4 h-4" />
-              <span className="hidden sm:inline text-xs font-bold uppercase tracking-wider">Bag</span>
-              <span className="bg-black text-[#D4AF37] text-[10px] font-bold px-1.5 py-0.2 rounded-full font-mono">
+              <span className="text-xs font-bold font-mono">
                 {totalItemsCount}
               </span>
             </button>
           </div>
         </div>
 
-        {/* Mobile Search */}
-        <div className="p-3 md:hidden border-t border-stone-800 bg-[#121212]">
-          <form onSubmit={handleSearchSubmit} className="relative flex items-center">
-            <input
-              type="text"
-              placeholder="Search timepieces & complications..."
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              className="w-full bg-[#FAFAF8] text-stone-900 placeholder-stone-400 pl-10 pr-20 py-2 rounded-full text-xs font-medium focus:outline-none"
-            />
-            <Search className="w-4 h-4 text-stone-400 absolute left-3.5 pointer-events-none" />
-            <button
-              type="submit"
-              className="absolute right-1 px-3 py-1 rounded-full bg-[#0F0F0F] text-[#D4AF37] text-[10px] font-bold uppercase tracking-wider"
-            >
-              Go
-            </button>
-          </form>
-        </div>
-      </header>
+        {/* Minimal Expandable Search Bar */}
+        {isSearchOpen && (
+          <div className="border-t border-stone-200 bg-white p-4 shadow-md animate-in fade-in duration-200">
+            <div className="max-w-3xl mx-auto">
+              <form onSubmit={handleSearchSubmit} className="relative flex items-center">
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  placeholder="Search timepieces by name, collection, or complication (e.g., Chrono Royal, Tourbillon, Diver)..."
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  className="w-full bg-[#F8F8F8] text-[#111111] placeholder-stone-400 pl-11 pr-24 py-3 rounded-xl text-xs font-medium border border-stone-200 focus:border-black focus:bg-white focus:outline-none transition"
+                />
+                <Search className="w-4 h-4 text-stone-400 absolute left-4 pointer-events-none" />
+                <button
+                  type="submit"
+                  className="absolute right-1.5 px-4 py-2 rounded-lg bg-black text-white text-xs font-semibold uppercase tracking-wider hover:bg-stone-800 transition"
+                >
+                  Search
+                </button>
+              </form>
 
-      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+              <div className="mt-3 flex items-center flex-wrap gap-2 text-[11px] text-stone-500">
+                <span className="flex items-center text-stone-700 font-semibold mr-1">
+                  <TrendingUp className="w-3.5 h-3.5 mr-1 text-black" /> Popular:
+                </span>
+                {trendingSearches.map(term => (
+                  <button
+                    key={term}
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery(term);
+                      setFilters(prev => ({ ...prev, searchQuery: term, category: 'All' }));
+                      navigate(`/products?search=${encodeURIComponent(term)}`);
+                      setIsSearchOpen(false);
+                    }}
+                    className="px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 hover:bg-black hover:text-white transition"
+                  >
+                    {term}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Mobile Navigation Drawer */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden border-t border-stone-200 bg-white py-4 px-6 space-y-3 animate-in fade-in duration-200 shadow-lg">
+            {navLinks.map(link => (
+              <Link
+                key={link.label}
+                to={link.path}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block py-2 text-sm font-semibold tracking-wider text-stone-800 hover:text-black border-b border-stone-100"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="pt-2">
+              <a
+                href={`https://wa.me/${WHATSAPP_RAW_NUMBER}?text=${encodeURIComponent('Hello Velmira Concierge, I would like to inquire about your watch collections.')}`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center space-x-2 text-xs font-semibold text-emerald-700 py-2"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>WhatsApp Concierge ({OFFICIAL_WHATSAPP_NUMBER})</span>
+              </a>
+            </div>
+          </div>
+        )}
+      </header>
     </>
   );
 };

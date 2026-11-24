@@ -82,15 +82,16 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Derive filter options dynamically from current catalog
   const categories: CategoryType[] = [
-    'All',
-    'Watches',
+    'All Watches',
+    "Men's Watches",
+    "Women's Watches",
+    'Luxury Watches',
+    'Classic Watches',
+    'Sports Watches',
+    'Minimal Watches',
     'Chronograph',
     'Automatic',
     'Tourbillon',
-    'Diver',
-    'Skeleton',
-    'Moonphase',
-    'Classic Dress',
     'New Arrivals',
     'Sale'
   ];
@@ -102,19 +103,31 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Dynamic filter and sorting logic
   const filteredProducts = products.filter(product => {
     // Category match
-    if (filters.category !== 'All') {
+    if (filters.category && filters.category !== 'All' && filters.category !== 'All Watches') {
       if (filters.category === 'Watches') {
-        // All products in Velmira are luxury timepieces
         return true;
       } else if (filters.category === 'New Arrivals') {
         if (!product.isNewArrival) return false;
       } else if (filters.category === 'Sale') {
         if (!product.isTopDeal && product.discountPercentage < 50 && product.category !== 'Sale') return false;
-      } else if (
-        product.category !== filters.category &&
-        !product.subcategory.toLowerCase().includes(filters.category.toLowerCase())
-      ) {
-        return false;
+      } else {
+        const cat = filters.category.toLowerCase();
+        const pCat = (product.category || '').toLowerCase();
+        const pSub = (product.subcategory || '').toLowerCase();
+        const pName = (product.name || '').toLowerCase();
+        const pDesc = (product.description || '').toLowerCase();
+        const pType = (product.watchType || '').toLowerCase();
+
+        const match =
+          pCat === cat ||
+          pCat.includes(cat) ||
+          cat.includes(pCat) ||
+          pSub.includes(cat) ||
+          pType.includes(cat) ||
+          pName.includes(cat) ||
+          pDesc.includes(cat);
+
+        if (!match) return false;
       }
     }
 

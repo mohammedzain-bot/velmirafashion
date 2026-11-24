@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heart, Star, ShoppingBag, Eye, Zap, MessageCircle } from 'lucide-react';
+import { Heart, MessageCircle, ArrowRight } from 'lucide-react';
 import { Product } from '../types';
-import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { openDirectProductWhatsApp } from '../utils/whatsapp';
@@ -12,9 +11,8 @@ interface ProductCardProps {
   onQuickView?: (product: Product) => void;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const navigate = useNavigate();
-  const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
   const { formatPrice, currency } = useCurrency();
   const [isHovered, setIsHovered] = useState(false);
@@ -23,35 +21,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
   const primaryImage = product.images[0];
   const secondaryImage = product.images[1] || product.images[0];
 
-  const handleQuickAdd = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addToCart(
-      product,
-      product.sizes[0] || 'One Size',
-      product.colors[0]?.name || 'Standard',
-      1
-    );
-  };
-
-  const handleBuyNow = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addToCart(
-      product,
-      product.sizes[0] || 'One Size',
-      product.colors[0]?.name || 'Standard',
-      1
-    );
-    navigate('/checkout');
-  };
-
   const handleWhatsAppOrder = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     openDirectProductWhatsApp(
       product,
-      product.sizes[0] || 'One Size',
+      product.sizes[0] || 'Standard',
       product.colors[0]?.name || 'Standard',
       currency
     );
@@ -65,12 +40,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
 
   return (
     <div
-      className="group relative bg-white rounded-xl border border-stone-200/90 hover:border-stone-400/60 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden"
+      className="group relative bg-white border border-stone-200 hover:border-black transition-all duration-300 flex flex-col justify-between"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Product Image Frame */}
-      <Link to={`/products/${product.id}`} className="relative block aspect-[3/4] overflow-hidden bg-stone-100">
+      <Link to={`/products/${product.id}`} className="relative block aspect-[4/5] overflow-hidden bg-[#FBFBFB]">
         <img
           src={isHovered ? secondaryImage : primaryImage}
           alt={product.name}
@@ -78,112 +53,100 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
           loading="lazy"
         />
 
-        {/* Top Badges */}
-        <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10">
-          {product.isBestSeller && (
-            <span className="bg-[#0F0F0F] text-[#D4AF37] text-[10px] font-bold px-2 py-0.5 rounded tracking-widest uppercase shadow-sm">
-              Bestseller
-            </span>
-          )}
+        {/* Minimal Badges */}
+        <div className="absolute top-3 left-3 flex flex-col gap-1 z-10">
           {product.isNewArrival && (
-            <span className="bg-emerald-800 text-white text-[10px] font-bold px-2 py-0.5 rounded tracking-widest uppercase shadow-sm">
-              New Arrival
+            <span className="bg-black text-white text-[9px] font-semibold px-2 py-0.5 uppercase tracking-widest">
+              NEW
             </span>
           )}
-          {product.discountPercentage >= 50 && (
-            <span className="bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded tracking-wider shadow-sm">
-              {product.discountPercentage}% OFF
+          {product.isBestSeller && !product.isNewArrival && (
+            <span className="bg-stone-900 text-white text-[9px] font-semibold px-2 py-0.5 uppercase tracking-widest">
+              BESTSELLER
             </span>
           )}
         </div>
 
-        {/* Wishlist Button */}
+        {/* Wishlist Icon */}
         <button
           onClick={handleWishlistClick}
           aria-label="Save to Wishlist"
-          className={`absolute top-2.5 right-2.5 p-2 rounded-full transition-all duration-200 shadow-md ${
+          className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-200 z-10 shadow-xs ${
             inWish
-              ? 'bg-rose-50 text-rose-600 hover:bg-rose-100'
-              : 'bg-white/90 text-stone-700 hover:text-rose-600 hover:bg-white'
+              ? 'bg-black text-white'
+              : 'bg-white/90 text-stone-700 hover:text-black hover:bg-white'
           }`}
         >
-          <Heart className={`w-4 h-4 ${inWish ? 'fill-rose-600 text-rose-600' : ''}`} />
+          <Heart className={`w-3.5 h-3.5 ${inWish ? 'fill-white text-white' : ''}`} />
         </button>
-
-        {/* Quick View overlay button */}
-        {onQuickView && (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onQuickView(product);
-            }}
-            className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-xs text-stone-900 text-xs font-semibold shadow-md opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center space-x-1.5 hover:bg-white"
-          >
-            <Eye className="w-3.5 h-3.5" />
-            <span>Quick View</span>
-          </button>
-        )}
       </Link>
 
       {/* Product Details */}
-      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between">
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between bg-white">
         <div>
-          {/* Brand & Rating Bar */}
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-[10px] sm:text-[11px] font-bold tracking-wider text-[#C5A059] uppercase font-cinzel">
-              {product.brand}
-            </span>
-            <div className="flex items-center space-x-1 text-stone-400 text-[10px] font-medium">
-              <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-              <span className="text-stone-700 font-semibold">{product.rating}</span>
-            </div>
+          {/* Brand & Subcategory */}
+          <div className="flex items-center justify-between mb-1.5 text-[10px] uppercase tracking-[0.2em] text-[#777777]">
+            <span>{product.brand}</span>
+            <span>{product.subcategory || product.category}</span>
           </div>
 
           {/* Product Name */}
           <Link to={`/products/${product.id}`} className="block">
-            <h3 className="text-xs sm:text-sm font-medium text-stone-900 line-clamp-1 hover:text-[#C5A059] transition-colors leading-snug">
+            <h3 className="font-cinzel text-xs sm:text-sm font-bold text-[#111111] line-clamp-1 hover:text-stone-600 transition-colors tracking-wide leading-snug">
               {product.name}
             </h3>
           </Link>
+
+          {/* Available Colors Swatches */}
+          {product.colors && product.colors.length > 0 && (
+            <div className="flex items-center space-x-1.5 mt-2.5">
+              {product.colors.slice(0, 4).map((c, idx) => (
+                <span
+                  key={idx}
+                  title={c.name}
+                  className="w-2.5 h-2.5 rounded-full border border-stone-300"
+                  style={{ backgroundColor: c.hex }}
+                />
+              ))}
+              {product.colors.length > 4 && (
+                <span className="text-[9px] text-[#777777] font-mono">
+                  +{product.colors.length - 4}
+                </span>
+              )}
+            </div>
+          )}
         </div>
 
-        {/* Pricing & Actions (Add to Bag + WhatsApp Quick Order) */}
-        <div className="mt-3 pt-2.5 border-t border-stone-100 flex items-end justify-between gap-1">
+        {/* Pricing & View Product Button */}
+        <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
           <div>
-            <div className="flex items-baseline space-x-1.5">
-              <span className="text-sm sm:text-base font-bold text-stone-900 font-mono">
+            <div className="flex items-baseline space-x-2">
+              <span className="text-sm sm:text-base font-bold text-[#111111] font-mono">
                 {formatPrice(product.discountedPrice, product.priceAED)}
               </span>
-              <span className="text-xs text-stone-400 line-through font-mono">
-                {formatPrice(product.originalPrice, product.originalPriceAED)}
-              </span>
+              {product.originalPrice > product.discountedPrice && (
+                <span className="text-xs text-[#777777] line-through font-mono">
+                  {formatPrice(product.originalPrice, product.originalPriceAED)}
+                </span>
+              )}
             </div>
-            {product.stock <= 5 && product.stock > 0 && (
-              <p className="text-[10px] font-semibold text-amber-700 mt-0.5 flex items-center">
-                <Zap className="w-2.5 h-2.5 mr-0.5 fill-amber-500 text-amber-500" /> Only {product.stock} in stock!
-              </p>
-            )}
           </div>
 
           <div className="flex items-center space-x-1.5">
-            {/* Direct WhatsApp Concierge button */}
             <button
               onClick={handleWhatsAppOrder}
-              className="p-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition shadow-xs"
-              title="Quick WhatsApp Inquiry (+971 55 678 7854)"
+              className="p-2 border border-stone-200 text-stone-700 hover:text-black hover:border-black transition rounded-none"
+              title="Inquire on WhatsApp (+971 55 678 7854)"
             >
-              <MessageCircle className="w-3.5 h-3.5 fill-white" />
+              <MessageCircle className="w-3.5 h-3.5" />
             </button>
 
-            {/* Buy / Inquiry Button */}
-            <button
-              onClick={handleBuyNow}
-              className="py-1 px-3 rounded-lg bg-[#0F0F0F] text-[#D4AF37] hover:bg-stone-800 transition text-[11px] font-bold uppercase tracking-wider font-cinzel shadow-xs"
-              title="Buy Now"
+            <Link
+              to={`/products/${product.id}`}
+              className="px-3.5 py-1.5 bg-[#111111] text-white hover:bg-black transition text-[10px] font-semibold uppercase tracking-widest font-sans"
             >
-              Buy
-            </button>
+              View
+            </Link>
           </div>
         </div>
       </div>

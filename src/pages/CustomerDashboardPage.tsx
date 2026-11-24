@@ -84,20 +84,20 @@ export const CustomerDashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] pb-16">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#111111] pb-16 font-sans">
       {/* Top Banner */}
-      <div className="bg-[#0F0F0F] text-white py-8 border-b border-stone-800">
+      <div className="bg-[#FFFFFF] text-[#111111] py-8 border-b border-neutral-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center space-x-4">
-            <div className="w-14 h-14 rounded-full bg-[#D4AF37] text-black font-cinzel font-bold text-xl flex items-center justify-center shadow-lg">
+            <div className="w-14 h-14 bg-[#111111] text-white font-serif font-bold text-xl flex items-center justify-center">
               {user?.name ? user.name.charAt(0) : 'V'}
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <h1 className="font-cinzel text-xl sm:text-2xl font-bold tracking-wide">
-                  {user?.name || 'Aarav Sharma'}
+                <h1 className="font-serif text-xl sm:text-2xl font-bold tracking-wide">
+                  {user?.name || 'Valued Patron'}
                 </h1>
-                <span className="bg-amber-100 text-amber-900 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full">
+                <span className="border border-neutral-200 bg-[#F8F8F8] text-[#111111] text-[10px] uppercase font-bold px-2 py-0.5">
                   Privé Patron
                 </span>
               </div>
@@ -107,14 +107,14 @@ export const CustomerDashboardPage: React.FC = () => {
 
           <div className="flex items-center space-x-3 text-xs">
             <Link
-              to="/products"
-              className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white transition"
+              to="/watches"
+              className="px-4 py-2 border border-neutral-300 hover:border-black text-[#111111] transition text-xs uppercase tracking-wider"
             >
-              Browse Catalog
+              Browse Watches
             </Link>
             <Link
               to="/admin"
-              className="px-4 py-2 rounded-full bg-[#D4AF37] text-black font-bold uppercase tracking-wider text-[11px] hover:bg-[#c5a059] transition"
+              className="px-4 py-2 bg-[#111111] text-white font-medium uppercase tracking-wider text-xs hover:bg-neutral-800 transition"
             >
               Admin Portal
             </Link>
@@ -125,13 +125,13 @@ export const CustomerDashboardPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* LEFT: Navigation Tabs (3 cols) */}
-          <div className="lg:col-span-3 bg-white rounded-2xl border border-stone-200 p-3 shadow-xs space-y-1">
+          <div className="lg:col-span-3 bg-white border border-neutral-200 p-3 space-y-1">
             <button
               onClick={() => switchTab('orders')}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold transition ${
+              className={`w-full flex items-center space-x-3 px-4 py-3 text-xs font-semibold transition ${
                 activeTab === 'orders'
-                  ? 'bg-[#0F0F0F] text-[#D4AF37] font-bold shadow-xs'
-                  : 'text-stone-700 hover:bg-stone-50'
+                  ? 'bg-[#111111] text-white font-bold'
+                  : 'text-[#777777] hover:bg-[#F8F8F8] hover:text-[#111111]'
               }`}
             >
               <Package className="w-4 h-4" />
@@ -140,10 +140,10 @@ export const CustomerDashboardPage: React.FC = () => {
 
             <button
               onClick={() => switchTab('wishlist')}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold transition ${
+              className={`w-full flex items-center space-x-3 px-4 py-3 text-xs font-semibold transition ${
                 activeTab === 'wishlist'
-                  ? 'bg-[#0F0F0F] text-[#D4AF37] font-bold shadow-xs'
-                  : 'text-stone-700 hover:bg-stone-50'
+                  ? 'bg-[#111111] text-white font-bold'
+                  : 'text-[#777777] hover:bg-[#F8F8F8] hover:text-[#111111]'
               }`}
             >
               <Heart className="w-4 h-4" />
@@ -152,10 +152,10 @@ export const CustomerDashboardPage: React.FC = () => {
 
             <button
               onClick={() => switchTab('addresses')}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold transition ${
+              className={`w-full flex items-center space-x-3 px-4 py-3 text-xs font-semibold transition ${
                 activeTab === 'addresses'
-                  ? 'bg-[#0F0F0F] text-[#D4AF37] font-bold shadow-xs'
-                  : 'text-stone-700 hover:bg-stone-50'
+                  ? 'bg-[#111111] text-white font-bold'
+                  : 'text-[#777777] hover:bg-[#F8F8F8] hover:text-[#111111]'
               }`}
             >
               <MapPin className="w-4 h-4" />
@@ -164,10 +164,10 @@ export const CustomerDashboardPage: React.FC = () => {
 
             <button
               onClick={() => switchTab('profile')}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold transition ${
+              className={`w-full flex items-center space-x-3 px-4 py-3 text-xs font-semibold transition ${
                 activeTab === 'profile'
-                  ? 'bg-[#0F0F0F] text-[#D4AF37] font-bold shadow-xs'
-                  : 'text-stone-700 hover:bg-stone-50'
+                  ? 'bg-[#111111] text-white font-bold'
+                  : 'text-[#777777] hover:bg-[#F8F8F8] hover:text-[#111111]'
               }`}
             >
               <UserIcon className="w-4 h-4" />
@@ -176,10 +176,10 @@ export const CustomerDashboardPage: React.FC = () => {
 
             <button
               onClick={() => switchTab('returns')}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold transition ${
+              className={`w-full flex items-center space-x-3 px-4 py-3 text-xs font-semibold transition ${
                 activeTab === 'returns'
-                  ? 'bg-[#0F0F0F] text-[#D4AF37] font-bold shadow-xs'
-                  : 'text-stone-700 hover:bg-stone-50'
+                  ? 'bg-[#111111] text-white font-bold'
+                  : 'text-[#777777] hover:bg-[#F8F8F8] hover:text-[#111111]'
               }`}
             >
               <RotateCcw className="w-4 h-4" />
@@ -238,7 +238,7 @@ export const CustomerDashboardPage: React.FC = () => {
                         <div className="flex items-center space-x-3 text-xs">
                           <button
                             onClick={() => setSelectedOrderForTrack(order)}
-                            className="px-3 py-1.5 rounded-lg bg-stone-900 text-[#D4AF37] font-semibold flex items-center space-x-1.5 hover:bg-stone-800 transition"
+                            className="px-3 py-1.5 bg-[#111111] text-white font-medium flex items-center space-x-1.5 hover:bg-neutral-800 transition"
                           >
                             <Truck className="w-3.5 h-3.5" />
                             <span>Track</span>
@@ -343,7 +343,7 @@ export const CustomerDashboardPage: React.FC = () => {
                         </Link>
                         <div className="p-4 flex-1 flex flex-col justify-between">
                           <div>
-                            <span className="text-[10px] font-bold text-[#D4AF37] uppercase">{p.brand}</span>
+                            <span className="text-[10px] font-semibold text-[#777777] uppercase tracking-wider">{p.brand}</span>
                             <h4 className="text-xs font-semibold text-stone-900 line-clamp-1 mt-0.5">{p.name}</h4>
                             <span className="text-sm font-bold font-mono text-stone-900 block mt-1">
                               ₹{p.discountedPrice.toLocaleString('en-IN')}
@@ -356,7 +356,7 @@ export const CustomerDashboardPage: React.FC = () => {
                                 addToCart(p, p.sizes[0], p.colors[0]?.name || 'Standard');
                                 removeFromWishlist(p.id);
                               }}
-                              className="px-3 py-1.5 rounded-lg bg-[#0F0F0F] text-[#D4AF37] text-xs font-semibold uppercase tracking-wider flex items-center space-x-1 hover:bg-stone-800"
+                              className="px-3 py-1.5 bg-[#111111] text-white text-xs font-medium uppercase tracking-wider flex items-center space-x-1 hover:bg-neutral-800 transition"
                             >
                               <ShoppingBag className="w-3.5 h-3.5" />
                               <span>Move to Bag</span>
@@ -462,38 +462,38 @@ export const CustomerDashboardPage: React.FC = () => {
                       type="text"
                       value={nameInput}
                       onChange={e => setNameInput(e.target.value)}
-                      className="w-full px-3 py-2 text-sm rounded-xl border border-stone-300 focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full px-3 py-2 text-sm rounded-xl border border-neutral-300 focus:outline-none focus:border-black"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-semibold text-stone-700 uppercase tracking-wider mb-1">
+                    <label className="block font-semibold text-neutral-700 uppercase tracking-wider mb-1">
                       Primary Contact Number
                     </label>
                     <input
                       type="tel"
                       value={phoneInput}
                       onChange={e => setPhoneInput(e.target.value)}
-                      className="w-full px-3 py-2 text-sm rounded-xl border border-stone-300 focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full px-3 py-2 text-sm rounded-xl border border-neutral-300 focus:outline-none focus:border-black"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-semibold text-stone-700 uppercase tracking-wider mb-1">
+                    <label className="block font-semibold text-neutral-700 uppercase tracking-wider mb-1">
                       Account Email
                     </label>
                     <input
                       type="email"
                       disabled
-                      value={user?.email || 'aarav.sharma@velmira.in'}
-                      className="w-full px-3 py-2 text-sm rounded-xl border border-stone-200 bg-stone-100 text-stone-500 cursor-not-allowed"
+                      value={user?.email || 'patron@velmira.in'}
+                      className="w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-neutral-100 text-[#777777] cursor-not-allowed"
                     />
-                    <p className="text-[10px] text-stone-400 mt-1">Contact concierge to update your registered email ID.</p>
+                    <p className="text-[10px] text-[#777777] mt-1">Contact concierge to update your registered email ID.</p>
                   </div>
 
                   <button
                     type="submit"
-                    className="mt-2 px-6 py-2.5 rounded-full bg-[#0F0F0F] text-[#D4AF37] font-bold text-xs uppercase tracking-wider hover:bg-stone-800 transition shadow-sm"
+                    className="mt-2 px-6 py-2.5 bg-[#111111] text-white font-medium text-xs uppercase tracking-wider hover:bg-neutral-800 transition"
                   >
                     Save Changes
                   </button>
@@ -561,7 +561,7 @@ export const CustomerDashboardPage: React.FC = () => {
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 rounded-lg bg-[#0F0F0F] text-[#D4AF37] font-bold"
+                    className="px-4 py-2 bg-[#111111] text-white font-medium text-xs uppercase tracking-wider hover:bg-neutral-800 transition"
                   >
                     Confirm Return
                   </button>

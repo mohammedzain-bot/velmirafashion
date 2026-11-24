@@ -43,18 +43,18 @@ export const VelmiraIntroLoader: React.FC<VelmiraIntroLoaderProps> = ({ onComple
   return (
     <div
       onClick={() => onCompleteRef.current()}
-      className={`fixed inset-0 z-[9999] bg-[#0F0F0F] flex items-center justify-center select-none cursor-pointer transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[9999] bg-[#FFFFFF] flex items-center justify-center select-none cursor-pointer transition-opacity duration-500 ${
         isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
       {/* VELMIRA each letter revealed one by one */}
-      <div className="flex items-center justify-center space-x-2 sm:space-x-4 md:space-x-5">
+      <div className="flex items-center justify-center space-x-2 sm:space-x-4 md:space-x-6">
         {BRAND_LETTERS.map((letter, idx) => {
           const isVisible = visibleCount > idx;
           return (
             <span
               key={idx}
-              className={`font-cinzel text-4xl sm:text-6xl md:text-7xl font-bold tracking-widest text-[#D4AF37] transition-all duration-400 ease-out inline-block ${
+              className={`font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-[0.3em] text-[#111111] transition-all duration-400 ease-out inline-block ${
                 isVisible
                   ? 'opacity-100 translate-y-0 scale-100'
                   : 'opacity-0 translate-y-4 scale-95'
