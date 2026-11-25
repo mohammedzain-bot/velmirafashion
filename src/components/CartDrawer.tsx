@@ -96,7 +96,7 @@ export const CartDrawer: React.FC = () => {
         onClick={() => setIsCartDrawerOpen(false)}
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div className="fixed inset-y-0 right-6 sm:right-7.5 max-w-full flex pl-4 sm:pl-10">
         <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col border-l border-stone-200">
           {/* Header */}
           <div className="p-4 sm:p-5 bg-white text-[#111111] border-b border-neutral-200 flex items-center justify-between">

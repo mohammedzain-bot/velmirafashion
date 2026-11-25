@@ -52,12 +52,12 @@ export const OrderConfirmationPage: React.FC = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3">
             <a
               href={`https://wa.me/971556787854?text=${encodeURIComponent(`Hello Velmira Concierge, I am inquiring about my Watch Order ID: ${order?.id || id}`)}`}
               target="_blank"
               rel="noreferrer"
-              className="px-6 py-3 bg-[#111111] hover:bg-neutral-800 text-white font-medium text-xs uppercase tracking-widest transition flex items-center space-x-2"
+              className="w-full sm:w-auto px-6 py-3 bg-[#111111] hover:bg-neutral-800 text-white font-medium text-xs uppercase tracking-widest transition flex items-center justify-center space-x-2"
             >
               <MessageCircle className="w-4 h-4" />
               <span>WhatsApp Concierge (+971 55 678 7854)</span>
@@ -65,7 +65,7 @@ export const OrderConfirmationPage: React.FC = () => {
 
             <button
               onClick={() => setIsTrackOpen(true)}
-              className="px-6 py-3 border border-neutral-300 hover:border-black text-[#111111] font-medium text-xs uppercase tracking-widest transition flex items-center space-x-2"
+              className="w-full sm:w-auto px-6 py-3 border border-neutral-300 hover:border-black text-[#111111] font-medium text-xs uppercase tracking-widest transition flex items-center justify-center space-x-2"
             >
               <Truck className="w-4 h-4" />
               <span>Track Delivery</span>
@@ -73,7 +73,7 @@ export const OrderConfirmationPage: React.FC = () => {
 
             <button
               onClick={() => setIsInvoiceOpen(true)}
-              className="px-6 py-3 border border-neutral-300 hover:border-black text-[#111111] font-medium text-xs uppercase tracking-widest transition flex items-center space-x-2"
+              className="w-full sm:w-auto px-6 py-3 border border-neutral-300 hover:border-black text-[#111111] font-medium text-xs uppercase tracking-widest transition flex items-center justify-center space-x-2"
             >
               <Printer className="w-4 h-4" />
               <span>Invoice</span>
@@ -81,7 +81,7 @@ export const OrderConfirmationPage: React.FC = () => {
 
             <Link
               to="/watches"
-              className="px-6 py-3 border border-neutral-300 hover:border-black text-[#111111] font-medium text-xs uppercase tracking-widest transition flex items-center space-x-2"
+              className="w-full sm:w-auto px-6 py-3 border border-neutral-300 hover:border-black text-[#111111] font-medium text-xs uppercase tracking-widest transition flex items-center justify-center space-x-2"
             >
               <span>Explore Watches</span>
               <ArrowRight className="w-4 h-4" />

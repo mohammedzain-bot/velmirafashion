@@ -122,9 +122,9 @@ export const HomePage: React.FC = () => {
       {/* =========================================================================
           3. WATCH CATEGORIES SECTION (Crisp White + Clean Architecture)
       ========================================================================= */}
-      <section className="py-16 sm:py-24 bg-white border-b border-neutral-200">
+      <section className="py-12 sm:py-24 bg-white border-b border-neutral-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-12">
             <div>
               <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#71717A] block">
                 THE 2026 REPERTOIRE
@@ -136,22 +136,29 @@ export const HomePage: React.FC = () => {
                 Explore hand-selected automatic movements, vintage mechanical restorations, and iconic luxury silhouettes.
               </p>
             </div>
-            <Link
-              to="/watches"
-              className="mt-4 md:mt-0 text-xs font-semibold uppercase tracking-[0.18em] text-[#111111] hover:text-neutral-500 inline-flex items-center space-x-1.5 transition group"
-            >
-              <span>Explore All Watches</span>
-              <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            
+            <div className="flex items-center justify-between mt-3 md:mt-0">
+              <span className="text-[11px] text-neutral-400 font-medium sm:hidden flex items-center space-x-1">
+                <span>Swipe to explore</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </span>
+              <Link
+                to="/watches"
+                className="text-xs font-semibold uppercase tracking-[0.18em] text-[#111111] hover:text-neutral-500 inline-flex items-center space-x-1.5 transition group"
+              >
+                <span>Explore All Watches</span>
+                <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
           </div>
 
-          {/* Spacious Grid for Watch Categories */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {/* Side Scroll on Mobile, Spacious Multi-Column Grid on Tablet/Desktop */}
+          <div className="flex overflow-x-auto gap-4 pb-4 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 scrollbar-none snap-x snap-mandatory sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 lg:gap-8">
             {categoriesList.map((cat, idx) => (
               <Link
                 key={idx}
                 to={`/watches?category=${encodeURIComponent(cat.categoryKey)}`}
-                className="group relative bg-[#F8F9FA] border border-neutral-200 overflow-hidden flex flex-col hover:border-black transition-all duration-400 shadow-xs hover:shadow-lg"
+                className="group relative bg-[#F8F9FA] border border-neutral-200 overflow-hidden flex flex-col hover:border-black transition-all duration-400 shadow-xs hover:shadow-lg w-[72vw] max-w-[290px] sm:w-auto shrink-0 snap-start"
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
                   <img
@@ -164,15 +171,15 @@ export const HomePage: React.FC = () => {
                     {cat.tag}
                   </div>
                 </div>
-                <div className="p-5 bg-white border-t border-neutral-200 flex items-center justify-between">
-                  <div>
-                    <h3 className="font-serif text-base font-bold text-[#111111] tracking-wide group-hover:text-black transition-colors">
+                <div className="p-4 sm:p-5 bg-white border-t border-neutral-200 flex items-center justify-between">
+                  <div className="min-w-0 pr-2">
+                    <h3 className="font-serif text-sm sm:text-base font-bold text-[#111111] tracking-wide group-hover:text-black transition-colors truncate">
                       {cat.name}
                     </h3>
-                    <p className="text-xs text-[#71717A] mt-0.5">{cat.subtitle}</p>
+                    <p className="text-[11px] sm:text-xs text-[#71717A] mt-0.5 truncate">{cat.subtitle}</p>
                   </div>
-                  <div className="w-9 h-9 rounded-full border border-neutral-300 flex items-center justify-center text-neutral-600 group-hover:bg-[#111111] group-hover:text-white group-hover:border-[#111111] transition-all duration-300 shrink-0 ml-3 shadow-xs">
-                    <ArrowRight className="w-4 h-4" />
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-neutral-300 flex items-center justify-center text-neutral-600 group-hover:bg-[#111111] group-hover:text-white group-hover:border-[#111111] transition-all duration-300 shrink-0 shadow-xs">
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </div>
                 </div>
               </Link>

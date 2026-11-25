@@ -421,7 +421,7 @@ export const ProductDetailPage: React.FC = () => {
 
           {/* LOWER TABS */}
           <div className="mt-14 pt-8 border-t border-neutral-200">
-            <div className="flex border-b border-neutral-200 space-x-8">
+            <div className="flex border-b border-neutral-200 space-x-4 sm:space-x-8 overflow-x-auto scrollbar-none whitespace-nowrap">
               <button
                 onClick={() => setActiveTab('details')}
                 className={`pb-3 text-xs font-bold uppercase tracking-widest transition ${

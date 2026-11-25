@@ -128,27 +128,27 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Pricing & View Product Button */}
-        <div className="mt-3.5 pt-3 border-t border-neutral-100 flex items-center justify-between gap-2">
-          <div>
-            <div className="flex items-baseline space-x-2">
+        <div className="mt-3 pt-2.5 border-t border-neutral-100 flex flex-col gap-2">
+          <div className="flex items-baseline justify-between">
+            <div className="flex items-baseline space-x-1.5 flex-wrap">
               <span className="text-xs sm:text-sm font-bold text-[#111111] font-mono">
                 {formatPrice(product.discountedPrice, product.priceAED)}
               </span>
               {product.originalPrice > product.discountedPrice && (
-                <span className="text-[10px] text-[#A1A1AA] line-through font-mono">
+                <span className="text-[9px] text-[#A1A1AA] line-through font-mono">
                   {formatPrice(product.originalPrice, product.originalPriceAED)}
                 </span>
               )}
             </div>
-            <span className="text-[9px] text-emerald-700 font-medium block">
-              Direct Insured Handover
+            <span className="text-[8px] text-emerald-700 font-medium hidden xs:inline">
+              Insured
             </span>
           </div>
 
-          <div className="flex items-center space-x-1.5">
+          <div className="flex items-center space-x-1.5 w-full">
             <button
               onClick={handleWhatsAppOrder}
-              className="p-1.5 border border-neutral-200 text-neutral-700 hover:text-black hover:border-black transition"
+              className="p-1.5 border border-neutral-200 text-neutral-700 hover:text-black hover:border-black transition shrink-0"
               title="Inquire on WhatsApp (+971 55 678 7854)"
             >
               <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
@@ -156,7 +156,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
             <Link
               to={`/products/${product.id}`}
-              className="px-3 py-1.5 bg-[#111111] text-white hover:bg-black transition text-[9px] font-bold uppercase tracking-widest font-sans inline-flex items-center space-x-1"
+              className="flex-1 py-1.5 bg-[#111111] text-white hover:bg-black transition text-[9px] font-bold uppercase tracking-widest font-sans inline-flex items-center justify-center space-x-1"
             >
               <span>View</span>
               <ArrowRight className="w-2.5 h-2.5" />

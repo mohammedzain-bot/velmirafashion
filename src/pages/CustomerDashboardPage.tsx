@@ -125,10 +125,10 @@ export const CustomerDashboardPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* LEFT: Navigation Tabs (3 cols) */}
-          <div className="lg:col-span-3 bg-white border border-neutral-200 p-3 space-y-1">
+          <div className="lg:col-span-3 bg-white border border-neutral-200 p-2 sm:p-3 flex lg:flex-col overflow-x-auto lg:overflow-visible gap-1.5 scrollbar-none">
             <button
               onClick={() => switchTab('orders')}
-              className={`w-full flex items-center space-x-3 px-4 py-3 text-xs font-semibold transition ${
+              className={`shrink-0 lg:w-full flex items-center space-x-2.5 px-3.5 py-2.5 text-xs font-semibold whitespace-nowrap transition ${
                 activeTab === 'orders'
                   ? 'bg-[#111111] text-white font-bold'
                   : 'text-[#777777] hover:bg-[#F8F8F8] hover:text-[#111111]'
@@ -140,7 +140,7 @@ export const CustomerDashboardPage: React.FC = () => {
 
             <button
               onClick={() => switchTab('wishlist')}
-              className={`w-full flex items-center space-x-3 px-4 py-3 text-xs font-semibold transition ${
+              className={`shrink-0 lg:w-full flex items-center space-x-2.5 px-3.5 py-2.5 text-xs font-semibold whitespace-nowrap transition ${
                 activeTab === 'wishlist'
                   ? 'bg-[#111111] text-white font-bold'
                   : 'text-[#777777] hover:bg-[#F8F8F8] hover:text-[#111111]'
@@ -152,7 +152,7 @@ export const CustomerDashboardPage: React.FC = () => {
 
             <button
               onClick={() => switchTab('addresses')}
-              className={`w-full flex items-center space-x-3 px-4 py-3 text-xs font-semibold transition ${
+              className={`shrink-0 lg:w-full flex items-center space-x-2.5 px-3.5 py-2.5 text-xs font-semibold whitespace-nowrap transition ${
                 activeTab === 'addresses'
                   ? 'bg-[#111111] text-white font-bold'
                   : 'text-[#777777] hover:bg-[#F8F8F8] hover:text-[#111111]'
@@ -164,7 +164,7 @@ export const CustomerDashboardPage: React.FC = () => {
 
             <button
               onClick={() => switchTab('profile')}
-              className={`w-full flex items-center space-x-3 px-4 py-3 text-xs font-semibold transition ${
+              className={`shrink-0 lg:w-full flex items-center space-x-2.5 px-3.5 py-2.5 text-xs font-semibold whitespace-nowrap transition ${
                 activeTab === 'profile'
                   ? 'bg-[#111111] text-white font-bold'
                   : 'text-[#777777] hover:bg-[#F8F8F8] hover:text-[#111111]'
@@ -176,7 +176,7 @@ export const CustomerDashboardPage: React.FC = () => {
 
             <button
               onClick={() => switchTab('returns')}
-              className={`w-full flex items-center space-x-3 px-4 py-3 text-xs font-semibold transition ${
+              className={`shrink-0 lg:w-full flex items-center space-x-2.5 px-3.5 py-2.5 text-xs font-semibold whitespace-nowrap transition ${
                 activeTab === 'returns'
                   ? 'bg-[#111111] text-white font-bold'
                   : 'text-[#777777] hover:bg-[#F8F8F8] hover:text-[#111111]'

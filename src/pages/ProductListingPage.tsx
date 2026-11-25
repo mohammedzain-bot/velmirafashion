@@ -231,7 +231,7 @@ export const ProductListingPage: React.FC = () => {
             className="absolute inset-0 bg-black/40 backdrop-blur-xs"
             onClick={() => setIsMobileFilterOpen(false)}
           />
-          <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+          <div className="fixed inset-y-0 right-6 sm:right-7.5 max-w-full flex pl-4 sm:pl-10">
             <div className="w-screen max-w-xs bg-white text-[#111111] shadow-2xl overflow-y-auto border-l border-neutral-200">
               <div className="p-4 bg-[#111111] text-white flex items-center justify-between">
                 <span className="font-serif font-bold text-sm tracking-wider uppercase">Filter Watches</span>

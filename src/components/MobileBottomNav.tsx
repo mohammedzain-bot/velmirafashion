@@ -11,7 +11,7 @@ export const MobileBottomNav: React.FC = () => {
   const { wishlistIds } = useWishlist();
 
   return (
-    <nav className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md text-[#777777] border-t border-neutral-200 z-40 sm:hidden">
+    <nav className="fixed bottom-0 left-0 right-6 sm:right-7.5 bg-white/95 backdrop-blur-md text-[#777777] border-t border-neutral-200 z-40 sm:hidden">
       <div className="grid grid-cols-4 items-center h-14">
         {/* Home */}
         <Link

@@ -22,11 +22,16 @@
 html {
   scroll-behavior: smooth;
   background-color: #FFFFFF;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
   background-color: #FFFFFF;
   color: #111111;
+  overflow-x: hidden;
+  max-width: 100vw;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Minimalist luxury scrollbar */

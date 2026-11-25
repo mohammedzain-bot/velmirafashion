@@ -665,7 +665,7 @@ export const CheckoutPage: React.FC = () => {
       </div>
 
       {/* MOBILE-ONLY: Sleek Sticky Bottom Action Bar */}
-      <div className="fixed bottom-0 inset-x-0 bg-white border-t border-neutral-200 p-3 sm:hidden z-30 shadow-lg">
+      <div className="fixed bottom-0 left-0 right-6 sm:right-7.5 bg-white border-t border-neutral-200 p-3 sm:hidden z-30 shadow-lg">
         <div className="flex items-center justify-between gap-3">
           <div className="shrink-0 pl-1">
             <span className="text-[9px] uppercase tracking-wider text-[#777777] font-semibold block leading-tight">
