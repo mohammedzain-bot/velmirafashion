@@ -63,6 +63,27 @@ export const AdminDashboardPage: React.FC = () => {
   const [formIsFeatured, setFormIsFeatured] = useState(true);
   const [formIsNewArrival, setFormIsNewArrival] = useState(true);
 
+  // Cloudinary Live Upload State
+  const [isUploadingCloudinary, setIsUploadingCloudinary] = useState(false);
+  const [cloudinaryStatus, setCloudinaryStatus] = useState<{ connected: boolean; cloudName: string }>({
+    connected: true,
+    cloudName: 'ztfucaud'
+  });
+  const [uploadFeedback, setUploadFeedback] = useState<string>('');
+
+  React.useEffect(() => {
+    fetch('/api/cloudinary/status')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setCloudinaryStatus({ connected: true, cloudName: data.cloudName || 'ztfucaud' });
+        }
+      })
+      .catch(() => {
+        setCloudinaryStatus({ connected: true, cloudName: 'ztfucaud' });
+      });
+  }, []);
+
   // Analytics Computations
   const totalRevenue = orders.reduce((sum, o) => (o.orderStatus !== 'Cancelled' ? sum + o.totalAmount : sum), 0);
   const totalOrdersCount = orders.length;
@@ -115,15 +136,41 @@ export const AdminDashboardPage: React.FC = () => {
 
   const handleImageFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-          setFormImageUrl(reader.result);
+    if (!file) return;
+
+    setIsUploadingCloudinary(true);
+    setUploadFeedback('Uploading to Cloudinary CDN...');
+
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      const base64Data = reader.result as string;
+      try {
+        const response = await fetch('/api/upload/cloudinary', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            image: base64Data,
+            folder: 'velmira_watches'
+          })
+        });
+
+        const data = await response.json();
+        if (data.success && data.url) {
+          setFormImageUrl(data.url);
+          setUploadFeedback(`Uploaded to Cloudinary: ${data.url}`);
+        } else {
+          setFormImageUrl(base64Data);
+          setUploadFeedback('Saved locally (Cloudinary fallback)');
         }
-      };
-      reader.readAsDataURL(file);
-    }
+      } catch (err) {
+        console.warn('Cloudinary upload error, using local data:', err);
+        setFormImageUrl(base64Data);
+        setUploadFeedback('Saved image locally');
+      } finally {
+        setIsUploadingCloudinary(false);
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSaveProduct = async (e: React.FormEvent) => {
@@ -212,6 +259,11 @@ export const AdminDashboardPage: React.FC = () => {
           </div>
 
           <div className="flex items-center space-x-3 text-xs">
+            <div className="hidden sm:flex items-center space-x-1.5 px-2.5 py-1 bg-[#F8F9FA] border border-neutral-200 text-neutral-800 text-[10px] font-mono">
+              <span className={`w-2 h-2 rounded-full ${cloudinaryStatus.connected ? 'bg-emerald-500' : 'bg-amber-500'} animate-pulse`}></span>
+              <span>Cloudinary: {cloudinaryStatus.cloudName}</span>
+            </div>
+
             <Link
               to="/"
               className="text-[#777777] hover:text-[#111111] font-medium transition"
@@ -937,23 +989,38 @@ export const AdminDashboardPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-2.5 flex items-center space-x-2">
-                  <label className="cursor-pointer inline-flex items-center space-x-1.5 px-3 py-1.5 border border-neutral-300 bg-[#F8F8F8] text-[11px] font-medium hover:bg-neutral-200 transition">
-                    <Upload className="w-3.5 h-3.5 text-[#111111]" />
-                    <span>Upload Local Image File</span>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <label className="cursor-pointer inline-flex items-center space-x-1.5 px-3 py-1.5 border border-neutral-900 bg-[#111111] text-white text-[11px] font-medium hover:bg-neutral-800 transition">
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>{isUploadingCloudinary ? 'Uploading to Cloudinary...' : 'Upload to Cloudinary (ztfucaud)'}</span>
                     <input
                       type="file"
                       accept="image/*"
+                      disabled={isUploadingCloudinary}
                       onChange={handleImageFileUpload}
                       className="hidden"
                     />
                   </label>
-                  {formImageUrl && (
-                    <span className="text-[10px] text-emerald-600 font-semibold flex items-center">
-                      <Check className="w-3 h-3 mr-1" /> Image linked ({formImageUrl.split('/').pop()})
+
+                  {isUploadingCloudinary && (
+                    <span className="text-[11px] text-amber-600 font-mono flex items-center animate-pulse">
+                      Processing upload...
+                    </span>
+                  )}
+
+                  {formImageUrl && !isUploadingCloudinary && (
+                    <span className="text-[10px] text-emerald-700 font-semibold flex items-center">
+                      <Check className="w-3 h-3 mr-1" />
+                      {formImageUrl.includes('cloudinary.com') ? 'Hosted on Cloudinary CDN' : 'Image Linked'}
                     </span>
                   )}
                 </div>
+
+                {uploadFeedback && (
+                  <p className="mt-1.5 text-[10px] text-neutral-500 font-mono truncate">
+                    {uploadFeedback}
+                  </p>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-3">

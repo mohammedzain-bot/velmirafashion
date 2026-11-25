@@ -3,6 +3,17 @@ import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+import { v2 as cloudinary } from 'cloudinary';
+
+dotenv.config();
+
+// Configure Cloudinary with User Credentials
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'ztfucaud',
+  api_key: process.env.CLOUDINARY_API_KEY || '934494792476117',
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'zjDbiW4wmdR6RpZrqfahZKP6g3c'
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,7 +22,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 const DATA_DIR = path.join(__dirname, 'data');
 if (!fs.existsSync(DATA_DIR)) {
@@ -315,6 +327,95 @@ app.post('/api/coupons/validate', (req, res) => {
       description: coupon.description
     }
   });
+});
+
+// ---------------- CLOUDINARY MEDIA DATABASE ENDPOINTS ---------------- //
+
+// GET /api/cloudinary/status - Verify Cloudinary connection
+app.get('/api/cloudinary/status', async (req, res) => {
+  try {
+    const pingRes = await cloudinary.api.ping();
+    res.json({
+      success: true,
+      cloudName: process.env.CLOUDINARY_CLOUD_NAME || 'ztfucaud',
+      status: pingRes.status || 'ok',
+      message: 'Cloudinary media database connected successfully'
+    });
+  } catch (error) {
+    console.error('Cloudinary ping error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to connect to Cloudinary'
+    });
+  }
+});
+
+// POST /api/upload/cloudinary - Upload single watch image
+app.post('/api/upload/cloudinary', async (req, res) => {
+  try {
+    const { image, folder = 'velmira_watches' } = req.body;
+    if (!image) {
+      return res.status(400).json({ success: false, message: 'No image provided for upload' });
+    }
+
+    const uploadRes = await cloudinary.uploader.upload(image, {
+      folder,
+      resource_type: 'auto',
+      transformation: [
+        { quality: 'auto:best', fetch_format: 'auto' }
+      ]
+    });
+
+    res.json({
+      success: true,
+      url: uploadRes.secure_url,
+      public_id: uploadRes.public_id,
+      width: uploadRes.width,
+      height: uploadRes.height,
+      format: uploadRes.format
+    });
+  } catch (error) {
+    console.error('Cloudinary upload error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to upload image to Cloudinary'
+    });
+  }
+});
+
+// POST /api/upload/cloudinary-multiple - Upload multiple watch images
+app.post('/api/upload/cloudinary-multiple', async (req, res) => {
+  try {
+    const { images, folder = 'velmira_watches' } = req.body;
+    if (!images || !Array.isArray(images) || images.length === 0) {
+      return res.status(400).json({ success: false, message: 'Images array required' });
+    }
+
+    const uploadPromises = images.map(img =>
+      cloudinary.uploader.upload(img, {
+        folder,
+        resource_type: 'auto',
+        transformation: [
+          { quality: 'auto:best', fetch_format: 'auto' }
+        ]
+      })
+    );
+
+    const results = await Promise.all(uploadPromises);
+    const urls = results.map(r => r.secure_url);
+
+    res.json({
+      success: true,
+      urls,
+      count: urls.length
+    });
+  } catch (error) {
+    console.error('Cloudinary multiple upload error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to upload images to Cloudinary'
+    });
+  }
 });
 
 app.listen(PORT, () => {
