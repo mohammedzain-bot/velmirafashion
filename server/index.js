@@ -418,6 +418,10 @@ app.post('/api/upload/cloudinary-multiple', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Velmira Fashion backend API running on http://localhost:${PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Velmira Fashion backend API running on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
