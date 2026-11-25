@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-velmira-black: #0f0f0f;
-  --color-velmira-dark: #171717;
-  --color-velmira-charcoal: #262626;
-  --color-velmira-gold: #c5a059;
-  --color-velmira-gold-accent: #d4af37;
-  --color-velmira-gold-light: #fdf6e7;
-  --color-velmira-cream: #fafaf8;
-  --color-velmira-bg: #f8f9fa;
+  --color-velmira-bg: #0B0D12;
+  --color-velmira-card: #141822;
+  --color-velmira-card-hover: #1A202D;
+  --color-velmira-gold: #D4AF37;
+  --color-velmira-gold-warm: #C5A059;
+  --color-velmira-gold-light: #E5B869;
+  --color-velmira-silver: #CBD5E1;
+  --color-velmira-silver-bright: #E2E8F0;
+  --color-velmira-silver-dark: #94A3B8;
+  --color-velmira-border: rgba(203, 213, 225, 0.14);
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-cinzel: 'Cinzel', serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
@@ -16,30 +18,30 @@
 
 :root {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  color: #111111;
-  background-color: #FFFFFF;
+  color: #FFFFFF;
+  background-color: #0B0D12;
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: #FFFFFF;
+  background-color: #0B0D12;
 }
 
-/* Minimalist luxury scrollbar */
+/* Minimalist luxury brushed silver & gold scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #FFFFFF;
+  background: #0B0D12;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CCCCCC;
+  background: #2A3142;
   border-radius: 9999px;
   transition: background-color 0.2s;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #111111;
+  background: #D4AF37;
 }
 
 @keyframes marqueeContinuous {

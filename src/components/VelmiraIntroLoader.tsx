@@ -43,7 +43,7 @@ export const VelmiraIntroLoader: React.FC<VelmiraIntroLoaderProps> = ({ onComple
   return (
     <div
       onClick={() => onCompleteRef.current()}
-      className={`fixed inset-0 z-[9999] bg-[#FFFFFF] flex items-center justify-center select-none cursor-pointer transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[9999] bg-[#0B0D12] flex items-center justify-center select-none cursor-pointer transition-opacity duration-500 ${
         isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
@@ -54,9 +54,9 @@ export const VelmiraIntroLoader: React.FC<VelmiraIntroLoaderProps> = ({ onComple
           return (
             <span
               key={idx}
-              className={`font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-[0.3em] text-[#111111] transition-all duration-400 ease-out inline-block ${
+              className={`font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-[0.3em] text-[#D4AF37] transition-all duration-400 ease-out inline-block ${
                 isVisible
-                  ? 'opacity-100 translate-y-0 scale-100'
+                  ? 'opacity-100 translate-y-0 scale-100 drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]'
                   : 'opacity-0 translate-y-4 scale-95'
               }`}
             >

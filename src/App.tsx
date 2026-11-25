@@ -72,11 +72,11 @@ const AppLayout: React.FC = () => {
   }, [setIsRegionModalOpen]);
 
   return (
-    <div className="flex flex-col min-h-screen text-[#111111] bg-white selection:bg-stone-900 selection:text-white pr-6 sm:pr-7.5">
+    <div className="flex flex-col min-h-screen text-[#E2E8F0] bg-[#0B0D12] selection:bg-[#D4AF37] selection:text-black pr-6 sm:pr-7.5">
       {/* Sleek Minimalist Top Progress Indicator */}
-      <div className="fixed top-0 left-0 right-6 sm:right-7.5 h-[2px] z-[99999] bg-stone-100 pointer-events-none">
+      <div className="fixed top-0 left-0 right-6 sm:right-7.5 h-[2px] z-[99999] bg-[#1A2234] pointer-events-none">
         <div 
-          className="h-full bg-[#111111] transition-all duration-75 ease-out"
+          className="h-full bg-[#D4AF37] transition-all duration-75 ease-out shadow-[0_0_8px_#D4AF37]"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
@@ -100,7 +100,7 @@ const AppLayout: React.FC = () => {
       {!isCheckout && <Navbar />}
       {!isAdmin && !isCheckout && <CategoryBar />}
 
-      <main className="flex-1 pb-16 sm:pb-0 bg-white">
+      <main className="flex-1 pb-16 sm:pb-0 bg-[#0B0D12]">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/watches" element={<ProductListingPage />} />

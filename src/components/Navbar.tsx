@@ -79,16 +79,16 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white border-b border-stone-200/90 text-[#111111] shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all">
-        {/* Subtle Top Utility Bar */}
-        <div className="bg-[#F8F8F8] border-b border-stone-100 text-[11px] py-1.5 px-4 sm:px-8 flex items-center justify-between text-stone-600 font-sans">
+      <header className="sticky top-0 z-50 bg-[#0B0D12]/95 backdrop-blur-md border-b border-[#2A3142] text-white shadow-xl transition-all">
+        {/* Subtle Top Utility Bar in Cinematic Dark */}
+        <div className="bg-[#08090D] border-b border-[#1E2533] text-[11px] py-1.5 px-4 sm:px-8 flex items-center justify-between text-[#94A3B8] font-sans">
           <div className="flex items-center space-x-2 truncate">
-            <span className="font-semibold text-black tracking-wider uppercase font-cinzel text-[10px]">
+            <span className="font-semibold text-[#D4AF37] tracking-wider uppercase font-serif text-[10px]">
               VELMIRA ATELIER
             </span>
-            <span className="text-stone-300">|</span>
-            <span className="truncate text-stone-500 text-[10px] sm:text-[11px]">
-              Complimentary Insured Delivery (India & UAE) • Concierge: <a href={`https://wa.me/${WHATSAPP_RAW_NUMBER}`} target="_blank" rel="noreferrer" className="text-black font-semibold hover:underline">{OFFICIAL_WHATSAPP_NUMBER}</a>
+            <span className="text-[#2A3142]">|</span>
+            <span className="truncate text-[#94A3B8] text-[10px] sm:text-[11px]">
+              Complimentary Insured Delivery (India & UAE) • Concierge: <a href={`https://wa.me/${WHATSAPP_RAW_NUMBER}`} target="_blank" rel="noreferrer" className="text-[#D4AF37] font-semibold hover:underline">{OFFICIAL_WHATSAPP_NUMBER}</a>
             </span>
           </div>
 
@@ -97,32 +97,32 @@ export const Navbar: React.FC = () => {
             <div ref={regionRef} className="relative">
               <button
                 onClick={() => setIsRegionMenuOpen(!isRegionMenuOpen)}
-                className="flex items-center space-x-1.5 py-0.5 px-2 rounded border border-stone-200 bg-white text-stone-700 hover:text-black hover:border-black transition text-[11px]"
+                className="flex items-center space-x-1.5 py-0.5 px-2 rounded border border-[#2A3142] bg-[#141822] text-[#E2E8F0] hover:border-[#D4AF37] transition text-[11px]"
               >
                 <span>{country === 'UAE' ? '🇦🇪 UAE (AED)' : '🇮🇳 India (INR ₹)'}</span>
-                <ChevronDown className="w-3 h-3 text-stone-400" />
+                <ChevronDown className="w-3 h-3 text-[#94A3B8]" />
               </button>
 
               {isRegionMenuOpen && (
-                <div className="absolute right-0 mt-1 w-44 bg-white text-stone-900 rounded-xl shadow-xl border border-stone-200 py-1.5 z-50 text-xs">
+                <div className="absolute right-0 mt-1 w-44 bg-[#141822] text-white rounded-xl shadow-2xl border border-[#2A3142] py-1.5 z-50 text-xs">
                   <button
                     onClick={() => { setRegion('India'); setIsRegionMenuOpen(false); }}
-                    className={`w-full text-left px-3 py-1.5 flex items-center justify-between hover:bg-stone-50 ${country === 'India' ? 'font-bold text-black' : ''}`}
+                    className={`w-full text-left px-3 py-1.5 flex items-center justify-between hover:bg-[#1C2230] ${country === 'India' ? 'font-bold text-[#D4AF37]' : 'text-[#E2E8F0]'}`}
                   >
                     <span>🇮🇳 India (₹ INR)</span>
-                    {country === 'India' && <span className="text-[10px] bg-stone-100 text-black px-1.5 rounded">Active</span>}
+                    {country === 'India' && <span className="text-[10px] bg-[#D4AF37]/20 text-[#D4AF37] px-1.5 rounded font-mono">Active</span>}
                   </button>
                   <button
                     onClick={() => { setRegion('UAE'); setIsRegionMenuOpen(false); }}
-                    className={`w-full text-left px-3 py-1.5 flex items-center justify-between hover:bg-stone-50 ${country === 'UAE' ? 'font-bold text-black' : ''}`}
+                    className={`w-full text-left px-3 py-1.5 flex items-center justify-between hover:bg-[#1C2230] ${country === 'UAE' ? 'font-bold text-[#D4AF37]' : 'text-[#E2E8F0]'}`}
                   >
                     <span>🇦🇪 UAE (AED د.إ)</span>
-                    {country === 'UAE' && <span className="text-[10px] bg-stone-100 text-black px-1.5 rounded">Active</span>}
+                    {country === 'UAE' && <span className="text-[10px] bg-[#D4AF37]/20 text-[#D4AF37] px-1.5 rounded font-mono">Active</span>}
                   </button>
-                  <div className="border-t border-stone-100 mt-1 pt-1">
+                  <div className="border-t border-[#2A3142] mt-1 pt-1">
                     <button
                       onClick={() => { setIsRegionMenuOpen(false); setIsRegionModalOpen(true); }}
-                      className="w-full text-left px-3 py-1.5 text-[11px] text-stone-600 hover:text-black font-medium"
+                      className="w-full text-left px-3 py-1.5 text-[11px] text-[#94A3B8] hover:text-[#D4AF37] font-medium"
                     >
                       🗺️ Change Destination
                     </button>
@@ -131,7 +131,7 @@ export const Navbar: React.FC = () => {
               )}
             </div>
 
-            <Link to="/admin" className="text-stone-400 hover:text-black transition flex items-center space-x-1 text-[11px]">
+            <Link to="/admin" className="text-[#94A3B8] hover:text-[#D4AF37] transition flex items-center space-x-1 text-[11px]">
               <Shield className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Admin</span>
             </Link>
@@ -144,17 +144,17 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center space-x-3">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-1 text-stone-700 hover:text-black"
+              className="lg:hidden p-1 text-[#E2E8F0] hover:text-[#D4AF37]"
               aria-label="Toggle navigation menu"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
 
             <Link to="/" className="flex flex-col group">
-              <span className="font-cinzel text-2xl sm:text-3xl font-extrabold tracking-[0.18em] text-[#111111] group-hover:text-stone-700 transition">
+              <span className="font-serif text-2xl sm:text-3xl font-extrabold tracking-[0.2em] text-[#D4AF37] group-hover:text-[#E5B869] transition drop-shadow-[0_0_10px_rgba(212,175,55,0.25)]">
                 VELMIRA
               </span>
-              <span className="text-[8px] font-medium tracking-[0.3em] text-[#777777] uppercase -mt-1 font-sans">
+              <span className="text-[8px] font-medium tracking-[0.3em] text-[#94A3B8] uppercase -mt-0.5 font-sans">
                 Haute Horlogerie
               </span>
             </Link>
@@ -170,8 +170,8 @@ export const Navbar: React.FC = () => {
                   to={link.path}
                   className={`text-xs font-semibold uppercase tracking-[0.15em] transition-colors py-1 relative ${
                     isActive 
-                      ? 'text-black font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-black' 
-                      : 'text-stone-600 hover:text-black'
+                      ? 'text-[#D4AF37] font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-[#D4AF37]' 
+                      : 'text-[#CBD5E1] hover:text-[#D4AF37]'
                   }`}
                 >
                   {link.label}
@@ -185,7 +185,7 @@ export const Navbar: React.FC = () => {
             {/* Search Toggle */}
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="p-2 text-stone-700 hover:text-black transition rounded-full hover:bg-stone-50"
+              className="p-2 text-[#CBD5E1] hover:text-[#D4AF37] transition rounded-full hover:bg-[#141822]"
               aria-label="Search watches"
               title="Search"
             >
@@ -194,14 +194,14 @@ export const Navbar: React.FC = () => {
 
             {/* Wishlist */}
             <Link
-              to="/products"
-              className="relative p-2 text-stone-700 hover:text-black transition rounded-full hover:bg-stone-50"
+              to="/watches"
+              className="relative p-2 text-[#CBD5E1] hover:text-[#D4AF37] transition rounded-full hover:bg-[#141822]"
               aria-label="Wishlist"
               title="Wishlist"
             >
               <Heart className="w-5 h-5" />
               {wishlistIds.length > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-black text-white font-bold text-[9px] flex items-center justify-center font-mono">
+                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#D4AF37] text-black font-bold text-[9px] flex items-center justify-center font-mono">
                   {wishlistIds.length}
                 </span>
               )}
@@ -210,7 +210,7 @@ export const Navbar: React.FC = () => {
             {/* Shopping Bag */}
             <button
               onClick={() => setIsCartDrawerOpen(true)}
-              className="relative flex items-center space-x-2 py-2 px-3.5 rounded-full bg-[#111111] text-white hover:bg-black transition shadow-xs font-medium"
+              className="relative flex items-center space-x-2 py-2 px-3.5 rounded-full bg-[#D4AF37] text-black hover:bg-[#E5B869] transition shadow-md font-bold"
               aria-label="Open Shopping Bag"
             >
               <ShoppingBag className="w-4 h-4" />
@@ -223,29 +223,29 @@ export const Navbar: React.FC = () => {
 
         {/* Minimal Expandable Search Bar */}
         {isSearchOpen && (
-          <div className="border-t border-stone-200 bg-white p-4 shadow-md animate-in fade-in duration-200">
+          <div className="border-t border-[#2A3142] bg-[#0E121A] p-4 shadow-2xl animate-in fade-in duration-200">
             <div className="max-w-3xl mx-auto">
               <form onSubmit={handleSearchSubmit} className="relative flex items-center">
                 <input
                   ref={searchInputRef}
                   type="text"
-                  placeholder="Search timepieces by name, collection, or complication (e.g., Chrono Royal, Tourbillon, Diver)..."
+                  placeholder="Search timepieces by name, collection, or complication (e.g., Seiko, Cartier, Santos, Hublot, Tissot)..."
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-[#F8F8F8] text-[#111111] placeholder-stone-400 pl-11 pr-24 py-3 rounded-xl text-xs font-medium border border-stone-200 focus:border-black focus:bg-white focus:outline-none transition"
+                  className="w-full bg-[#141822] text-white placeholder-[#94A3B8] pl-11 pr-24 py-3 rounded-xl text-xs font-medium border border-[#2A3142] focus:border-[#D4AF37] focus:bg-[#161B26] focus:outline-none transition"
                 />
-                <Search className="w-4 h-4 text-stone-400 absolute left-4 pointer-events-none" />
+                <Search className="w-4 h-4 text-[#94A3B8] absolute left-4 pointer-events-none" />
                 <button
                   type="submit"
-                  className="absolute right-1.5 px-4 py-2 rounded-lg bg-black text-white text-xs font-semibold uppercase tracking-wider hover:bg-stone-800 transition"
+                  className="absolute right-1.5 px-4 py-2 rounded-lg bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-wider hover:bg-[#E5B869] transition"
                 >
                   Search
                 </button>
               </form>
 
-              <div className="mt-3 flex items-center flex-wrap gap-2 text-[11px] text-stone-500">
-                <span className="flex items-center text-stone-700 font-semibold mr-1">
-                  <TrendingUp className="w-3.5 h-3.5 mr-1 text-black" /> Popular:
+              <div className="mt-3 flex items-center flex-wrap gap-2 text-[11px] text-[#94A3B8]">
+                <span className="flex items-center text-[#D4AF37] font-semibold mr-1">
+                  <TrendingUp className="w-3.5 h-3.5 mr-1 text-[#D4AF37]" /> Popular:
                 </span>
                 {trendingSearches.map(term => (
                   <button
@@ -254,10 +254,10 @@ export const Navbar: React.FC = () => {
                     onClick={() => {
                       setSearchQuery(term);
                       setFilters(prev => ({ ...prev, searchQuery: term, category: 'All' }));
-                      navigate(`/products?search=${encodeURIComponent(term)}`);
+                      navigate(`/watches?search=${encodeURIComponent(term)}`);
                       setIsSearchOpen(false);
                     }}
-                    className="px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 hover:bg-black hover:text-white transition"
+                    className="px-2.5 py-1 rounded-full bg-[#141822] border border-[#2A3142] text-[#E2E8F0] hover:bg-[#D4AF37] hover:text-black transition"
                   >
                     {term}
                   </button>
@@ -269,13 +269,13 @@ export const Navbar: React.FC = () => {
 
         {/* Mobile Navigation Drawer */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-stone-200 bg-white py-4 px-6 space-y-3 animate-in fade-in duration-200 shadow-lg">
+          <div className="lg:hidden border-t border-[#2A3142] bg-[#0E121A] py-4 px-6 space-y-3 animate-in fade-in duration-200 shadow-lg">
             {navLinks.map(link => (
               <Link
                 key={link.label}
                 to={link.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-2 text-sm font-semibold tracking-wider text-stone-800 hover:text-black border-b border-stone-100"
+                className="block py-2 text-sm font-semibold tracking-wider text-[#CBD5E1] hover:text-[#D4AF37] border-b border-[#1E2536]"
               >
                 {link.label}
               </Link>
@@ -285,7 +285,7 @@ export const Navbar: React.FC = () => {
                 href={`https://wa.me/${WHATSAPP_RAW_NUMBER}?text=${encodeURIComponent('Hello Velmira Concierge, I would like to inquire about your watch collections.')}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center space-x-2 text-xs font-semibold text-emerald-700 py-2"
+                className="inline-flex items-center space-x-2 text-xs font-semibold text-[#D4AF37] py-2"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>WhatsApp Concierge ({OFFICIAL_WHATSAPP_NUMBER})</span>

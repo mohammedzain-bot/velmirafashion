@@ -31,7 +31,7 @@ export const CategoryBar: React.FC = () => {
   ];
 
   return (
-    <div className="bg-white border-b border-stone-200 sticky top-[73px] z-30 transition-all">
+    <div className="bg-[#0B0D12] border-b border-[#2A3142] sticky top-[73px] z-30 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between overflow-x-auto py-2.5 space-x-6 sm:space-x-8 scrollbar-none">
           {categories.map(cat => {
@@ -43,11 +43,11 @@ export const CategoryBar: React.FC = () => {
             return (
               <Link
                 key={cat.name}
-                to={cat.name === 'All Watches' ? '/products' : `/products?category=${encodeURIComponent(cat.name)}`}
-                className={`flex items-center space-x-1.5 shrink-0 py-1 px-3 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
+                to={cat.name === 'All Watches' ? '/watches' : `/watches?category=${encodeURIComponent(cat.name)}`}
+                className={`flex items-center space-x-1.5 shrink-0 py-1.5 px-3.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
                   isActive
-                    ? 'bg-black text-white'
-                    : 'text-stone-600 hover:text-black hover:bg-stone-100'
+                    ? 'bg-[#D4AF37] text-black font-bold shadow-md shadow-[#D4AF37]/20 border border-[#D4AF37]'
+                    : 'text-[#94A3B8] hover:text-white hover:bg-[#181E2B] border border-transparent'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
