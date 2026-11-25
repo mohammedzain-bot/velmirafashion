@@ -142,9 +142,9 @@ export const WatchHeroSlider: React.FC = () => {
     >
       {/* 
         Ultra-High-Resolution Almost Full-Screen Watch Photography 
-        with Silky Cross-Fade and Subtle Cinematic Scale Effect
+        with Silky Cross-Fade and Ambient Lighting Depth
       */}
-      <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0 w-full h-full bg-[#FFFFFF]">
         {WATCH_SLIDES.map((slide, idx) => {
           const isActive = idx === currentIndex;
           return (
@@ -156,21 +156,38 @@ export const WatchHeroSlider: React.FC = () => {
             >
               <Link 
                 to={slide.link} 
-                className="block w-full h-full cursor-pointer relative overflow-hidden"
+                className="block w-full h-full cursor-pointer relative overflow-hidden flex items-center justify-center bg-white"
                 title={`Explore ${slide.title}`}
               >
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  className={`w-full h-full object-cover object-center filter brightness-[0.98] contrast-[1.03] transition-transform duration-[6500ms] ease-out ${
-                    isActive ? 'scale-105' : 'scale-100'
-                  }`}
-                  loading={idx === 0 ? 'eager' : 'lazy'}
-                />
+                {/* 1. Ambient Background Fill to Match Tone & Depth */}
+                <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+                  <img
+                    src={slide.image}
+                    alt=""
+                    aria-hidden="true"
+                    className="w-full h-full object-cover filter blur-3xl opacity-25 scale-115 transform"
+                  />
+                  <div className="absolute inset-0 bg-white/40" />
+                </div>
 
-                {/* Subtle luxury edge vignette preserving full brightness */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-black/10 pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent pointer-events-none" />
+                {/* 2. Crystal-Clear 2K+ High-Definition Watch Photography */}
+                <div className="relative z-10 w-full h-full flex items-center justify-center p-2 sm:p-6 lg:p-8">
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className={`max-h-[82vh] max-w-full sm:max-w-5xl h-full w-full object-contain filter drop-shadow-[0_20px_45px_rgba(0,0,0,0.14)] transition-transform duration-[6500ms] ease-out ${
+                      isActive ? 'scale-102' : 'scale-100'
+                    }`}
+                    style={{
+                      imageRendering: '-webkit-optimize-contrast',
+                      backfaceVisibility: 'hidden'
+                    }}
+                    loading={idx === 0 ? 'eager' : 'lazy'}
+                  />
+                </div>
+
+                {/* Subtle luxury edge lighting */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-black/5 pointer-events-none" />
               </Link>
             </div>
           );
