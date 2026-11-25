@@ -10,9 +10,9 @@ dotenv.config();
 
 // Configure Cloudinary with User Credentials
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'ztfucaud',
-  api_key: process.env.CLOUDINARY_API_KEY || '934494792476117',
-  api_secret: process.env.CLOUDINARY_API_SECRET || 'zjDbiW4wmdR6RpZrqfahZKP6g3c'
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'ukaw0xz6',
+  api_key: process.env.CLOUDINARY_API_KEY || '456211547439223',
+  api_secret: process.env.CLOUDINARY_API_SECRET || '7GQxoFsCoLtwqIsMNQ2WXasbD4A'
 });
 
 const __filename = fileURLToPath(import.meta.url);
@@ -337,7 +337,7 @@ app.get('/api/cloudinary/status', async (req, res) => {
     const pingRes = await cloudinary.api.ping();
     res.json({
       success: true,
-      cloudName: process.env.CLOUDINARY_CLOUD_NAME || 'ztfucaud',
+      cloudName: process.env.CLOUDINARY_CLOUD_NAME || 'ukaw0xz6',
       status: pingRes.status || 'ok',
       message: 'Cloudinary media database connected successfully'
     });

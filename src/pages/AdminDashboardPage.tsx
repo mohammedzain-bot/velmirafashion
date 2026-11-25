@@ -67,7 +67,7 @@ export const AdminDashboardPage: React.FC = () => {
   const [isUploadingCloudinary, setIsUploadingCloudinary] = useState(false);
   const [cloudinaryStatus, setCloudinaryStatus] = useState<{ connected: boolean; cloudName: string }>({
     connected: true,
-    cloudName: 'ztfucaud'
+    cloudName: 'ukaw0xz6'
   });
   const [uploadFeedback, setUploadFeedback] = useState<string>('');
 
@@ -76,11 +76,11 @@ export const AdminDashboardPage: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          setCloudinaryStatus({ connected: true, cloudName: data.cloudName || 'ztfucaud' });
+          setCloudinaryStatus({ connected: true, cloudName: data.cloudName || 'ukaw0xz6' });
         }
       })
       .catch(() => {
-        setCloudinaryStatus({ connected: true, cloudName: 'ztfucaud' });
+        setCloudinaryStatus({ connected: true, cloudName: 'ukaw0xz6' });
       });
   }, []);
 
@@ -992,7 +992,7 @@ export const AdminDashboardPage: React.FC = () => {
                 <div className="mt-3 flex flex-wrap items-center gap-2">
                   <label className="cursor-pointer inline-flex items-center space-x-1.5 px-3 py-1.5 border border-neutral-900 bg-[#111111] text-white text-[11px] font-medium hover:bg-neutral-800 transition">
                     <Upload className="w-3.5 h-3.5" />
-                    <span>{isUploadingCloudinary ? 'Uploading to Cloudinary...' : 'Upload to Cloudinary (ztfucaud)'}</span>
+                    <span>{isUploadingCloudinary ? 'Uploading to Cloudinary...' : `Upload to Cloudinary (${cloudinaryStatus.cloudName})`}</span>
                     <input
                       type="file"
                       accept="image/*"
