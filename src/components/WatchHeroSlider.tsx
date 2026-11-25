@@ -134,23 +134,24 @@ export const WatchHeroSlider: React.FC = () => {
               idx === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
             }`}
           >
-            {/* The watch photo almost full screen */}
-            <img
-              src={slide.image}
-              alt={slide.title}
-              className="w-full h-full object-cover object-center filter brightness-[0.96] contrast-[1.02] transform transition-transform duration-[6000ms] ease-out scale-100 group-hover:scale-102"
-              loading={idx === 0 ? 'eager' : 'lazy'}
-            />
+            {/* The watch photo almost full screen, directly clickable */}
+            <Link to={slide.link} className="block w-full h-full cursor-pointer">
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className="w-full h-full object-cover object-center filter brightness-[0.98] contrast-[1.02] transform transition-transform duration-[6000ms] ease-out scale-100 group-hover:scale-102"
+                loading={idx === 0 ? 'eager' : 'lazy'}
+              />
+            </Link>
 
-            {/* Subtle soft gradient scrim to ensure small text readability while preserving full-screen watch visual */}
-            <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-black/30 pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-transparent to-white/40 pointer-events-none sm:from-white/70" />
+            {/* Subtle soft gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-black/10 pointer-events-none" />
           </div>
         ))}
       </div>
 
-      {/* Floating Small Texts (Minimal, Subtle & Editorial) */}
-      <div className="relative z-20 max-w-7xl mx-auto h-full px-4 sm:px-8 lg:px-12 flex flex-col justify-between py-8 sm:py-12 pointer-events-none">
+      {/* Floating Controls & Minimal Indicators */}
+      <div className="relative z-20 max-w-7xl mx-auto h-full px-4 sm:px-8 lg:px-12 flex flex-col justify-between py-6 sm:py-8 pointer-events-none">
         
         {/* Top Minimal Track Indicator */}
         <div className="flex items-center justify-between text-[11px] font-mono tracking-widest text-[#111111] pointer-events-auto">
@@ -166,54 +167,8 @@ export const WatchHeroSlider: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Small Texts — Minimal & Uncluttered */}
-        <div className="max-w-lg bg-white/92 backdrop-blur-md p-5 sm:p-6 border border-neutral-200 shadow-lg pointer-events-auto space-y-2.5 transition-all duration-500">
-          <span className="text-[9px] uppercase tracking-[0.25em] text-[#71717A] font-semibold block">
-            VELMIRA TIMEPIECES
-          </span>
-
-          <h2 className="font-serif text-lg sm:text-2xl font-bold tracking-tight text-[#111111] leading-snug">
-            {current.title}
-          </h2>
-
-          <p className="text-xs text-[#52525B] leading-relaxed line-clamp-2">
-            {current.subtitle}
-          </p>
-
-          <div className="pt-2 flex items-center justify-between border-t border-neutral-200/80">
-            <div>
-              <span className="text-sm sm:text-base font-bold font-mono text-[#111111]">
-                {current.price}
-              </span>
-              <span className="text-[10px] text-neutral-500 font-mono ml-1.5">
-                / {current.priceAED}
-              </span>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <a
-                href={`https://wa.me/${WHATSAPP_RAW_NUMBER}?text=${encodeURIComponent(`Hello Velmira, I would like to inquire about: ${current.title}`)}`}
-                target="_blank"
-                rel="noreferrer"
-                className="p-2 border border-neutral-300 text-neutral-700 hover:text-black hover:border-black transition"
-                title="WhatsApp Inquiry"
-              >
-                <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
-              </a>
-
-              <Link
-                to={current.link}
-                className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 bg-[#111111] text-white hover:bg-black text-[10px] font-bold uppercase tracking-widest transition shadow-xs"
-              >
-                <span>View</span>
-                <ArrowRight className="w-3 h-3" />
-              </Link>
-            </div>
-          </div>
-        </div>
-
         {/* Bottom Slide Progress Dotted Line */}
-        <div className="flex items-center space-x-2 pointer-events-auto">
+        <div className="flex items-center space-x-2 pointer-events-auto pb-2">
           {WATCH_SLIDES.map((_, idx) => (
             <button
               key={idx}
@@ -222,7 +177,7 @@ export const WatchHeroSlider: React.FC = () => {
               className={`h-1 transition-all duration-300 ${
                 currentIndex === idx 
                   ? 'w-8 bg-[#111111]' 
-                  : 'w-2 bg-neutral-300 hover:bg-neutral-500'
+                  : 'w-2 bg-neutral-300/80 hover:bg-neutral-600'
               }`}
             />
           ))}
