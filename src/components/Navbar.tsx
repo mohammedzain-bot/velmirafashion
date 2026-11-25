@@ -22,7 +22,7 @@ import { OFFICIAL_WHATSAPP_NUMBER, WHATSAPP_RAW_NUMBER } from '../utils/whatsapp
 export const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setFilters } = useShop();
+  const { products, setFilters } = useShop();
   const { totalItemsCount, setIsCartDrawerOpen } = useCart();
   const { wishlistIds } = useWishlist();
   const { country, setRegion, setIsRegionModalOpen } = useCurrency();
@@ -34,6 +34,15 @@ export const Navbar: React.FC = () => {
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const regionRef = useRef<HTMLDivElement>(null);
+
+  const matchingWatches = searchQuery.trim().length > 1
+    ? products.filter(p => 
+        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (p.watchType && p.watchType.toLowerCase().includes(searchQuery.toLowerCase()))
+      ).slice(0, 4)
+    : [];
 
   useEffect(() => {
     if (isSearchOpen && searchInputRef.current) {
@@ -244,6 +253,42 @@ export const Navbar: React.FC = () => {
                   Search
                 </button>
               </form>
+
+              {/* Instant Search Results Preview */}
+              {matchingWatches.length > 0 && (
+                <div className="mt-3.5 pt-3 border-t border-neutral-100 space-y-2">
+                  <span className="text-[10px] uppercase font-mono tracking-widest text-[#71717A] block">
+                    Matching Timepieces ({matchingWatches.length}):
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {matchingWatches.map(watch => (
+                      <Link
+                        key={watch.id}
+                        to={`/products/${watch.id}`}
+                        onClick={() => setIsSearchOpen(false)}
+                        className="flex items-center space-x-3 p-2 border border-neutral-200 hover:border-black transition bg-[#FAFAFA] hover:bg-white"
+                      >
+                        <img
+                          src={watch.images[0]}
+                          alt={watch.name}
+                          className="w-10 h-12 object-cover border border-neutral-200 bg-white shrink-0"
+                        />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-[9px] uppercase font-mono text-[#71717A] truncate">
+                            {watch.brand}
+                          </p>
+                          <p className="text-xs font-serif font-bold text-[#111111] truncate">
+                            {watch.name}
+                          </p>
+                          <span className="text-xs font-mono font-bold text-neutral-800">
+                            {country === 'UAE' ? `AED ${watch.priceAED}` : `₹${watch.discountedPrice.toLocaleString('en-IN')}`}
+                          </span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className="mt-3 flex items-center flex-wrap gap-2 text-[11px] text-[#64748B]">
                 <span className="flex items-center text-[#111111] font-semibold mr-1">
