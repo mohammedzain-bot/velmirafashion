@@ -78,17 +78,17 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
     filters.maxPrice < 50000;
 
   return (
-    <div className="bg-[#141822] border border-[#2A3142] p-4 sm:p-5 divide-y divide-[#1E2536] space-y-5 font-sans shadow-lg">
+    <div className="bg-white border border-neutral-200 p-4 sm:p-5 divide-y divide-neutral-200 space-y-5 font-sans shadow-xs">
       {/* Header with Clear Button */}
       <div className="flex items-center justify-between pb-1">
         <div>
-          <h3 className="font-serif text-sm font-bold uppercase tracking-wider text-white">Refine Vault</h3>
-          <p className="text-[11px] text-[#94A3B8] mt-0.5">{filteredProducts.length} timepieces</p>
+          <h3 className="font-serif text-sm font-bold uppercase tracking-wider text-[#111111]">Refine</h3>
+          <p className="text-[11px] text-[#71717A] mt-0.5">{filteredProducts.length} timepieces</p>
         </div>
         {hasActiveFilters && (
           <button
             onClick={resetFilters}
-            className="text-[11px] font-medium text-[#D4AF37] hover:underline flex items-center space-x-1"
+            className="text-[11px] font-medium text-[#111111] hover:underline flex items-center space-x-1"
           >
             <RotateCcw className="w-3 h-3" />
             <span>Reset</span>
@@ -98,8 +98,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
 
       {/* Category Filter */}
       <div className="pt-4 space-y-2">
-        <label className="text-xs font-semibold text-[#D4AF37] uppercase tracking-wider block">
-          Watch Category
+        <label className="text-xs font-semibold text-[#111111] uppercase tracking-wider block">
+          Category
         </label>
         <div className="space-y-1 max-h-48 overflow-y-auto pr-1">
           {categories.map(cat => (
@@ -108,12 +108,12 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
               onClick={() => handleCategoryChange(cat)}
               className={`w-full text-left px-2.5 py-1.5 text-xs font-medium transition flex items-center justify-between ${
                 filters.category === cat
-                  ? 'bg-[#D4AF37] text-black font-semibold'
-                  : 'text-[#94A3B8] hover:bg-[#1E2536] hover:text-white'
+                  ? 'bg-[#111111] text-white font-semibold'
+                  : 'text-[#52525B] hover:bg-[#F8F9FA] hover:text-[#111111]'
               }`}
             >
               <span>{cat}</span>
-              {filters.category === cat && <Check className="w-3.5 h-3.5 text-black" />}
+              {filters.category === cat && <Check className="w-3.5 h-3.5 text-white" />}
             </button>
           ))}
         </div>
@@ -122,10 +122,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
       {/* Price Range Slider */}
       <div className="pt-4 space-y-3">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-semibold text-[#D4AF37] uppercase tracking-wider">
+          <label className="text-xs font-semibold text-[#111111] uppercase tracking-wider">
             Price Range
           </label>
-          <span className="text-xs font-mono font-medium text-white">
+          <span className="text-xs font-mono font-medium text-[#111111]">
             Up to {formatPrice(filters.maxPrice)}
           </span>
         </div>
@@ -136,9 +136,9 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
           step={500}
           value={filters.maxPrice}
           onChange={e => handlePriceChange(Number(e.target.value))}
-          className="w-full accent-[#D4AF37] h-1 bg-[#1E2536] cursor-pointer"
+          className="w-full accent-[#111111] h-1 bg-neutral-200 cursor-pointer"
         />
-        <div className="flex justify-between text-[10px] text-[#94A3B8] font-mono">
+        <div className="flex justify-between text-[10px] text-[#71717A] font-mono">
           <span>{formatPrice(1000)}</span>
           <span>{formatPrice(50000)}</span>
         </div>
@@ -147,7 +147,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
       {/* Subcategory / Calibre Type */}
       {allSubcategories.length > 0 && (
         <div className="pt-4 space-y-2">
-          <label className="text-xs font-semibold text-[#D4AF37] uppercase tracking-wider block">
+          <label className="text-xs font-semibold text-[#111111] uppercase tracking-wider block">
             Movement & Complications
           </label>
           <div className="space-y-1 max-h-40 overflow-y-auto pr-1">
@@ -156,13 +156,13 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
               return (
                 <label
                   key={sub}
-                  className="flex items-center space-x-2 text-xs text-[#94A3B8] hover:text-white cursor-pointer py-0.5"
+                  className="flex items-center space-x-2 text-xs text-[#52525B] hover:text-[#111111] cursor-pointer py-0.5"
                 >
                   <input
                     type="checkbox"
                     checked={checked}
                     onChange={() => handleSubcategoryToggle(sub)}
-                    className="accent-[#D4AF37] rounded-none"
+                    className="accent-[#111111] rounded-none"
                   />
                   <span>{sub}</span>
                 </label>
@@ -175,7 +175,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
       {/* Case Diameter Sizes */}
       {allSizes.length > 0 && (
         <div className="pt-4 space-y-2">
-          <label className="text-xs font-semibold text-[#D4AF37] uppercase tracking-wider block">
+          <label className="text-xs font-semibold text-[#111111] uppercase tracking-wider block">
             Dial Diameter
           </label>
           <div className="flex flex-wrap gap-1.5">
@@ -187,8 +187,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
                   onClick={() => handleSizeToggle(size)}
                   className={`px-2.5 py-1 text-xs border font-mono transition ${
                     active
-                      ? 'border-[#D4AF37] bg-[#D4AF37] text-black font-bold'
-                      : 'border-[#2A3142] text-[#94A3B8] hover:border-[#D4AF37] hover:text-white bg-[#0E1118]'
+                      ? 'border-[#111111] bg-[#111111] text-white font-bold'
+                      : 'border-neutral-200 text-[#52525B] hover:border-black hover:text-[#111111] bg-white'
                   }`}
                 >
                   {size}
@@ -201,14 +201,14 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
 
       {/* In-stock Only */}
       <div className="pt-4">
-        <label className="flex items-center space-x-2 text-xs text-[#CBD5E1] cursor-pointer">
+        <label className="flex items-center space-x-2 text-xs text-[#52525B] cursor-pointer">
           <input
             type="checkbox"
             checked={filters.inStockOnly}
             onChange={e => setFilters(prev => ({ ...prev, inStockOnly: e.target.checked }))}
-            className="accent-[#D4AF37]"
+            className="accent-[#111111]"
           />
-          <span>In Stock & Ready for Immediate Dispatch</span>
+          <span>In Stock & Ready for Dispatch</span>
         </label>
       </div>
 
@@ -216,7 +216,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ onCloseMobile }) =
         <div className="pt-4">
           <button
             onClick={onCloseMobile}
-            className="w-full py-2.5 bg-[#D4AF37] text-black font-semibold text-xs uppercase tracking-wider hover:bg-[#E5B869] transition"
+            className="w-full py-2.5 bg-[#111111] text-white font-semibold text-xs uppercase tracking-wider hover:bg-black transition"
           >
             Apply Filters
           </button>
